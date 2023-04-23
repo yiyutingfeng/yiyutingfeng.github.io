@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="使用CEA搭建集群">
+<meta property="og:type" content="article">
+<meta property="og:title" content="集群搭建">
+<meta property="og:url" content="http://example.com/2022/07/06/%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA/index.html">
+<meta property="og:site_name" content="BONC">
+<meta property="og:description" content="使用CEA搭建集群">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-07-06T07:58:02.000Z">
+<meta property="article:modified_time" content="2023-04-13T03:00:42.012Z">
+<meta property="article:author" content="fengfuyuyang">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2022/07/06/%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>集群搭建 | BONC</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">BONC</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/06/%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="fengfuyuyang">
+      <meta itemprop="description" content="BONC工作总结">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BONC">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          集群搭建
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-07-06 15:58:02" itemprop="dateCreated datePublished" datetime="2022-07-06T15:58:02+08:00">2022-07-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-04-13 11:00:42" itemprop="dateModified" datetime="2023-04-13T11:00:42+08:00">2023-04-13</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>使用CEA搭建集群</p>
+<span id="more"></span>
+<h2 id="zookeeper"><a href="#zookeeper" class="headerlink" title="zookeeper"></a>zookeeper</h2><table>
+<thead>
+<tr>
+<th align="left">参数名</th>
+<th align="left">说明</th>
+<th align="left">示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">dataDir</td>
+<td align="left">zookeeper日志等文件存放位置</td>
+<td align="left">&#x2F;data1&#x2F;dlc_group&#x2F;gaoyuanfeng&#x2F;2.15_number&#x2F;zookeeper</td>
+</tr>
+<tr>
+<td align="left">clientPort</td>
+<td align="left">zookeeper连接端口号</td>
+<td align="left">6361</td>
+</tr>
+</tbody></table>
+<h2 id="3-0前的版本"><a href="#3-0前的版本" class="headerlink" title="3.0前的版本"></a>3.0前的版本</h2><h3 id="HDFS元数据代理"><a href="#HDFS元数据代理" class="headerlink" title="HDFS元数据代理"></a>HDFS元数据代理</h3><table>
+<thead>
+<tr>
+<th align="left">参数名</th>
+<th align="left">说明</th>
+<th align="left">示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">clusterName</td>
+<td align="left">集群名</td>
+<td align="left">gyf_xcloud_2.15_number</td>
+</tr>
+<tr>
+<td align="left">zkUrl</td>
+<td align="left">zookeeper连接地址ip + 端口号, 要zookeeper配置一致</td>
+<td align="left">172.16.44.42:6361</td>
+</tr>
+<tr>
+<td align="left">hdfsMetaQueryPort</td>
+<td align="left">连接端口号</td>
+<td align="left">16361</td>
+</tr>
+<tr>
+<td align="left">xcloudName</td>
+<td align="left">集群根目录</td>
+<td align="left">xcloud_gyf</td>
+</tr>
+</tbody></table>
+<h3 id="行云计算引擎"><a href="#行云计算引擎" class="headerlink" title="行云计算引擎"></a>行云计算引擎</h3><h4 id="公共配置"><a href="#公共配置" class="headerlink" title="公共配置"></a>公共配置</h4><table>
+<thead>
+<tr>
+<th align="left">参数名</th>
+<th align="left">说明</th>
+<th align="left">示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">hdfs_meta_query_proxy_port</td>
+<td align="left">hdfs元数据代理配置的端口号</td>
+<td align="left">16361</td>
+</tr>
+<tr>
+<td align="left">cluster_name</td>
+<td align="left">集群名，需要与hdfs元数据配置的保持一致</td>
+<td align="left">gyf_xcloud_2.15_number</td>
+</tr>
+<tr>
+<td align="left">hdfs_meta_query_proxy_host</td>
+<td align="left">hdfs元数据代理安装的节点ip</td>
+<td align="left">172.16.44.42</td>
+</tr>
+<tr>
+<td align="left">zk_server</td>
+<td align="left">zookeeper安装的节点ip与端口号</td>
+<td align="left">172.16.44.42:6361</td>
+</tr>
+<tr>
+<td align="left">xcloud_root_name</td>
+<td align="left">行云hdfs根目录</td>
+<td align="left">xcloud_gyf</td>
+</tr>
+</tbody></table>
+<h4 id="进程组配置"><a href="#进程组配置" class="headerlink" title="进程组配置"></a>进程组配置</h4><table>
+<thead>
+<tr>
+<th align="left">参数名</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">webserve_port</td>
+<td align="left">webserver对外提供服务的端口</td>
+</tr>
+<tr>
+<td align="left">inter_port</td>
+<td align="left">内部端口号</td>
+</tr>
+<tr>
+<td align="left">domain_port</td>
+<td align="left">domain port</td>
+</tr>
+<tr>
+<td align="left">session_port</td>
+<td align="left">外部端口号，SqlDeveloper连接的端口号</td>
+</tr>
+<tr>
+<td align="left">udf_port</td>
+<td align="left">自定义函数端口号</td>
+</tr>
+</tbody></table>
+<h2 id="3-0版"><a href="#3-0版" class="headerlink" title="3.0版"></a>3.0版</h2><h3 id="RegistrationCenter"><a href="#RegistrationCenter" class="headerlink" title="RegistrationCenter"></a>RegistrationCenter</h3><p>配置文件 conf&#x2F;configuration-cea.xml</p>
+<table>
+<thead>
+<tr>
+<th align="left">参数名</th>
+<th align="left">说明</th>
+<th align="left">示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">dataDir</td>
+<td align="left">数据目录，用于存放zookeeper的数据</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">clientPort</td>
+<td align="left">监听客户端连接的端口</td>
+<td align="left"></td>
+</tr>
+</tbody></table>
+<h3 id="HDFS元数据代理-1"><a href="#HDFS元数据代理-1" class="headerlink" title="HDFS元数据代理"></a>HDFS元数据代理</h3><table>
+<thead>
+<tr>
+<th align="left">参数名</th>
+<th align="left">说明</th>
+<th align="left">示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">xcloud_helper_rpc_port</td>
+<td align="left">xcloud与helper通信的RPC端口</td>
+<td align="left">19091</td>
+</tr>
+<tr>
+<td align="left">cea_detection_udp_port</td>
+<td align="left">与xcloud_helper_rpc_port保持一致即可</td>
+<td align="left">19091</td>
+</tr>
+<tr>
+<td align="left">cirrofs_user</td>
+<td align="left">CirroFS集群管理员账号，与CirroEngine的cirrofs_user一致</td>
+<td align="left">hdfs 或 hadoop</td>
+</tr>
+<tr>
+<td align="left">root_name</td>
+<td align="left">与CirroeEngine的root_name保持一致</td>
+<td align="left">xcloud</td>
+</tr>
+<tr>
+<td align="left">engine_cluster_name</td>
+<td align="left">与CirroeEngine的cluster_name保持一致</td>
+<td align="left">xcloud_3.0</td>
+</tr>
+<tr>
+<td align="left">registrationcenter_server</td>
+<td align="left">zookeeper ip:port 与CirroeEngine的registrationcenter_server保持一致</td>
+<td align="left">172.16.44.37:12345</td>
+</tr>
+</tbody></table>
+<p>非必要配置,若启动失败可配置排查原因</p>
+<table>
+<thead>
+<tr>
+<th align="left">参数名</th>
+<th align="left">说明</th>
+<th align="left">示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">cirrodata_java_home</td>
+<td align="left">用户指定的JAVA_HOME环境变量，与CirroEngine的JAVA_HOME一致,要求jdk版本不低于1.8</td>
+<td align="left">&#x2F;usr&#x2F;local&#x2F;jdk</td>
+</tr>
+<tr>
+<td align="left">cirrodata_hadoop_home</td>
+<td align="left">用户指定的HADOOP_HOME环境变量，与CirroEngine的HADOOP_HOME一致</td>
+<td align="left">&#x2F;opt&#x2F;cloudera&#x2F;parcels&#x2F;CDH-5.14.0-1.cdh5.14.0.p0.24&#x2F;lib&#x2F;hadoop</td>
+</tr>
+</tbody></table>
+<h3 id="行云计算引擎-1"><a href="#行云计算引擎-1" class="headerlink" title="行云计算引擎"></a>行云计算引擎</h3><h4 id="公共配置-1"><a href="#公共配置-1" class="headerlink" title="公共配置"></a>公共配置</h4><table>
+<thead>
+<tr>
+<th align="left">参数名</th>
+<th align="left">说明</th>
+<th align="left">示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">cluster_name</td>
+<td align="left">集群名，需要与hdfs元数据配置的保持一致</td>
+<td align="left">gyf_xcloud_2.15_number</td>
+</tr>
+<tr>
+<td align="left">registrationcenter_server</td>
+<td align="left">zookeeper安装的节点ip与端口号</td>
+<td align="left">172.16.44.42:6361</td>
+</tr>
+<tr>
+<td align="left">root_name</td>
+<td align="left">CirroFS根目录</td>
+<td align="left">xcloud_gyf</td>
+</tr>
+<tr>
+<td align="left">client_arbiter_address_list</td>
+<td align="left">ARBITER的地址信息</td>
+<td align="left">xcloud37:5350,xcloud38:5350,xcloud39:5350</td>
+</tr>
+<tr>
+<td align="left">cirrofs_user</td>
+<td align="left">访问CirroFS的账号,在同时指定cirrofs_user和principal和keytab的情况下，cirrofs_user会被忽略</td>
+<td align="left">hdfs 或 hadoop</td>
+</tr>
+</tbody></table>
+<p>非必要配置,若启动崩溃可配置排查原因</p>
+<table>
+<thead>
+<tr>
+<th align="left">参数名</th>
+<th align="left">说明</th>
+<th align="left">示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">cirrodata_java_home</td>
+<td align="left">用户指定的java home路径,要求版本不低于1.8</td>
+<td align="left">&#x2F;usr&#x2F;local&#x2F;jdk</td>
+</tr>
+<tr>
+<td align="left">cirrodata_hadoop_home</td>
+<td align="left">用户指定的hadoop home路径</td>
+<td align="left">&#x2F;opt&#x2F;cloudera&#x2F;parcels&#x2F;CDH-5.14.0-1.cdh5.14.0.p0.24&#x2F;lib&#x2F;hadoop</td>
+</tr>
+<tr>
+<td align="left">brpc_dsink_enable</td>
+<td align="left"></td>
+<td align="left">false</td>
+</tr>
+</tbody></table>
+<h3 id="若启动失败，可开启日志，在logs目录中查看日志"><a href="#若启动失败，可开启日志，在logs目录中查看日志" class="headerlink" title="若启动失败，可开启日志，在logs目录中查看日志"></a>若启动失败，可开启日志，在logs目录中查看日志</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python daemon.py start <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="进程组配置-1"><a href="#进程组配置-1" class="headerlink" title="进程组配置"></a>进程组配置</h4><table>
+<thead>
+<tr>
+<th align="left">参数名</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">grm_inter_port</td>
+<td align="left">grm rpc监听端口</td>
+</tr>
+<tr>
+<td align="left">internal_port</td>
+<td align="left">内部通信端口</td>
+</tr>
+<tr>
+<td align="left">domain_port</td>
+<td align="left">跨域通信的端口</td>
+</tr>
+<tr>
+<td align="left">service_port</td>
+<td align="left">对外服务端口.外部通过该端口访问数据库.</td>
+</tr>
+<tr>
+<td align="left">metric_port</td>
+<td align="left">指标采集服务export端口</td>
+</tr>
+<tr>
+<td align="left">brpc_server_port</td>
+<td align="left"></td>
+</tr>
+</tbody></table>
+<h4 id="存储过程"><a href="#存储过程" class="headerlink" title="存储过程"></a>存储过程</h4><table>
+<thead>
+<tr>
+<th align="left">参数名</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">store_procedure_server_list</td>
+<td align="left">存储过程引擎的服务地址，用于计算UDF以及UDF等的创建</td>
+</tr>
+</tbody></table>
+<h4 id="启动崩溃，日志为kv-init-failed"><a href="#启动崩溃，日志为kv-init-failed" class="headerlink" title="启动崩溃，日志为kv init failed"></a>启动崩溃，日志为kv init failed</h4><ol>
+<li>检查client_arbiter_address_list是否配置错误</li>
+<li>更新kv，重新启动kv引擎</li>
+</ol>
+<h3 id="SqlDeveloper连接"><a href="#SqlDeveloper连接" class="headerlink" title="SqlDeveloper连接"></a>SqlDeveloper连接</h3><p>端口即配置参数<code>session_port</code></p>
+<p>集群管理员连接<br>用户名: <code>systemadmin</code>, 密码: <code>123456</code></p>
+<p>数据库用户连接<br>用户名: <code>system</code>, 密码: <code>123456</code></p>
+<p>所有连接信息存储文件位置<br>C:\Users\CirroData\xcloud\DBConfig.xml</p>
+<h4 id="创建数据库"><a href="#创建数据库" class="headerlink" title="创建数据库"></a>创建数据库</h4><p>systemadmin用户执行</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> DATABASE db_0;</span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">user</span> systemadmin identified <span class="keyword">by</span> <span class="string">&#x27;123456_&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<h4 id="创建普通用户"><a href="#创建普通用户" class="headerlink" title="创建普通用户"></a>创建普通用户</h4><p>system用户执行</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">USER</span> user_0 IDENTIFIED <span class="keyword">BY</span> <span class="string">&#x27;123456_&#x27;</span>;</span><br><span class="line"><span class="keyword">GRANT</span> <span class="keyword">CREATE</span> DATABASE LINK <span class="keyword">TO</span> user_0;</span><br><span class="line"><span class="keyword">GRANT</span> <span class="keyword">ALL</span> <span class="keyword">ON</span> user_0.<span class="operator">*</span> <span class="keyword">to</span> user_0;</span><br></pre></td></tr></table></figure>
+
+<h4 id="高版本需要额外执行建表赋权"><a href="#高版本需要额外执行建表赋权" class="headerlink" title="高版本需要额外执行建表赋权"></a>高版本需要额外执行建表赋权</h4><p>system用户执行</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">GRANT</span> <span class="keyword">CREATE</span> <span class="keyword">TABLE</span>, <span class="keyword">CREATE</span> <span class="keyword">VIEW</span> <span class="keyword">TO</span> user_0;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-16-cgroup赋权"><a href="#2-16-cgroup赋权" class="headerlink" title="2.16 cgroup赋权"></a>2.16 cgroup赋权</h4><p>sudo .&#x2F;init-xcloud-cg.sh [user_name]:[user_name]</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/07/05/lob/" rel="prev" title="lob">
+      <i class="fa fa-chevron-left"></i> lob
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/07/08/SQL/" rel="next" title="SQL">
+      SQL <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#zookeeper"><span class="nav-number">1.</span> <span class="nav-text">zookeeper</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-0%E5%89%8D%E7%9A%84%E7%89%88%E6%9C%AC"><span class="nav-number">2.</span> <span class="nav-text">3.0前的版本</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HDFS%E5%85%83%E6%95%B0%E6%8D%AE%E4%BB%A3%E7%90%86"><span class="nav-number">2.1.</span> <span class="nav-text">HDFS元数据代理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A1%8C%E4%BA%91%E8%AE%A1%E7%AE%97%E5%BC%95%E6%93%8E"><span class="nav-number">2.2.</span> <span class="nav-text">行云计算引擎</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%AC%E5%85%B1%E9%85%8D%E7%BD%AE"><span class="nav-number">2.2.1.</span> <span class="nav-text">公共配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E7%BB%84%E9%85%8D%E7%BD%AE"><span class="nav-number">2.2.2.</span> <span class="nav-text">进程组配置</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-0%E7%89%88"><span class="nav-number">3.</span> <span class="nav-text">3.0版</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#RegistrationCenter"><span class="nav-number">3.1.</span> <span class="nav-text">RegistrationCenter</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HDFS%E5%85%83%E6%95%B0%E6%8D%AE%E4%BB%A3%E7%90%86-1"><span class="nav-number">3.2.</span> <span class="nav-text">HDFS元数据代理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A1%8C%E4%BA%91%E8%AE%A1%E7%AE%97%E5%BC%95%E6%93%8E-1"><span class="nav-number">3.3.</span> <span class="nav-text">行云计算引擎</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%AC%E5%85%B1%E9%85%8D%E7%BD%AE-1"><span class="nav-number">3.3.1.</span> <span class="nav-text">公共配置</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8B%A5%E5%90%AF%E5%8A%A8%E5%A4%B1%E8%B4%A5%EF%BC%8C%E5%8F%AF%E5%BC%80%E5%90%AF%E6%97%A5%E5%BF%97%EF%BC%8C%E5%9C%A8logs%E7%9B%AE%E5%BD%95%E4%B8%AD%E6%9F%A5%E7%9C%8B%E6%97%A5%E5%BF%97"><span class="nav-number">3.4.</span> <span class="nav-text">若启动失败，可开启日志，在logs目录中查看日志</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E7%BB%84%E9%85%8D%E7%BD%AE-1"><span class="nav-number">3.4.1.</span> <span class="nav-text">进程组配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B"><span class="nav-number">3.4.2.</span> <span class="nav-text">存储过程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%E5%B4%A9%E6%BA%83%EF%BC%8C%E6%97%A5%E5%BF%97%E4%B8%BAkv-init-failed"><span class="nav-number">3.4.3.</span> <span class="nav-text">启动崩溃，日志为kv init failed</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SqlDeveloper%E8%BF%9E%E6%8E%A5"><span class="nav-number">3.5.</span> <span class="nav-text">SqlDeveloper连接</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">3.5.1.</span> <span class="nav-text">创建数据库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E6%99%AE%E9%80%9A%E7%94%A8%E6%88%B7"><span class="nav-number">3.5.2.</span> <span class="nav-text">创建普通用户</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%AB%98%E7%89%88%E6%9C%AC%E9%9C%80%E8%A6%81%E9%A2%9D%E5%A4%96%E6%89%A7%E8%A1%8C%E5%BB%BA%E8%A1%A8%E8%B5%8B%E6%9D%83"><span class="nav-number">3.5.3.</span> <span class="nav-text">高版本需要额外执行建表赋权</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-16-cgroup%E8%B5%8B%E6%9D%83"><span class="nav-number">3.5.4.</span> <span class="nav-text">2.16 cgroup赋权</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">fengfuyuyang</p>
+  <div class="site-description" itemprop="description">BONC工作总结</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">fengfuyuyang</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

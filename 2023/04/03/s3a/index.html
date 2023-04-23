@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="确定每次I&#x2F;O量    最大读取长度 最大写长度    csv csv_file_max_buffer_size (默认16M) 或csv_file_with_clob_max_buffer_size(默认64M) csv_file_max_buffer_size (默认16M) 或csv_file_with_clob_max_buffer_size(默认64M)   标准parquet">
+<meta property="og:type" content="article">
+<meta property="og:title" content="s3a">
+<meta property="og:url" content="http://example.com/2023/04/03/s3a/index.html">
+<meta property="og:site_name" content="BONC">
+<meta property="og:description" content="确定每次I&#x2F;O量    最大读取长度 最大写长度    csv csv_file_max_buffer_size (默认16M) 或csv_file_with_clob_max_buffer_size(默认64M) csv_file_max_buffer_size (默认16M) 或csv_file_with_clob_max_buffer_size(默认64M)   标准parquet">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-04-03T01:09:05.000Z">
+<meta property="article:modified_time" content="2023-04-12T06:55:59.508Z">
+<meta property="article:author" content="fengfuyuyang">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2023/04/03/s3a/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>s3a | BONC</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">BONC</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/03/s3a/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="fengfuyuyang">
+      <meta itemprop="description" content="BONC工作总结">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BONC">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          s3a
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-04-03 09:09:05" itemprop="dateCreated datePublished" datetime="2023-04-03T09:09:05+08:00">2023-04-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-04-12 14:55:59" itemprop="dateModified" datetime="2023-04-12T14:55:59+08:00">2023-04-12</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="确定每次I-x2F-O量"><a href="#确定每次I-x2F-O量" class="headerlink" title="确定每次I&#x2F;O量"></a>确定每次I&#x2F;O量</h3><table>
+<thead>
+<tr>
+<th></th>
+<th>最大读取长度</th>
+<th>最大写长度</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>csv</td>
+<td>csv_file_max_buffer_size (默认16M) 或<br>csv_file_with_clob_max_buffer_size(默认64M)</td>
+<td>csv_file_max_buffer_size (默认16M) 或<br>csv_file_with_clob_max_buffer_size(默认64M)</td>
+</tr>
+<tr>
+<td>标准parquet</td>
+<td>无限制,取决于标准parquet记录的下次读取长度</td>
+<td>arrow控制，具体不知</td>
+</tr>
+<tr>
+<td>orc</td>
+<td>256KB</td>
+<td></td>
+</tr>
+<tr>
+<td>remote hdfs</td>
+<td>64KB</td>
+<td></td>
+</tr>
+<tr>
+<td>s3a</td>
+<td>128KB, 每次实际读取长度未知</td>
+<td></td>
+</tr>
+<tr>
+<td>libs3</td>
+<td>int32_max</td>
+<td>5GB</td>
+</tr>
+</tbody></table>
+<h4 id="问题："><a href="#问题：" class="headerlink" title="问题："></a>问题：</h4><ol>
+<li>csv，orc类型文件可以控制，读取数据量，但parquet无法控制</li>
+<li>测试不同API性能，如何控制I&#x2F;O，尤其s3a读取的不确定性</li>
+</ol>
+<h3 id="若开发测试"><a href="#若开发测试" class="headerlink" title="若开发测试"></a>若开发测试</h3><ol>
+<li>为测试s3a 与 libs3, parser解析增加s3a:&#x2F;&#x2F;${buck_name}&#x2F;[${key}]?coreSiteFile&#x3D;${core_site_xml_path}，以使得可同时测试s3a 与 libs3</li>
+<li>计划增加s3a处理</li>
+<li>ClientCacheHdfs与HdfsAccessService添加s3a连接</li>
+</ol>
+<h4 id="问题"><a href="#问题" class="headerlink" title="问题:"></a>问题:</h4><ol>
+<li>s3a使用hdfs逻辑，还是新增封装</li>
+<li>测试流程所说的写数据源，使用内存如何实现，即写测试数据源是什么</li>
+</ol>
+<p>从命令行接收输入文件名和输出文件名，并读取文件内容，将所有包含冒号的行提取出来，按照以下要求写入到CSV文件中:<br>一行数可能含有多个冒号，按最后一个冒号分割，冒号前的内容为列名，冒号后的内容为数据，若为空也占一个cell<br>数据分为两行，第一行为列名，第二行为对应数据<br>写一个符合要求的脚本，编码格式为utf-8</p>
+<p>这是一个Markdown文件</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> csv</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"><span class="comment"># 从命令行接收输入文件名和输出文件名</span></span><br><span class="line">input_file = sys.argv[<span class="number">1</span>]</span><br><span class="line">output_file = sys.argv[<span class="number">2</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 尝试使用utf-8编码读取文件，如果失败则尝试使用gbk编码</span></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(input_file, <span class="string">&#x27;r&#x27;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> file_in:</span><br><span class="line">        data = [line.strip() <span class="keyword">for</span> line <span class="keyword">in</span> file_in <span class="keyword">if</span> line.count(<span class="string">&#x27;:&#x27;</span>) == <span class="number">1</span>]</span><br><span class="line"><span class="keyword">except</span> UnicodeDecodeError:</span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(input_file, <span class="string">&#x27;r&#x27;</span>, encoding=<span class="string">&#x27;gbk&#x27;</span>) <span class="keyword">as</span> file_in:</span><br><span class="line">        data = [line.strip() <span class="keyword">for</span> line <span class="keyword">in</span> file_in <span class="keyword">if</span> line.count(<span class="string">&#x27;:&#x27;</span>) == <span class="number">1</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 按最后一个冒号分割每行数据</span></span><br><span class="line">split_data = [line.rsplit(<span class="string">&#x27;:&#x27;</span>, <span class="number">1</span>) <span class="keyword">for</span> line <span class="keyword">in</span> data]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 数据分为列名和对应数据</span></span><br><span class="line">columns = []</span><br><span class="line">values = []</span><br><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> split_data:</span><br><span class="line">    <span class="comment"># 如果列名前面有等于号或者破折号，则去掉等于号或者破折号</span></span><br><span class="line">    column_name = item[<span class="number">0</span>].strip().lstrip(<span class="string">&#x27;=–-&#x27;</span>)</span><br><span class="line">    columns.append(column_name)</span><br><span class="line">    values.append(item[<span class="number">1</span>].strip())</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将数据写入CSV文件中</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(output_file, <span class="string">&#x27;w&#x27;</span>, newline=<span class="string">&#x27;&#x27;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> file_out:</span><br><span class="line">    writer = csv.writer(file_out)</span><br><span class="line">    <span class="comment"># 写入列名</span></span><br><span class="line">    writer.writerow(columns)</span><br><span class="line">    <span class="comment"># 写入对应数据</span></span><br><span class="line">    writer.writerow(values)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>修改脚本，从列名为 Sql Statement 开始到下个Sql Statement 前的内容属于一个完整断，如此循环直到处理完数据，效果如下：</p>
+<table>
+<thead>
+<tr>
+<th>Sql Statement</th>
+<th>列名2</th>
+<th>列名3</th>
+<th>…</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>数据1</td>
+<td>数据2</td>
+<td>数据3</td>
+<td>…</td>
+</tr>
+<tr>
+<td>Sql Statement</td>
+<td>列名a</td>
+<td>列名x</td>
+<td>…</td>
+</tr>
+<tr>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>数据1</td>
+<td>数据a</td>
+<td>数据x</td>
+<td>…</td>
+</tr>
+</tbody></table>
+<p>使用代码段，给出修改后的脚本</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> csv</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"><span class="comment"># 从命令行接收输入文件名和输出文件名</span></span><br><span class="line">input_file = sys.argv[<span class="number">1</span>]</span><br><span class="line">output_file = sys.argv[<span class="number">2</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 尝试使用utf-8编码读取文件，如果失败则尝试使用gbk编码</span></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(input_file, <span class="string">&#x27;r&#x27;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> file_in:</span><br><span class="line">        data = [line.strip() <span class="keyword">for</span> line <span class="keyword">in</span> file_in <span class="keyword">if</span> line.count(<span class="string">&#x27;:&#x27;</span>) == <span class="number">1</span>]</span><br><span class="line"><span class="keyword">except</span> UnicodeDecodeError:</span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(input_file, <span class="string">&#x27;r&#x27;</span>, encoding=<span class="string">&#x27;gbk&#x27;</span>) <span class="keyword">as</span> file_in:</span><br><span class="line">        data = [line.strip() <span class="keyword">for</span> line <span class="keyword">in</span> file_in <span class="keyword">if</span> line.count(<span class="string">&#x27;:&#x27;</span>) == <span class="number">1</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 按最后一个冒号分割每行数据</span></span><br><span class="line">split_data = [line.rsplit(<span class="string">&#x27;:&#x27;</span>, <span class="number">1</span>) <span class="keyword">for</span> line <span class="keyword">in</span> data]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查行数是否为空</span></span><br><span class="line"><span class="keyword">if</span> <span class="built_in">len</span>(split_data) == <span class="number">0</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;No data found.&quot;</span>)</span><br><span class="line">    exit()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查首行是否为 Sql Statement</span></span><br><span class="line"><span class="keyword">if</span> split_data[<span class="number">0</span>][<span class="number">0</span>].strip().lower() != <span class="string">&quot;sql statement&quot;</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Invalid input format. First column must be &#x27;Sql Statement&#x27;.&quot;</span>)</span><br><span class="line">    exit()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 初始化变量</span></span><br><span class="line">columns = []</span><br><span class="line">values = []</span><br><span class="line">statement_count = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> split_data:</span><br><span class="line">    <span class="comment"># 如果当前行为新的 Sql Statement，则将上一组数据写入CSV文件中，并重置 columns 和 values</span></span><br><span class="line">    <span class="keyword">if</span> item[<span class="number">0</span>].strip().lower() == <span class="string">&quot;sql statement&quot;</span>:</span><br><span class="line">        <span class="comment"># 写入列名和对应数据，注意第一行写入列名</span></span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(output_file, <span class="string">&#x27;a&#x27;</span>, newline=<span class="string">&#x27;&#x27;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> file_out:</span><br><span class="line">            writer = csv.writer(file_out)</span><br><span class="line">            <span class="keyword">if</span> statement_count == <span class="number">0</span>:</span><br><span class="line">                writer.writerow(columns)</span><br><span class="line">            writer.writerow(values)</span><br><span class="line">        columns = []</span><br><span class="line">        values = []</span><br><span class="line">        statement_count += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 如果列名前面有等于号或者破折号，则去掉等于号或者破折号</span></span><br><span class="line">    column_name = item[<span class="number">0</span>].strip().lstrip(<span class="string">&#x27;=–-&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 添加列名和对应数据</span></span><br><span class="line">    columns.append(column_name)</span><br><span class="line">    values.append(item[<span class="number">1</span>].strip())</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将最后一组数据写入CSV文件中</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(output_file, <span class="string">&#x27;a&#x27;</span>, newline=<span class="string">&#x27;&#x27;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> file_out:</span><br><span class="line">    writer = csv.writer(file_out)</span><br><span class="line">    writer.writerow(columns)</span><br><span class="line">    writer.writerow(values)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> csv</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"><span class="comment"># 从命令行接收输入文件名和输出文件名</span></span><br><span class="line">input_file = sys.argv[<span class="number">1</span>]</span><br><span class="line">output_file = sys.argv[<span class="number">2</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 尝试使用utf-8编码读取文件，如果失败则尝试使用gbk编码</span></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(input_file, <span class="string">&#x27;r&#x27;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> file_in:</span><br><span class="line">        data = [line.strip() <span class="keyword">for</span> line <span class="keyword">in</span> file_in <span class="keyword">if</span> line.count(<span class="string">&#x27;:&#x27;</span>) == <span class="number">1</span>]</span><br><span class="line"><span class="keyword">except</span> UnicodeDecodeError:</span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(input_file, <span class="string">&#x27;r&#x27;</span>, encoding=<span class="string">&#x27;gbk&#x27;</span>) <span class="keyword">as</span> file_in:</span><br><span class="line">        data = [line.strip() <span class="keyword">for</span> line <span class="keyword">in</span> file_in <span class="keyword">if</span> line.count(<span class="string">&#x27;:&#x27;</span>) == <span class="number">1</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查行数是否为空</span></span><br><span class="line"><span class="keyword">if</span> <span class="built_in">len</span>(data) == <span class="number">0</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;No data found.&quot;</span>)</span><br><span class="line">    exit()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查找首个 Sql Statement 的位置</span></span><br><span class="line">start_index = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(data)):</span><br><span class="line">    <span class="keyword">if</span> data[i].strip().lower().startswith(<span class="string">&quot;sql statement&quot;</span>):</span><br><span class="line">        start_index = i</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 初始化变量</span></span><br><span class="line">columns = []</span><br><span class="line">values = []</span><br><span class="line">statement_count = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 从首个 Sql Statement 开始循环处理数据</span></span><br><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> data[start_index:]:</span><br><span class="line">    <span class="comment"># 如果当前行为新的 Sql Statement，则将上一组数据写入CSV文件中，并重置 columns 和 values</span></span><br><span class="line">    <span class="keyword">if</span> item.strip().lower().startswith(<span class="string">&quot;sql statement&quot;</span>):</span><br><span class="line">        <span class="comment"># 写入列名和对应数据，注意第一行写入列名</span></span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(output_file, <span class="string">&#x27;a&#x27;</span>, newline=<span class="string">&#x27;&#x27;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> file_out:</span><br><span class="line">            writer = csv.writer(file_out)</span><br><span class="line">            <span class="keyword">if</span> statement_count == <span class="number">0</span>:</span><br><span class="line">                writer.writerow(columns)</span><br><span class="line">            writer.writerow(values)</span><br><span class="line">        columns = []</span><br><span class="line">        values = []</span><br><span class="line">        statement_count += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 如果列名前面有等于号或者破折号，则去掉等于号或者破折号</span></span><br><span class="line">    column_name = item.split(<span class="string">&#x27;:&#x27;</span>, <span class="number">1</span>)[<span class="number">0</span>].strip().lstrip(<span class="string">&#x27;=–-&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 添加列名和对应数据</span></span><br><span class="line">    <span class="keyword">if</span> statement_count == <span class="number">0</span>:</span><br><span class="line">        columns.append(column_name)</span><br><span class="line">    values.append(item.split(<span class="string">&#x27;:&#x27;</span>, <span class="number">1</span>)[<span class="number">1</span>].strip())</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将最后一组数据写入CSV文件中</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(output_file, <span class="string">&#x27;a&#x27;</span>, newline=<span class="string">&#x27;&#x27;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> file_out:</span><br><span class="line">    writer = csv.writer(file_out)</span><br><span class="line">    writer.writerow(columns)</span><br><span class="line">    writer.writerow(values)</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>不是仅将Sql Statement作为首列，对于改列前的数据是不需要的，不要添加上</li>
+<li>每行数据前的前一行列名不要省略，避免有不同列名</li>
+</ol>
+<p>假设文件内容为</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">  Sql Statement: SELECT * FROM EXTE</span><br><span class="line">  RPC Function Timeline: 11s343ms</span><br><span class="line">  - IO Time: 6m21s</span><br><span class="line">  Elapsed time:</span><br><span class="line">     - execute_start: 116.513us (116.513us)</span><br><span class="line">     - PreStart: 116.513us (116.513us)</span><br><span class="line">     =- Query Report: 11s264ms (11s097ms)</span><br><span class="line">     - Close Query: 11s271ms (7.430ms)</span><br><span class="line">     - IO Time: 3m21s</span><br><span class="line">Elapsed time:</span><br><span class="line">Elapsed time: Elapsed time: Elapsed time:</span><br></pre></td></tr></table></figure>
+
+<p>指定分割标记”: “（冒号和空格）,则输出<br>第一行的内容：Sql Statement,RPC Function Timeline,IO Time,execute_start,PreStart,Query Report,Close Query,IO Time<br>第二行的内容：SELECT * FROM EXTE,11s343ms,6m21s,116.513us (116.513us),116.513us (116.513us),11s264ms (11s097ms),11s271ms (7.430ms),3m21s</p>
+<ol>
+<li>分割标记将字符串分割未key value 对，key在第一行，value在第二行，且一一对应</li>
+<li>可以看出字母前的其他无效字符是需要去除，例如&#x3D;- Query Report修改为Query Report</li>
+<li>可以存在相同key, 例如示例中的IO Time, 说明只需按文本顺序添加key value 对</li>
+<li>对于不符合要求的行忽略，例如”  Elapsed time: “ 与 “Elapsed time: Elapsed time: Elapsed time: “ 会被忽略</li>
+</ol>
+<p>以上只是示例，实际key与value都是从文件中获取的<br>实现一个符合以上所有需求的脚本，文件名和输出文件名直接从命令行获取<br>给出代码前要自我检查,是否存在问题，是否满足需求</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/02/14/checkin/" rel="prev" title="checkin">
+      <i class="fa fa-chevron-left"></i> checkin
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/04/07/%E5%B8%AE%E5%8A%A9%E8%84%9A%E6%9C%AC/" rel="next" title="帮助脚本">
+      帮助脚本 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A1%AE%E5%AE%9A%E6%AF%8F%E6%AC%A1I-x2F-O%E9%87%8F"><span class="nav-number">1.</span> <span class="nav-text">确定每次I&#x2F;O量</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%EF%BC%9A"><span class="nav-number">1.1.</span> <span class="nav-text">问题：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8B%A5%E5%BC%80%E5%8F%91%E6%B5%8B%E8%AF%95"><span class="nav-number">2.</span> <span class="nav-text">若开发测试</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%97%AE%E9%A2%98"><span class="nav-number">2.1.</span> <span class="nav-text">问题:</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">fengfuyuyang</p>
+  <div class="site-description" itemprop="description">BONC工作总结</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">fengfuyuyang</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
