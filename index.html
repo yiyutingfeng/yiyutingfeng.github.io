@@ -1204,7 +1204,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-04-23 22:52:48" itemprop="dateModified" datetime="2023-04-23T22:52:48+08:00">2023-04-23</time>
+                <time title="修改时间：2023-04-23 23:07:16" itemprop="dateModified" datetime="2023-04-23T23:07:16+08:00">2023-04-23</time>
               </span>
 
           
@@ -1403,10 +1403,10 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep -aEA4 <span class="string">&quot;Sql Statement|Hdfs Remote Bytes Read|Hdfs Local Bytes Read|Remote Read Data Cache|Fragment-&quot;</span> <span class="built_in">log</span>/PROFILE_.log20230423-110817.5028</span><br></pre></td></tr></table></figure>
 
 <h3 id="会缓存数据的前提"><a href="#会缓存数据的前提" class="headerlink" title="会缓存数据的前提"></a>会缓存数据的前提</h3><ol>
-<li><p>执行节点是可缓存节点</p>
+<li><p>执行节点是可缓存节点<br>查看profile中<code>Fragment-</code>后的节点是否在系统表<code>V$LOCAL_DATA_CACHE_STATUS</code>的<code>CACHE_NODES</code>列显示的节点中</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> V$LOCAL_DATA_CACHE_STATUS;</span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep -aE <span class="string">&quot;Sql Statement|Hdfs Remote Bytes Read|Hdfs Local Bytes Read|Remote Read Data Cache|Fragment-&quot;</span> <span class="variable">$&#123;profile_path&#125;</span></span><br></pre></td></tr></table></figure>
-<p>对比以上查询结果是否一致</p>
+
 </li>
 <li><p>Remote Read Data Cache Miss Bytes 和 Remote Read Data Cache Write Time 不为0,说明有写缓存</p>
 </li>
