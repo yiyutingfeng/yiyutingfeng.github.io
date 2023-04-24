@@ -1204,7 +1204,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-04-24 10:19:40" itemprop="dateModified" datetime="2023-04-24T10:19:40+08:00">2023-04-24</time>
+                <time title="修改时间：2023-04-24 10:26:22" itemprop="dateModified" datetime="2023-04-24T10:26:22+08:00">2023-04-24</time>
               </span>
 
           
@@ -1339,7 +1339,7 @@
 <li>待缓存数据长度大于<code>local_data_cache_file_max_size</code>不会被缓存</li>
 <li>受IO线程数影响,受到IO阻塞影响的数据,直接放弃写入缓存文件中,避免因阻塞导致查询耗时倍增<ul>
 <li>可通过多次查询将因IO阻塞而未被缓存的数据写入到缓存文件中,即逐渐缓存全部可缓存数据的过程,查询会因缓存增加而耗时减少。<strong>建议</strong></li>
-<li><code>local_data_cache_max_file_num</code> 修改为64,会使得所有IO都用于缓存,可使在第一次查询时缓存所有可缓存数据。<strong>不建议,会最阻塞其他SQL执行</strong></li>
+<li><code>local_data_cache_max_file_num</code> 修改为64,会使得所有IO都用于缓存,可使在第一次查询时缓存所有可缓存数据。<strong>不建议,会阻塞其他SQL执行</strong></li>
 </ul>
 </li>
 </ol>
