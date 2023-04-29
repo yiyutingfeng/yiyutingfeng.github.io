@@ -147,6 +147,314 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/19/%E5%8A%A8%E6%80%81%E5%8F%82%E6%95%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yiyutingfeng">
+      <meta itemprop="description" content="BONC工作总结">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BONC">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/07/19/%E5%8A%A8%E6%80%81%E5%8F%82%E6%95%B0/" class="post-title-link" itemprop="url">动态参数</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-07-19 09:40:49" itemprop="dateCreated datePublished" datetime="2022-07-19T09:40:49+08:00">2022-07-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-04-21 11:40:21" itemprop="dateModified" datetime="2023-04-21T11:40:21+08:00">2023-04-21</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h4 id="目前支持修改的参数"><a href="#目前支持修改的参数" class="headerlink" title="目前支持修改的参数"></a>目前支持修改的参数</h4><table>
+<thead>
+<tr>
+<th>DB级参数</th>
+<th>说明</th>
+<th>参数类型</th>
+<th>默认值</th>
+<th>参数值范围</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>page_compress_type</td>
+<td>Page 数据压缩算法：1-SNAPPY，2-LZ4；如果使用非SNAPPY 算法，会影响与标准parquet 格式的兼容</td>
+<td>int32</td>
+<td>1</td>
+<td>{1,2}</td>
+</tr>
+<tr>
+<td>datapack_maxsize</td>
+<td>单个 DataPack 文件大小上限，单位Byte</td>
+<td>int64</td>
+<td>1073741824</td>
+<td>[223,263-1]</td>
+</tr>
+<tr>
+<td>datapack_maxrownum</td>
+<td>单个 DataPack 文件数据行数上限</td>
+<td>int64</td>
+<td>10485760</td>
+<td>[1,263-1]</td>
+</tr>
+<tr>
+<td>dictpage_num</td>
+<td>ColumnChunk 中字典页的缓存页数，内存中字典编码的 buffer 大小为 dictpage_num * page_size，值越大需要的内存越多，编码效率更高</td>
+<td>int32</td>
+<td>4</td>
+<td>[1,4]</td>
+</tr>
+<tr>
+<td>filesize_reserverate</td>
+<td>DP 文件中实际使用空间占 datapack_maxsize 规定的单个 dp 文件大小的百分比，dp 文件 footer 的估值并不十分准确，为了确保 dp 文件的size 不会超过 datapack_maxsize，给 datapack_maxsize 乘个百分比作为 dp 文件中存储的数据大小</td>
+<td>int32</td>
+<td>90</td>
+<td>(0,100]</td>
+</tr>
+<tr>
+<td>no_page_compress_optimize</td>
+<td>是否禁止 Page 压缩优化；如果不禁止，会影响与标准 parquet 格式的兼容</td>
+<td>bool</td>
+<td>TRUE</td>
+<td>TRUE&#x2F;FALSE</td>
+</tr>
+<tr>
+<td>compress_validrate</td>
+<td>DP 文件数据压缩百分比阈值，当 no_page_compress_optimize 为 false 时才会生效，压缩后与压缩前大小比例超过该值才进行压缩</td>
+<td>int32</td>
+<td>60</td>
+<td>[1,100]</td>
+</tr>
+<tr>
+<td>dictcardinality</td>
+<td>字典编码中，字典条目上限，字典条目达到参数指定条数或者字典编码的 buffer 占满，则写字典页</td>
+<td>int32</td>
+<td>65535</td>
+<td>(0,231-1]</td>
+</tr>
+<tr>
+<td>plain_encoding_rule</td>
+<td>指定采用默认 Plain 编码规则的数据类型，多个类型用’,’分隔，如果数据类型指定了 plain 编码规则，该类型不生成字典页	string</td>
+<td>空</td>
+<td>{int, long, double, date, yminterval, dsinterval, timestamp, number, char, char(n), varchar, varch(n)}中选择一个或多个</td>
+<td></td>
+</tr>
+<tr>
+<td>page_rownum_index</td>
+<td>是否在加载数据时，创建 page_row 索引，点查询优化需要该参数值为 true</td>
+<td>bool</td>
+<td>TRUE</td>
+<td>TRUE&#x2F;FALSE</td>
+</tr>
+<tr>
+<td>page_max_min_index</td>
+<td>是否在加载数据时，创建 page 内部极值索引，点查询优化需要该参数值为 true</td>
+<td>bool</td>
+<td>TRUE</td>
+<td>TRUE&#x2F;FALSE</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>PC级参数</th>
+<th>说明</th>
+<th>参数类型</th>
+<th>默认值</th>
+<th>参数值范围</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>write_buffer_num</td>
+<td>异步加载线程使用的 MDP 队列中 mdp 的数量，参数原名为 mdp_queue_num</td>
+<td>int32</td>
+<td>3</td>
+<td>[1,5]</td>
+</tr>
+<tr>
+<td>cast_timestamp_format</td>
+<td><Basic>Timestamp类型默认格式，小数精度为9</td>
+<td>string</td>
+<td>YYYY-MM-DD HH24:MI:SS.FF</td>
+<td></td>
+</tr>
+<tr>
+<td>cast_date_format</td>
+<td><Basic>Date类型默认格式</td>
+<td>string</td>
+<td>YYYY&#x2F;MM&#x2F;DD HH24:MI:SS</td>
+<td></td>
+</tr>
+<tr>
+<td>compact_group_num</td>
+<td>整并分组数</td>
+<td>int32</td>
+<td>1</td>
+<td>[1,64]</td>
+</tr>
+<tr>
+<td>compact_filesize_threshold</td>
+<td>不参加整并的文件大小下限，单位BYTE</td>
+<td>int64</td>
+<td>849346560</td>
+<td>[0,263-1]</td>
+</tr>
+<tr>
+<td>local_data_cache_policy</td>
+<td>本地数据缓存策略.NO_CACHE: 不进行本地缓存 AUTO_CACHE: 自动选择节点进行缓存（最多选择两个） GLOBAL_CACHE: 所有节点都可以缓存</td>
+<td>string</td>
+<td>AUTO_CACHE</td>
+<td>NO_CACHE, AUTO_CACHE, GLOBAL_CACHE</td>
+</tr>
+</tbody></table>
+<h2 id="动态参数参数名"><a href="#动态参数参数名" class="headerlink" title="动态参数参数名"></a>动态参数参数名</h2><table>
+<thead>
+<tr>
+<th>曾用名</th>
+<th>3.0 名称</th>
+<th>验证方法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>page_compress_type</td>
+<td>page_compress_algorithm</td>
+<td>grep -a “CompressionCodec” log&#x2F;xcloudd.INFO</td>
+</tr>
+<tr>
+<td>datapack_maxsize</td>
+<td>cirrofile_max_size</td>
+<td></td>
+</tr>
+<tr>
+<td>datapack_maxrownum</td>
+<td>cirrofile_max_row</td>
+<td></td>
+</tr>
+<tr>
+<td>dictpage_num</td>
+<td>dictionary_page_num</td>
+<td></td>
+</tr>
+<tr>
+<td>filesize_reserverate</td>
+<td>cirrofile_reserve_rate</td>
+<td></td>
+</tr>
+<tr>
+<td>no_page_compress_optimize</td>
+<td>page_compress_optimize_enable</td>
+<td></td>
+</tr>
+<tr>
+<td>compress_validrate</td>
+<td>page_compress_optimize_threshold_ratio</td>
+<td></td>
+</tr>
+<tr>
+<td>dictcardinality</td>
+<td>dictionary_item_num</td>
+<td></td>
+</tr>
+<tr>
+<td>plain_encoding_rule</td>
+<td>plain_encoding_rule</td>
+<td></td>
+</tr>
+<tr>
+<td>page_rownum_index</td>
+<td>page_rownum_index_enable</td>
+<td></td>
+</tr>
+<tr>
+<td>page_max_min_index</td>
+<td>page_maxmin_index_enable</td>
+<td></td>
+</tr>
+<tr>
+<td>write_buffer_num</td>
+<td>dml_write_buffer_mdp_num</td>
+<td></td>
+</tr>
+<tr>
+<td>cast_timestamp_format</td>
+<td>default_timestamp_format</td>
+<td></td>
+</tr>
+<tr>
+<td>cast_date_format</td>
+<td>default_date_format</td>
+<td></td>
+</tr>
+<tr>
+<td>compact_filesize_threshold</td>
+<td>compaction_max_file_size</td>
+<td></td>
+</tr>
+<tr>
+<td>compact_group_num</td>
+<td>compaction_group_num</td>
+<td></td>
+</tr>
+<tr>
+<td>local_data_cache_policy</td>
+<td>local_data_cache_policy</td>
+<td></td>
+</tr>
+</tbody></table>
+<h4 id="系统表"><a href="#系统表" class="headerlink" title="系统表"></a>系统表</h4><p>systemadmin 用户查询 <code>V$CLUSTER_PARAMETERS_INFO</code><br>system 用户查询 <code>V$DB_PARAMETERS_INFO</code></p>
+<h4 id="SQL"><a href="#SQL" class="headerlink" title="SQL"></a>SQL</h4><p>systemadmin 设置 DB 级别参数</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> DATABASE db_name <span class="keyword">SET</span> <span class="keyword">PARAMETER</span> parameter_name <span class="operator">=</span> <span class="string">&#x27;parameter_value&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>system 设置 DB 级别参数</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">SYSTEM</span> PARAM <span class="keyword">SET</span> parameter_name <span class="operator">=</span> <span class="string">&#x27;parameter_value&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>system 设置 PC 级别参数</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> PC PARAM <span class="keyword">SET</span> pc_name.parameter_name <span class="operator">=</span> <span class="string">&#x27;parameter_value&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/19/%E6%80%BB%E7%BB%93/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -958,7 +1266,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-count">17</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
