@@ -28,7 +28,7 @@
 <meta property="og:description" content="总结工作中遇到的问题，处理方法等">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-07-19T01:11:18.000Z">
-<meta property="article:modified_time" content="2023-04-29T08:16:46.903Z">
+<meta property="article:modified_time" content="2023-05-02T12:55:12.031Z">
 <meta property="article:author" content="yiyutingfeng">
 <meta name="twitter:card" content="summary">
 
@@ -180,7 +180,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-04-29 16:16:46" itemprop="dateModified" datetime="2023-04-29T16:16:46+08:00">2023-04-29</time>
+                <time title="修改时间：2023-05-02 20:55:12" itemprop="dateModified" datetime="2023-05-02T20:55:12+08:00">2023-05-02</time>
               </span>
 
           
@@ -201,15 +201,22 @@
 <blockquote>
 <p>注意：需要清三方库，否则编译会报错</p>
 </blockquote>
-<h3 id="std-map"><a href="#std-map" class="headerlink" title="std::map"></a>std::map</h3><p>下标访问，若元素不存在会导致新增该元素<br>使用成员函数erase()后，切记不可使用下标访问</p>
+<h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><h3 id="std-map"><a href="#std-map" class="headerlink" title="std::map"></a>std::map</h3><p>下标访问，若元素不存在会导致新增该元素<br>使用成员函数erase()后，切记不可使用下标访问</p>
 <h3 id="static"><a href="#static" class="headerlink" title="static"></a>static</h3><p>static变量是指静态的变量，不管是在全局还是局部声明的static变量都存放于程序的全局变量区域，<br>所以它的生命周期是从程序开始到程序结束。但是static变量的作用域并不等同于它的生存周期，它的作用域决定于它被定义的位置。<br>可以认为static变量的作用域&lt;&#x3D;生存周期</p>
-<h3 id="build"><a href="#build" class="headerlink" title="build"></a>build</h3><p>报错: make[1]: *** No rule to make target &#96;be&#x2F;src&#x2F;idl&#x2F;all’. Stop.<br>编译命令后加上 idl</p>
+<h2 id="行云编译相关"><a href="#行云编译相关" class="headerlink" title="行云编译相关"></a>行云编译相关</h2><h3 id="编译报错"><a href="#编译报错" class="headerlink" title="编译报错"></a>编译报错</h3><p>报错: make[1]: *** No rule to make target &#96;be&#x2F;src&#x2F;idl&#x2F;all’. Stop.<br>编译命令后加上 idl</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./build.sh --build=release idl</span><br></pre></td></tr></table></figure>
 
+<h2 id="行云打包"><a href="#行云打包" class="headerlink" title="行云打包"></a>行云打包</h2><h3 id="跳过参数检查，适用于当前代码中配置参数与远端有不一致的情况"><a href="#跳过参数检查，适用于当前代码中配置参数与远端有不一致的情况" class="headerlink" title="跳过参数检查，适用于当前代码中配置参数与远端有不一致的情况"></a>跳过参数检查，适用于当前代码中配置参数与远端有不一致的情况</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./build.sh --build=release --pack_all=1 --strip-debug --test-flags-checking all</span><br></pre></td></tr></table></figure>
 
-<h3 id="链接zookeeper"><a href="#链接zookeeper" class="headerlink" title="链接zookeeper"></a>链接zookeeper</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bin/zkCli.sh -server 172.16.12.170:5555</span><br></pre></td></tr></table></figure>
+<h3 id="仅生成CirroEngine与CirroKV安装包"><a href="#仅生成CirroEngine与CirroKV安装包" class="headerlink" title="仅生成CirroEngine与CirroKV安装包"></a>仅生成CirroEngine与CirroKV安装包</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./build.sh --build=release --pack_all=1 all</span><br></pre></td></tr></table></figure>
+<p>或</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./build.sh --build=release --pack_deploy=1 all</span><br></pre></td></tr></table></figure>
 
-<h3 id="公共环境使用hdfs"><a href="#公共环境使用hdfs" class="headerlink" title="公共环境使用hdfs"></a>公共环境使用hdfs</h3><ol>
+<h3 id="生成CEA安装包，包括CirroEngine-RegistrationCenter-MetaProxy-CirroKV"><a href="#生成CEA安装包，包括CirroEngine-RegistrationCenter-MetaProxy-CirroKV" class="headerlink" title="生成CEA安装包，包括CirroEngine,RegistrationCenter,MetaProxy,CirroKV"></a>生成CEA安装包，包括CirroEngine,RegistrationCenter,MetaProxy,CirroKV</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./build.sh --build=release --pack_deploy=2 all</span><br></pre></td></tr></table></figure>
+
+<h2 id="访问zookeeper"><a href="#访问zookeeper" class="headerlink" title="访问zookeeper"></a>访问zookeeper</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bin/zkCli.sh -server <span class="variable">$&#123;ip&#125;</span>:<span class="variable">$&#123;port&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="公共环境使用hdfs"><a href="#公共环境使用hdfs" class="headerlink" title="公共环境使用hdfs"></a>公共环境使用hdfs</h2><ol>
 <li><p>获取kerberos认证文件路径[kerb_keytab_file]</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep -aA10 <span class="string">&quot;keytab&quot;</span> conf/ds.xml</span><br></pre></td></tr></table></figure>
 </li>
@@ -222,19 +229,13 @@
 <p>例如：172.16.44.53节点</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kinit -kt /home/cirrofs/cirrofs_cfs/key/cirrofs.keytab cirrofs/hdp53.bonc.com@BONC4.COM</span><br></pre></td></tr></table></figure>
 
-<h3 id="3-0编译命令，开启配置参数检查测试，避免应修改配置参数而无法打包"><a href="#3-0编译命令，开启配置参数检查测试，避免应修改配置参数而无法打包" class="headerlink" title="3.0编译命令，开启配置参数检查测试，避免应修改配置参数而无法打包"></a>3.0编译命令，开启配置参数检查测试，避免应修改配置参数而无法打包</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./build.sh --build=release --pack_all=1 --strip-debug --test-flags-checking all</span><br></pre></td></tr></table></figure>
-<p>build.sh 添加参数–pack_deploy&#x3D;[0|1|2].<br>其中默认值是0，表示不生成CEA安装包.<br>参数值1：安装包只包含CirroEngine(xpkg);<br>参数值2: 安装包含有CirroEngine(xpkg),RegistrationCenter,MetaProxy,arbiter,carrier组件.<br>生成的安装包在build&#x2F;[release|debug]&#x2F;deploy_pack下面.</p>
-<h3 id="hadoop-配置文件路径"><a href="#hadoop-配置文件路径" class="headerlink" title="hadoop 配置文件路径"></a>hadoop 配置文件路径</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> conf/config-env.sh</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$HADOOP_HOME</span>/etc/hadoop/</span><br></pre></td></tr></table></figure>
+<h2 id="hadoop-配置文件路径"><a href="#hadoop-配置文件路径" class="headerlink" title="hadoop 配置文件路径"></a>hadoop 配置文件路径</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> conf/config-env.sh</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$HADOOP_HOME</span>/etc/hadoop/</span><br></pre></td></tr></table></figure>
 
-<p>查看hdfs磁盘使用情况</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hdfs dfs -<span class="built_in">du</span> -h /</span><br></pre></td></tr></table></figure>
+<h2 id="查看hdfs磁盘使用情况"><a href="#查看hdfs磁盘使用情况" class="headerlink" title="查看hdfs磁盘使用情况"></a>查看hdfs磁盘使用情况</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hdfs dfs -<span class="built_in">du</span> -h /</span><br></pre></td></tr></table></figure>
 
-<h3 id="conf配置目录注意事项"><a href="#conf配置目录注意事项" class="headerlink" title="conf配置目录注意事项"></a>conf配置目录注意事项</h3><p>conf目录下不能添加hadoop同名配置文件,否则会导致默认hdfs连接使用conf目录下的配置文件,引发启动失败</p>
+<h3 id="CirroEngine下conf配置目录注意事项"><a href="#CirroEngine下conf配置目录注意事项" class="headerlink" title="CirroEngine下conf配置目录注意事项"></a>CirroEngine下conf配置目录注意事项</h3><p>conf目录下不能添加hadoop同名配置文件,否则会导致默认hdfs连接使用conf目录下的配置文件,引发启动失败</p>
 <h3 id="sql下发过程"><a href="#sql下发过程" class="headerlink" title="sql下发过程"></a>sql下发过程</h3><p>SQLDeveloper –&gt; session –&gt; 计划 –&gt; node</p>
-<p>查看堆栈对应的代码行</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">addr2line -e bin/xcloudd <span class="variable">$&#123;堆栈地址&#125;</span></span><br></pre></td></tr></table></figure>
-<p>示例:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">addr2line -e bin/xcloudd 0x37f75d1</span><br></pre></td></tr></table></figure>
+<h2 id="git开启push前不做检查开关"><a href="#git开启push前不做检查开关" class="headerlink" title="git开启push前不做检查开关"></a>git开启push前不做检查开关</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push -u origin BugFix/gyf/42710 <span class="string">&#x27;--push-option=--no-ticket-check&#x27;</span></span><br></pre></td></tr></table></figure>
     </div>
 
     
@@ -314,7 +315,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%8F%E5%88%97%E5%8C%96"><span class="nav-number">1.</span> <span class="nav-text">序列化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#std-map"><span class="nav-number">2.</span> <span class="nav-text">std::map</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#static"><span class="nav-number">3.</span> <span class="nav-text">static</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#build"><span class="nav-number">4.</span> <span class="nav-text">build</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%93%BE%E6%8E%A5zookeeper"><span class="nav-number">5.</span> <span class="nav-text">链接zookeeper</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%AC%E5%85%B1%E7%8E%AF%E5%A2%83%E4%BD%BF%E7%94%A8hdfs"><span class="nav-number">6.</span> <span class="nav-text">公共环境使用hdfs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-0%E7%BC%96%E8%AF%91%E5%91%BD%E4%BB%A4%EF%BC%8C%E5%BC%80%E5%90%AF%E9%85%8D%E7%BD%AE%E5%8F%82%E6%95%B0%E6%A3%80%E6%9F%A5%E6%B5%8B%E8%AF%95%EF%BC%8C%E9%81%BF%E5%85%8D%E5%BA%94%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE%E5%8F%82%E6%95%B0%E8%80%8C%E6%97%A0%E6%B3%95%E6%89%93%E5%8C%85"><span class="nav-number">7.</span> <span class="nav-text">3.0编译命令，开启配置参数检查测试，避免应修改配置参数而无法打包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hadoop-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84"><span class="nav-number">8.</span> <span class="nav-text">hadoop 配置文件路径</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#conf%E9%85%8D%E7%BD%AE%E7%9B%AE%E5%BD%95%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-number">9.</span> <span class="nav-text">conf配置目录注意事项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sql%E4%B8%8B%E5%8F%91%E8%BF%87%E7%A8%8B"><span class="nav-number">10.</span> <span class="nav-text">sql下发过程</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%8F%E5%88%97%E5%8C%96"><span class="nav-number">1.</span> <span class="nav-text">序列化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="nav-number"></span> <span class="nav-text">基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#std-map"><span class="nav-number">1.</span> <span class="nav-text">std::map</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#static"><span class="nav-number">2.</span> <span class="nav-text">static</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A1%8C%E4%BA%91%E7%BC%96%E8%AF%91%E7%9B%B8%E5%85%B3"><span class="nav-number"></span> <span class="nav-text">行云编译相关</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E6%8A%A5%E9%94%99"><span class="nav-number">1.</span> <span class="nav-text">编译报错</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A1%8C%E4%BA%91%E6%89%93%E5%8C%85"><span class="nav-number"></span> <span class="nav-text">行云打包</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B7%B3%E8%BF%87%E5%8F%82%E6%95%B0%E6%A3%80%E6%9F%A5%EF%BC%8C%E9%80%82%E7%94%A8%E4%BA%8E%E5%BD%93%E5%89%8D%E4%BB%A3%E7%A0%81%E4%B8%AD%E9%85%8D%E7%BD%AE%E5%8F%82%E6%95%B0%E4%B8%8E%E8%BF%9C%E7%AB%AF%E6%9C%89%E4%B8%8D%E4%B8%80%E8%87%B4%E7%9A%84%E6%83%85%E5%86%B5"><span class="nav-number">1.</span> <span class="nav-text">跳过参数检查，适用于当前代码中配置参数与远端有不一致的情况</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%85%E7%94%9F%E6%88%90CirroEngine%E4%B8%8ECirroKV%E5%AE%89%E8%A3%85%E5%8C%85"><span class="nav-number">2.</span> <span class="nav-text">仅生成CirroEngine与CirroKV安装包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%9F%E6%88%90CEA%E5%AE%89%E8%A3%85%E5%8C%85%EF%BC%8C%E5%8C%85%E6%8B%ACCirroEngine-RegistrationCenter-MetaProxy-CirroKV"><span class="nav-number">3.</span> <span class="nav-text">生成CEA安装包，包括CirroEngine,RegistrationCenter,MetaProxy,CirroKV</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BF%E9%97%AEzookeeper"><span class="nav-number"></span> <span class="nav-text">访问zookeeper</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AC%E5%85%B1%E7%8E%AF%E5%A2%83%E4%BD%BF%E7%94%A8hdfs"><span class="nav-number"></span> <span class="nav-text">公共环境使用hdfs</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hadoop-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84"><span class="nav-number"></span> <span class="nav-text">hadoop 配置文件路径</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8Bhdfs%E7%A3%81%E7%9B%98%E4%BD%BF%E7%94%A8%E6%83%85%E5%86%B5"><span class="nav-number"></span> <span class="nav-text">查看hdfs磁盘使用情况</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CirroEngine%E4%B8%8Bconf%E9%85%8D%E7%BD%AE%E7%9B%AE%E5%BD%95%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-number">1.</span> <span class="nav-text">CirroEngine下conf配置目录注意事项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sql%E4%B8%8B%E5%8F%91%E8%BF%87%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text">sql下发过程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git%E5%BC%80%E5%90%AFpush%E5%89%8D%E4%B8%8D%E5%81%9A%E6%A3%80%E6%9F%A5%E5%BC%80%E5%85%B3"><span class="nav-number"></span> <span class="nav-text">git开启push前不做检查开关</span></a></div>
       </div>
       <!--/noindex-->
 
@@ -328,7 +329,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-count">19</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
