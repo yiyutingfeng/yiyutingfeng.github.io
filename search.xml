@@ -777,7 +777,7 @@
 </tr>
 <tr>
 <td>userPrincipal</td>
-<td>cirrofs&#x2F;<a href="mailto:&#95;&#x48;&#79;&#x53;&#84;&#64;&#66;&#x4f;&#x4e;&#x43;&#52;&#46;&#67;&#79;&#x4d;">&#95;&#x48;&#79;&#x53;&#84;&#64;&#66;&#x4f;&#x4e;&#x43;&#52;&#46;&#67;&#79;&#x4d;</a></td>
+<td>cirrofs&#x2F;<a href="mailto:&#95;&#x48;&#79;&#83;&#84;&#64;&#x42;&#x4f;&#x4e;&#x43;&#x34;&#46;&#67;&#x4f;&#x4d;">&#95;&#x48;&#79;&#83;&#84;&#64;&#x42;&#x4f;&#x4e;&#x43;&#x34;&#46;&#67;&#x4f;&#x4d;</a></td>
 </tr>
 </tbody></table>
 <h4 id="xcloud配置"><a href="#xcloud配置" class="headerlink" title="xcloud配置"></a>xcloud配置</h4><table>
@@ -789,7 +789,7 @@
 </thead>
 <tbody><tr>
 <td>kerb_principal</td>
-<td>cirrofs&#x2F;<a href="mailto:&#x5f;&#72;&#79;&#83;&#84;&#x40;&#66;&#x4f;&#78;&#67;&#52;&#x2e;&#x43;&#79;&#77;">&#x5f;&#72;&#79;&#83;&#84;&#x40;&#66;&#x4f;&#78;&#67;&#52;&#x2e;&#x43;&#79;&#77;</a></td>
+<td>cirrofs&#x2F;<a href="mailto:&#95;&#x48;&#x4f;&#x53;&#x54;&#x40;&#x42;&#79;&#x4e;&#x43;&#52;&#46;&#67;&#x4f;&#x4d;">&#95;&#x48;&#x4f;&#x53;&#x54;&#x40;&#x42;&#79;&#x4e;&#x43;&#52;&#46;&#67;&#x4f;&#x4d;</a></td>
 </tr>
 <tr>
 <td>kerb_keytab_file</td>
@@ -1037,10 +1037,7 @@
 </ul>
 </li>
 </ol>
-<h3 id="缓存节点选择规则"><a href="#缓存节点选择规则" class="headerlink" title="缓存节点选择规则"></a>缓存节点选择规则</h3><p>优先选择已缓存数据占比少的节点,选定节点,该节点会持有10分钟优先权,10分钟后才会重新选择<br>使用系统表<code>V$USER_TAB_CACHE_DISTR</code>查询同一个表的可缓存节点,也相当于一次表查询操作,会触发节点优先权计时,即查询前若使用<code>V$USER_TAB_CACHE_DISTR</code>查询表的可缓存节点,那么节点失去优先权倒计时已开始计时</p>
-<blockquote>
-<p><strong>TODO</strong>: 去掉定时更换节点机制,保持节点长期有效,仅当节点下线,才会更换缓存节点</p>
-</blockquote>
+<h3 id="auto-cache缓存策略下缓存节点选择规则"><a href="#auto-cache缓存策略下缓存节点选择规则" class="headerlink" title="auto_cache缓存策略下缓存节点选择规则"></a>auto_cache缓存策略下缓存节点选择规则</h3><p>优先选择已缓存数据占比少的节点,选定节点,该节点会持有10分钟优先权,10分钟后才会重新选择<br>使用系统表<code>V$USER_TAB_CACHE_DISTR</code>查询同一个表的可缓存节点,也相当于一次表查询操作,会触发节点优先权计时,即查询前若使用<code>V$USER_TAB_CACHE_DISTR</code>查询表的可缓存节点,那么节点失去优先权倒计时已开始计时</p>
 <h2 id="查询各节点缓存情况"><a href="#查询各节点缓存情况" class="headerlink" title="查询各节点缓存情况"></a>查询各节点缓存情况</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> V$LOCAL_DATA_CACHE_STATUS;</span><br></pre></td></tr></table></figure>
 
 <h2 id="查询某表的可缓存节点"><a href="#查询某表的可缓存节点" class="headerlink" title="查询某表的可缓存节点"></a>查询某表的可缓存节点</h2><h3 id="systemadmin用户"><a href="#systemadmin用户" class="headerlink" title="systemadmin用户"></a>systemadmin用户</h3><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> V$USER_TAB_CACHE_DISTR <span class="keyword">WHERE</span> DATABASE_NAME <span class="operator">=</span> <span class="string">&#x27;database_name&#x27;</span> <span class="keyword">AND</span> SCHEMA_NAME <span class="operator">=</span> <span class="string">&#x27;schema_name&#x27;</span> <span class="keyword">AND</span> TABLE_NAME <span class="operator">=</span> <span class="string">&#x27;table_name&#x27;</span>;</span><br></pre></td></tr></table></figure>
