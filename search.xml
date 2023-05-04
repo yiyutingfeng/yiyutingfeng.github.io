@@ -177,7 +177,11 @@
 <h3 id="创建有序表">创建有序表</h3>
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="comment">/*+ORDERED_TABLE*/</span> <span class="keyword">TABLE</span> table_name(id LONG, name STRING, birthday <span class="type">DATE</span>) SLICED <span class="keyword">BY</span>(birthday, name, id) <span class="keyword">INTO</span> <span class="number">1</span> SLICES</span><br></pre></td></tr></table></figure>
 <h3 id="检查是否为有序表">检查是否为有序表</h3>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> table_name, is_ordered <span class="keyword">from</span> v$user_tables</span><br></pre></td></tr></table></figure>]]></content>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> table_name, is_ordered <span class="keyword">from</span> v$user_tables</span><br></pre></td></tr></table></figure>
+<h3 id="查看当前DB空闲节点">查看当前DB空闲节点</h3>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> V$DB_FREE_PUS;</span><br></pre></td></tr></table></figure>
+<h3 id="清除DB的所有进程组配置信息-systemadmin用户">清除DB的所有进程组配置信息(systemadmin用户)</h3>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ALTER PC CONFIG CLEAN ALL ON db_name;</span><br></pre></td></tr></table></figure>]]></content>
   </entry>
   <entry>
     <title>checkin</title>
@@ -713,13 +717,11 @@ csv_file_with_clob_max_buffer_size 和 csv_file_max_buffer_size</p>
 <p>systemadmin 用户查询 <code>V$CLUSTER_PARAMETERS_INFO</code><br>
 system 用户查询 <code>V$DB_PARAMETERS_INFO</code></p>
 <h4 id="SQL">SQL</h4>
-<p>systemadmin 设置 DB 级别参数</p>
+<div class="tabs" id="修改动态参数"><ul class="nav-tabs"><li class="tab active"><a href="#修改动态参数-1">设置 DB 级别参数</a></li><li class="tab"><a href="#修改动态参数-2">设置 PC 级别参数</a></li></ul><div class="tab-content"><div class="tab-pane active" id="修改动态参数-1"><p>systemadmin用户执行</p>
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> DATABASE db_name <span class="keyword">SET</span> <span class="keyword">PARAMETER</span> parameter_name <span class="operator">=</span> <span class="string">&#x27;parameter_value&#x27;</span>;</span><br></pre></td></tr></table></figure>
-<p>system 设置 DB 级别参数</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">SYSTEM</span> PARAM <span class="keyword">SET</span> parameter_name <span class="operator">=</span> <span class="string">&#x27;parameter_value&#x27;</span>;</span><br></pre></td></tr></table></figure>
-<p>system 设置 PC 级别参数</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> PC PARAM <span class="keyword">SET</span> pc_name.parameter_name <span class="operator">=</span> <span class="string">&#x27;parameter_value&#x27;</span>;</span><br></pre></td></tr></table></figure>
-]]></content>
+<p>system用户执行</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">SYSTEM</span> PARAM <span class="keyword">SET</span> parameter_name <span class="operator">=</span> <span class="string">&#x27;parameter_value&#x27;</span>;</span><br></pre></td></tr></table></figure></div><div class="tab-pane" id="修改动态参数-2"><p>system用户执行</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> PC PARAM <span class="keyword">SET</span> pc_name.parameter_name <span class="operator">=</span> <span class="string">&#x27;parameter_value&#x27;</span>;</span><br></pre></td></tr></table></figure></div></div></div>]]></content>
   </entry>
   <entry>
     <title>句柄缓存</title>
@@ -1003,21 +1005,6 @@ system 用户查询 <code>V$DB_PARAMETERS_INFO</code></p>
     <content><![CDATA[<p>将远程读取到的数据缓存到本地，减少网络IO，提高重复读取远程操作效率</p>
 <span id="more"></span>
 <p>创建文件，拿到文件句柄后立即删除文件，以实现行云宕机后缓存文件被删除</p>
-<h2 id="缓存文件">缓存文件</h2>
-<h3 id="查看缓存文件文件">查看缓存文件文件</h3>
-<h4 id="精准查找">精准查找</h4>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">lsof +L1 | grep <span class="string">&quot;data-cache-<span class="variable">$&#123;hostname&#125;</span>-<span class="variable">$&#123;service_port&#125;</span>&quot;</span></span><br></pre></td></tr></table></figure>
-<p>示例:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">lsof +L1 | grep <span class="string">&quot;data-cache-cirrodata04-62622&quot;</span></span><br></pre></td></tr></table></figure>
-<h4 id="模糊查找-适用多个节点一起看-不用更改-hostname">模糊查找,适用多个节点一起看,不用更改<code>$&#123;hostname&#125;</code></h4>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">lsof +L1 | grep <span class="string">&quot;data-cache&quot;</span> | grep <span class="string">&quot;<span class="variable">$&#123;service_port&#125;</span>&quot;</span></span><br></pre></td></tr></table></figure>
-<p>示例:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">lsof +L1 | grep <span class="string">&quot;data-cache&quot;</span> | grep <span class="string">&quot;62622&quot;</span></span><br></pre></td></tr></table></figure>
-<h3 id="循环查看缓存文件数">循环查看缓存文件数</h3>
-<p>每10秒打印一次缓存文件数</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span> <span class="literal">true</span>; <span class="keyword">do</span> lsof +L1 | grep -c <span class="string">&quot;data-cache-<span class="variable">$&#123;hostname&#125;</span>-<span class="variable">$&#123;service_port&#125;</span>&quot;</span>; <span class="built_in">sleep</span> 3; <span class="keyword">done</span></span><br></pre></td></tr></table></figure>
-<p>示例</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span> <span class="literal">true</span>; <span class="keyword">do</span> lsof +L1 | grep -c <span class="string">&quot;data-cache-cirrodata04-62622&quot;</span>; <span class="built_in">sleep</span> 3; <span class="keyword">done</span></span><br></pre></td></tr></table></figure>
 <h2 id="各单号">各单号</h2>
 <table>
 <thead>
@@ -1099,9 +1086,9 @@ system 用户查询 <code>V$DB_PARAMETERS_INFO</code></p>
 </tr>
 </tbody>
 </table>
-<blockquote>
-<p><strong>注意</strong>: 若数据长度大于<code>local_data_cache_file_max_size</code>,则数据不会被缓存,数据缓存不支持拆分数据以存下超量数据</p>
-</blockquote>
+<div class="note warning"><h3 id="注意">注意</h3>
+<p>若数据长度大于<code>local_data_cache_file_max_size</code>,则数据不会被缓存,数据缓存不支持拆分数据以存下超量数据</p>
+</div>
 <h3 id="数据缓存优化">数据缓存优化</h3>
 <table>
 <thead>
@@ -1169,6 +1156,21 @@ system 用户查询 <code>V$DB_PARAMETERS_INFO</code></p>
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> V$LOCAL_DATA_CACHE_STATUS;</span><br></pre></td></tr></table></figure>
 <h2 id="查询某表的可缓存节点">查询某表的可缓存节点</h2>
 <div class="tabs" id="v$user_tab_cache_distr"><ul class="nav-tabs"><li class="tab active"><a href="#v$user_tab_cache_distr-1">systemadmin用户</a></li><li class="tab"><a href="#v$user_tab_cache_distr-2">system用户</a></li><li class="tab"><a href="#v$user_tab_cache_distr-3">普通用户</a></li></ul><div class="tab-content"><div class="tab-pane active" id="v$user_tab_cache_distr-1"><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> V$USER_TAB_CACHE_DISTR <span class="keyword">WHERE</span> DATABASE_NAME <span class="operator">=</span> <span class="string">&#x27;database_name&#x27;</span> <span class="keyword">AND</span> SCHEMA_NAME <span class="operator">=</span> <span class="string">&#x27;schema_name&#x27;</span> <span class="keyword">AND</span> TABLE_NAME <span class="operator">=</span> <span class="string">&#x27;table_name&#x27;</span>;</span><br></pre></td></tr></table></figure></div><div class="tab-pane" id="v$user_tab_cache_distr-2"><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> V$USER_TAB_CACHE_DISTR <span class="keyword">WHERE</span> SCHEMA_NAME <span class="operator">=</span> <span class="string">&#x27;schema_name&#x27;</span> <span class="keyword">AND</span> TABLE_NAME <span class="operator">=</span> <span class="string">&#x27;table_name&#x27;</span>;</span><br></pre></td></tr></table></figure></div><div class="tab-pane" id="v$user_tab_cache_distr-3"><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> V$USER_TAB_CACHE_DISTR <span class="keyword">WHERE</span> TABLE_NAME <span class="operator">=</span> <span class="string">&#x27;table_name&#x27;</span>;</span><br></pre></td></tr></table></figure></div></div></div>
+<h2 id="缓存文件">缓存文件</h2>
+<h3 id="查看缓存文件文件">查看缓存文件文件</h3>
+<h4 id="精准查找">精准查找</h4>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">lsof +L1 | grep <span class="string">&quot;data-cache-<span class="variable">$&#123;hostname&#125;</span>-<span class="variable">$&#123;service_port&#125;</span>&quot;</span></span><br></pre></td></tr></table></figure>
+<p>示例:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">lsof +L1 | grep <span class="string">&quot;data-cache-cirrodata04-62622&quot;</span></span><br></pre></td></tr></table></figure>
+<h4 id="模糊查找-适用多个节点一起看-不用更改-hostname">模糊查找,适用多个节点一起看,不用更改<code>$&#123;hostname&#125;</code></h4>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">lsof +L1 | grep <span class="string">&quot;data-cache&quot;</span> | grep <span class="string">&quot;<span class="variable">$&#123;service_port&#125;</span>&quot;</span></span><br></pre></td></tr></table></figure>
+<p>示例:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">lsof +L1 | grep <span class="string">&quot;data-cache&quot;</span> | grep <span class="string">&quot;62622&quot;</span></span><br></pre></td></tr></table></figure>
+<h3 id="循环查看缓存文件数">循环查看缓存文件数</h3>
+<p>每10秒打印一次缓存文件数</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span> <span class="literal">true</span>; <span class="keyword">do</span> lsof +L1 | grep -c <span class="string">&quot;data-cache-<span class="variable">$&#123;hostname&#125;</span>-<span class="variable">$&#123;service_port&#125;</span>&quot;</span>; <span class="built_in">sleep</span> 3; <span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+<p>示例</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span> <span class="literal">true</span>; <span class="keyword">do</span> lsof +L1 | grep -c <span class="string">&quot;data-cache-cirrodata04-62622&quot;</span>; <span class="built_in">sleep</span> 3; <span class="keyword">done</span></span><br></pre></td></tr></table></figure>
 <h2 id="profile关键字">profile关键字</h2>
 <table>
 <thead>
@@ -1239,8 +1241,8 @@ system 用户查询 <code>V$DB_PARAMETERS_INFO</code></p>
 </thead>
 <tbody>
 <tr>
-<td></td>
-<td></td>
+<td><a href="http://puctrl-xcloud.sh">puctrl-xcloud.sh</a></td>
+<td>闵国凤</td>
 </tr>
 </tbody>
 </table>
