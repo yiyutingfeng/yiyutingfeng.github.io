@@ -1086,7 +1086,7 @@ system 用户查询 <code>V$DB_PARAMETERS_INFO</code></p>
 </tr>
 </tbody>
 </table>
-<div class="note warning"><h3 id="注意">注意</h3>
+<div class="note warning"><h4 id="注意">注意</h4>
 <p>若数据长度大于<code>local_data_cache_file_max_size</code>,则数据不会被缓存,数据缓存不支持拆分数据以存下超量数据</p>
 </div>
 <h3 id="数据缓存优化">数据缓存优化</h3>
