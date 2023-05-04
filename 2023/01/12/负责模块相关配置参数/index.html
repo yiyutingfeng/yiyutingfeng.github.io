@@ -17,7 +17,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="归纳负责模块的CirroEngine配置参数">
 <meta property="og:type" content="article">
@@ -246,8 +246,8 @@
     
     <div class="post-body" itemprop="articleBody"><p>归纳负责模块的<code>CirroEngine</code>配置参数</p>
 <span id="more"></span>
-
-<h2 id="hdfs句柄缓存模块"><a href="#hdfs句柄缓存模块" class="headerlink" title="hdfs句柄缓存模块"></a>hdfs句柄缓存模块</h2><table>
+<h2 id="hdfs句柄缓存模块">hdfs句柄缓存模块</h2>
+<table>
 <thead>
 <tr>
 <th>参数名</th>
@@ -258,7 +258,8 @@
 <th>参数值范围</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>file_handle_cache_bucket_num</td>
 <td>num_file_handle_cache_partitions</td>
 <td>文件句柄缓存使用的分桶数量,用于减少并发时的冲突.</td>
@@ -272,7 +273,7 @@
 <td>文件句柄缓存开关,设置是否使用文件句柄缓存.</td>
 <td>bool</td>
 <td>true</td>
-<td>true&#x2F;false</td>
+<td>true/false</td>
 </tr>
 <tr>
 <td>file_handle_cache_num</td>
@@ -290,8 +291,10 @@
 <td>21600</td>
 <td>[1h, 1d]</td>
 </tr>
-</tbody></table>
-<h2 id="LOB模块"><a href="#LOB模块" class="headerlink" title="LOB模块"></a>LOB模块</h2><table>
+</tbody>
+</table>
+<h2 id="LOB模块">LOB模块</h2>
+<table>
 <thead>
 <tr>
 <th>参数名</th>
@@ -302,7 +305,8 @@
 <th>参数值范围</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>compaction_lob_file_valid_threshold</td>
 <td>lob_delete_factor</td>
 <td>每个lob数据文件中允许无效的lob个数占总lob个数的比例小于该比例.</td>
@@ -358,8 +362,10 @@
 <td>uncompressed</td>
 <td>uncompresse,lz4</td>
 </tr>
-</tbody></table>
-<h2 id="动态参数"><a href="#动态参数" class="headerlink" title="动态参数"></a>动态参数</h2><table>
+</tbody>
+</table>
+<h2 id="动态参数">动态参数</h2>
+<table>
 <thead>
 <tr>
 <th>参数名</th>
@@ -370,7 +376,8 @@
 <th>参数值范围</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>parameter_setting_sync_timeout</td>
 <td>param_update_timeout</td>
 <td>动态参数设定的同步超时时间.如果超时,则不再等待其他节点的同步状态,可能导致其他节点使用的参数不是最新值.</td>
@@ -378,8 +385,10 @@
 <td>5</td>
 <td>[1, 100]</td>
 </tr>
-</tbody></table>
-<h3 id="数据缓存模块"><a href="#数据缓存模块" class="headerlink" title="数据缓存模块"></a>数据缓存模块</h3><table>
+</tbody>
+</table>
+<h3 id="数据缓存模块">数据缓存模块</h3>
+<table>
 <thead>
 <tr>
 <th>参数名</th>
@@ -390,7 +399,8 @@
 <th>参数值范围</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>consistent_hashing_min_virtual_node_count</td>
 <td>consistent_hashing_min_virtual_node_count</td>
 <td>数据缓存节点选择时一致性哈希的最小虚拟节点数.</td>
@@ -401,7 +411,7 @@
 <tr>
 <td>local_data_cache_dir</td>
 <td>data_cache_dir</td>
-<td>配置缓存数据的存储目录的绝对路径和每个目录的容量大小的字符串,不同路径使用英文逗号隔开,使用英文冒号分割路径和容量大小,例如: data&#x2F;0,&#x2F;data&#x2F;1:1TB.代表缓存最大2TB,&#x2F;data&#x2F;0 和 &#x2F;data&#x2F;1分别最大1TB. 请注意,主机上每个CirroData进程必须有唯一的数据缓存目录.默认为空,代表禁用.</td>
+<td>配置缓存数据的存储目录的绝对路径和每个目录的容量大小的字符串,不同路径使用英文逗号隔开,使用英文冒号分割路径和容量大小,例如: data/0,/data/1:1TB.代表缓存最大2TB,/data/0 和 /data/1分别最大1TB. 请注意,主机上每个CirroData进程必须有唯一的数据缓存目录.默认为空,代表禁用.</td>
 <td>string</td>
 <td>空</td>
 <td>目录: 为空或存储目录数量大于等于1；容量: [4KB,4TB]（支持使用单位: K、KB、M、MB、G、GB、T、TB、P、PB、E、EB, 无单位默认为Byte,但要保证单位转换后的结果在取值范围内）</td>
@@ -412,7 +422,7 @@
 <td>是否为远程读开启数据缓存.若需要启用数据缓存,则同时需要配置local_data_cache_dir参数.</td>
 <td>bool</td>
 <td>false</td>
-<td>true&#x2F;false</td>
+<td>true/false</td>
 </tr>
 <tr>
 <td>local_data_cache_file_max_size</td>
@@ -425,7 +435,7 @@
 <tr>
 <td>local_data_cache_max_file_num</td>
 <td>data_cache_max_file_num</td>
-<td>允许打开的最大文件数,不能小于指定数据缓存目录的数量.若有两个存储目录,则每个存储目录下最大可打开文件数为n&#x2F;2.</td>
+<td>允许打开的最大文件数,不能小于指定数据缓存目录的数量.若有两个存储目录,则每个存储目录下最大可打开文件数为n/2.</td>
 <td>int32</td>
 <td>1000</td>
 <td>[数据缓存存储目录个数,int32_max]</td>
@@ -446,8 +456,10 @@
 <td>auto_cache</td>
 <td>no_cache,auto_cache,global_cache</td>
 </tr>
-</tbody></table>
-<h3 id="对象存储"><a href="#对象存储" class="headerlink" title="对象存储"></a>对象存储</h3><table>
+</tbody>
+</table>
+<h3 id="对象存储">对象存储</h3>
+<table>
 <thead>
 <tr>
 <th>参数名</th>
@@ -457,7 +469,8 @@
 <th>参数值范围</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>s3_block_size</td>
 <td>S3存储使用的虚拟块大小, CSV并发扫描时使用.</td>
 <td>int32</td>
@@ -471,8 +484,10 @@
 <td>157286400(150MB)</td>
 <td>[5242880, 2^31-1]</td>
 </tr>
-</tbody></table>
-<h3 id="hadoop-s3a-core-site-xml配置"><a href="#hadoop-s3a-core-site-xml配置" class="headerlink" title="hadoop s3a core-site.xml配置"></a>hadoop s3a core-site.xml配置</h3><table>
+</tbody>
+</table>
+<h3 id="hadoop-s3a-core-site-xml配置">hadoop s3a core-site.xml配置</h3>
+<table>
 <thead>
 <tr>
 <th>参数名</th>
@@ -482,7 +497,8 @@
 <th>参数值范围</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>hadoop.tmp.dir</td>
 <td></td>
 <td></td>
@@ -566,7 +582,8 @@
 <td></td>
 <td></td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 
     </div>
 

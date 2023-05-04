@@ -17,7 +17,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="无需重启CirroEngine,通过SQL修改默认参数值">
 <meta property="og:type" content="article">
@@ -246,8 +246,8 @@
     
     <div class="post-body" itemprop="articleBody"><p>无需重启<code>CirroEngine</code>,通过<code>SQL</code>修改默认参数值</p>
 <span id="more"></span>
-
-<h4 id="目前支持修改的参数"><a href="#目前支持修改的参数" class="headerlink" title="目前支持修改的参数"></a>目前支持修改的参数</h4><table>
+<h4 id="目前支持修改的参数">目前支持修改的参数</h4>
+<table>
 <thead>
 <tr>
 <th>DB级参数</th>
@@ -257,7 +257,8 @@
 <th>参数值范围</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>page_compress_type</td>
 <td>Page 数据压缩算法：1-SNAPPY，2-LZ4；如果使用非SNAPPY 算法，会影响与标准parquet 格式的兼容</td>
 <td>int32</td>
@@ -297,7 +298,7 @@
 <td>是否禁止 Page 压缩优化；如果不禁止，会影响与标准 parquet 格式的兼容</td>
 <td>bool</td>
 <td>TRUE</td>
-<td>TRUE&#x2F;FALSE</td>
+<td>TRUE/FALSE</td>
 </tr>
 <tr>
 <td>compress_validrate</td>
@@ -315,7 +316,7 @@
 </tr>
 <tr>
 <td>plain_encoding_rule</td>
-<td>指定采用默认 Plain 编码规则的数据类型，多个类型用’,’分隔，如果数据类型指定了 plain 编码规则，该类型不生成字典页	string</td>
+<td>指定采用默认 Plain 编码规则的数据类型，多个类型用’,'分隔，如果数据类型指定了 plain 编码规则，该类型不生成字典页	string</td>
 <td>空</td>
 <td>{int, long, double, date, yminterval, dsinterval, timestamp, number, char, char(n), varchar, varch(n)}中选择一个或多个</td>
 <td></td>
@@ -325,16 +326,17 @@
 <td>是否在加载数据时，创建 page_row 索引，点查询优化需要该参数值为 true</td>
 <td>bool</td>
 <td>TRUE</td>
-<td>TRUE&#x2F;FALSE</td>
+<td>TRUE/FALSE</td>
 </tr>
 <tr>
 <td>page_max_min_index</td>
 <td>是否在加载数据时，创建 page 内部极值索引，点查询优化需要该参数值为 true</td>
 <td>bool</td>
 <td>TRUE</td>
-<td>TRUE&#x2F;FALSE</td>
+<td>TRUE/FALSE</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <table>
 <thead>
 <tr>
@@ -345,7 +347,8 @@
 <th>参数值范围</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>write_buffer_num</td>
 <td>异步加载线程使用的 MDP 队列中 mdp 的数量，参数原名为 mdp_queue_num</td>
 <td>int32</td>
@@ -363,7 +366,7 @@
 <td>cast_date_format</td>
 <td><Basic>Date类型默认格式</td>
 <td>string</td>
-<td>YYYY&#x2F;MM&#x2F;DD HH24:MI:SS</td>
+<td>YYYY/MM/DD HH24:MI:SS</td>
 <td></td>
 </tr>
 <tr>
@@ -387,8 +390,10 @@
 <td>AUTO_CACHE</td>
 <td>NO_CACHE, AUTO_CACHE, GLOBAL_CACHE</td>
 </tr>
-</tbody></table>
-<h2 id="动态参数参数名"><a href="#动态参数参数名" class="headerlink" title="动态参数参数名"></a>动态参数参数名</h2><table>
+</tbody>
+</table>
+<h2 id="动态参数参数名">动态参数参数名</h2>
+<table>
 <thead>
 <tr>
 <th>曾用名</th>
@@ -396,10 +401,11 @@
 <th>验证方法</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>page_compress_type</td>
 <td>page_compress_algorithm</td>
-<td>grep -a “CompressionCodec” log&#x2F;xcloudd.INFO</td>
+<td>grep -a “CompressionCodec” log/xcloudd.INFO</td>
 </tr>
 <tr>
 <td>datapack_maxsize</td>
@@ -481,14 +487,16 @@
 <td>local_data_cache_policy</td>
 <td></td>
 </tr>
-</tbody></table>
-<h4 id="系统表"><a href="#系统表" class="headerlink" title="系统表"></a>系统表</h4><p>systemadmin 用户查询 <code>V$CLUSTER_PARAMETERS_INFO</code><br>system 用户查询 <code>V$DB_PARAMETERS_INFO</code></p>
-<h4 id="SQL"><a href="#SQL" class="headerlink" title="SQL"></a>SQL</h4><p>systemadmin 设置 DB 级别参数</p>
+</tbody>
+</table>
+<h4 id="系统表">系统表</h4>
+<p>systemadmin 用户查询 <code>V$CLUSTER_PARAMETERS_INFO</code><br>
+system 用户查询 <code>V$DB_PARAMETERS_INFO</code></p>
+<h4 id="SQL">SQL</h4>
+<p>systemadmin 设置 DB 级别参数</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> DATABASE db_name <span class="keyword">SET</span> <span class="keyword">PARAMETER</span> parameter_name <span class="operator">=</span> <span class="string">&#x27;parameter_value&#x27;</span>;</span><br></pre></td></tr></table></figure>
-
 <p>system 设置 DB 级别参数</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">SYSTEM</span> PARAM <span class="keyword">SET</span> parameter_name <span class="operator">=</span> <span class="string">&#x27;parameter_value&#x27;</span>;</span><br></pre></td></tr></table></figure>
-
 <p>system 设置 PC 级别参数</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> PC PARAM <span class="keyword">SET</span> pc_name.parameter_name <span class="operator">=</span> <span class="string">&#x27;parameter_value&#x27;</span>;</span><br></pre></td></tr></table></figure>
 

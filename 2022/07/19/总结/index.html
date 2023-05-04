@@ -17,7 +17,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="总结工作中遇到的问题，处理方法等">
 <meta property="og:type" content="article">
@@ -246,46 +246,57 @@
     
     <div class="post-body" itemprop="articleBody"><p>总结工作中遇到的问题，处理方法等</p>
 <span id="more"></span>
-
-<h3 id="序列化"><a href="#序列化" class="headerlink" title="序列化"></a>序列化</h3><p>增加成员，对应proto文件也要添加<br>文件路径： be&#x2F;src&#x2F;proto&#x2F;xxxx.proto</p>
+<h3 id="序列化">序列化</h3>
+<p>增加成员，对应proto文件也要添加文件路径： be/src/proto/xxxx.proto</p>
 <blockquote>
 <p>注意：需要清三方库，否则编译会报错</p>
 </blockquote>
-<h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><h3 id="std-map"><a href="#std-map" class="headerlink" title="std::map"></a>std::map</h3><p>下标访问，若元素不存在会导致新增该元素<br>使用成员函数erase()后，切记不可使用下标访问</p>
-<h3 id="static"><a href="#static" class="headerlink" title="static"></a>static</h3><p>static变量是指静态的变量，不管是在全局还是局部声明的static变量都存放于程序的全局变量区域，<br>所以它的生命周期是从程序开始到程序结束。但是static变量的作用域并不等同于它的生存周期，它的作用域决定于它被定义的位置。<br>可以认为static变量的作用域&lt;&#x3D;生存周期</p>
-<h2 id="行云编译相关"><a href="#行云编译相关" class="headerlink" title="行云编译相关"></a>行云编译相关</h2><h3 id="编译报错"><a href="#编译报错" class="headerlink" title="编译报错"></a>编译报错</h3><p>报错: make[1]: *** No rule to make target &#96;be&#x2F;src&#x2F;idl&#x2F;all’. Stop.<br>编译命令后加上 idl</p>
+<h2 id="基础知识">基础知识</h2>
+<h3 id="std-map">std::map</h3>
+<p>下标访问，若元素不存在会导致新增该元素使用成员函数erase()后，切记不可使用下标访问</p>
+<h3 id="static">static</h3>
+<p>static变量是指静态的变量，不管是在全局还是局部声明的static变量都存放于程序的全局变量区域，所以它的生命周期是从程序开始到程序结束。但是static变量的作用域并不等同于它的生存周期，它的作用域决定于它被定义的位置。可以认为static变量的作用域&lt;=生存周期</p>
+<h2 id="行云编译相关">行云编译相关</h2>
+<h3 id="编译报错">编译报错</h3>
+<p>报错: make[1]: *** No rule to make target `be/src/idl/all’. Stop.<br>
+编译命令后加上 idl</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./build.sh --build=release idl</span><br></pre></td></tr></table></figure>
-
-<h2 id="行云打包"><a href="#行云打包" class="headerlink" title="行云打包"></a>行云打包</h2><h3 id="跳过参数检查，适用于当前代码中配置参数与远端有不一致的情况"><a href="#跳过参数检查，适用于当前代码中配置参数与远端有不一致的情况" class="headerlink" title="跳过参数检查，适用于当前代码中配置参数与远端有不一致的情况"></a>跳过参数检查，适用于当前代码中配置参数与远端有不一致的情况</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./build.sh --build=release --pack_all=1 --strip-debug --test-flags-checking all</span><br></pre></td></tr></table></figure>
-
-<h3 id="仅生成CirroEngine与CirroKV安装包"><a href="#仅生成CirroEngine与CirroKV安装包" class="headerlink" title="仅生成CirroEngine与CirroKV安装包"></a>仅生成CirroEngine与CirroKV安装包</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./build.sh --build=release --pack_all=1 all</span><br></pre></td></tr></table></figure>
+<h2 id="行云打包">行云打包</h2>
+<h3 id="跳过参数检查，适用于当前代码中配置参数与远端有不一致的情况">跳过参数检查，适用于当前代码中配置参数与远端有不一致的情况</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./build.sh --build=release --pack_all=1 --strip-debug --test-flags-checking all</span><br></pre></td></tr></table></figure>
+<h3 id="仅生成CirroEngine与CirroKV安装包">仅生成CirroEngine与CirroKV安装包</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./build.sh --build=release --pack_all=1 all</span><br></pre></td></tr></table></figure>
 <p>或</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./build.sh --build=release --pack_deploy=1 all</span><br></pre></td></tr></table></figure>
-
-<h3 id="生成CEA安装包，包括CirroEngine-RegistrationCenter-MetaProxy-CirroKV"><a href="#生成CEA安装包，包括CirroEngine-RegistrationCenter-MetaProxy-CirroKV" class="headerlink" title="生成CEA安装包，包括CirroEngine,RegistrationCenter,MetaProxy,CirroKV"></a>生成CEA安装包，包括CirroEngine,RegistrationCenter,MetaProxy,CirroKV</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./build.sh --build=release --pack_deploy=2 all</span><br></pre></td></tr></table></figure>
-
-<h2 id="访问zookeeper"><a href="#访问zookeeper" class="headerlink" title="访问zookeeper"></a>访问zookeeper</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bin/zkCli.sh -server <span class="variable">$&#123;ip&#125;</span>:<span class="variable">$&#123;port&#125;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="公共环境使用hdfs"><a href="#公共环境使用hdfs" class="headerlink" title="公共环境使用hdfs"></a>公共环境使用hdfs</h2><ol>
-<li><p>获取kerberos认证文件路径[kerb_keytab_file]</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep -aA10 <span class="string">&quot;keytab&quot;</span> conf/ds.xml</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>查看keytab文件中的帐号列表,获取当前节点[kerb_principal]</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">klist -ket /home/cirrofs/cirrofs_cfs/key/cirrofs.keytab</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>注册</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kinit -kt [kerb_keytab_file] [kerb_principal]</span><br></pre></td></tr></table></figure></li>
+<h3 id="生成CEA安装包，包括CirroEngine-RegistrationCenter-MetaProxy-CirroKV">生成CEA安装包，包括CirroEngine,RegistrationCenter,MetaProxy,CirroKV</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./build.sh --build=release --pack_deploy=2 all</span><br></pre></td></tr></table></figure>
+<h2 id="访问zookeeper">访问zookeeper</h2>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bin/zkCli.sh -server <span class="variable">$&#123;ip&#125;</span>:<span class="variable">$&#123;port&#125;</span></span><br></pre></td></tr></table></figure>
+<h2 id="公共环境使用hdfs">公共环境使用hdfs</h2>
+<ol>
+<li>获取kerberos认证文件路径[kerb_keytab_file]</li>
 </ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep -aA10 <span class="string">&quot;keytab&quot;</span> conf/ds.xml</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>查看keytab文件中的帐号列表,获取当前节点[kerb_principal]</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">klist -ket /home/cirrofs/cirrofs_cfs/key/cirrofs.keytab</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>注册</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kinit -kt [kerb_keytab_file] [kerb_principal]</span><br></pre></td></tr></table></figure>
 <p>例如：172.16.44.53节点</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kinit -kt /home/cirrofs/cirrofs_cfs/key/cirrofs.keytab cirrofs/hdp53.bonc.com@BONC4.COM</span><br></pre></td></tr></table></figure>
-
-<h2 id="hadoop-配置文件路径"><a href="#hadoop-配置文件路径" class="headerlink" title="hadoop 配置文件路径"></a>hadoop 配置文件路径</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> conf/config-env.sh</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$HADOOP_HOME</span>/etc/hadoop/</span><br></pre></td></tr></table></figure>
-
-<h2 id="查看hdfs磁盘使用情况"><a href="#查看hdfs磁盘使用情况" class="headerlink" title="查看hdfs磁盘使用情况"></a>查看hdfs磁盘使用情况</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hdfs dfs -<span class="built_in">du</span> -h /</span><br></pre></td></tr></table></figure>
-
-<h3 id="CirroEngine下conf配置目录注意事项"><a href="#CirroEngine下conf配置目录注意事项" class="headerlink" title="CirroEngine下conf配置目录注意事项"></a>CirroEngine下conf配置目录注意事项</h3><p>conf目录下不能添加hadoop同名配置文件,否则会导致默认hdfs连接使用conf目录下的配置文件,引发启动失败</p>
-<h3 id="sql下发过程"><a href="#sql下发过程" class="headerlink" title="sql下发过程"></a>sql下发过程</h3><p>SQLDeveloper –&gt; session –&gt; 计划 –&gt; node</p>
-<h2 id="git开启push前不做检查开关"><a href="#git开启push前不做检查开关" class="headerlink" title="git开启push前不做检查开关"></a>git开启push前不做检查开关</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push -u origin BugFix/gyf/42710 <span class="string">&#x27;--push-option=--no-ticket-check&#x27;</span></span><br></pre></td></tr></table></figure>
+<h2 id="hadoop-配置文件路径">hadoop 配置文件路径</h2>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> conf/config-env.sh</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$HADOOP_HOME</span>/etc/hadoop/</span><br></pre></td></tr></table></figure>
+<h2 id="查看hdfs磁盘使用情况">查看hdfs磁盘使用情况</h2>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hdfs dfs -<span class="built_in">du</span> -h /</span><br></pre></td></tr></table></figure>
+<h3 id="CirroEngine下conf配置目录注意事项">CirroEngine下conf配置目录注意事项</h3>
+<p>conf目录下不能添加hadoop同名配置文件,否则会导致默认hdfs连接使用conf目录下的配置文件,引发启动失败</p>
+<h3 id="sql下发过程">sql下发过程</h3>
+<p>SQLDeveloper --&gt; session --&gt; 计划 --&gt; node</p>
+<h2 id="git开启push前不做检查开关">git开启push前不做检查开关</h2>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push -u origin BugFix/gyf/42710 <span class="string">&#x27;--push-option=--no-ticket-check&#x27;</span></span><br></pre></td></tr></table></figure>
     </div>
 
     

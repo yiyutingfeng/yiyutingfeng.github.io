@@ -17,7 +17,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="CirroDate LOB类型说明">
 <meta property="og:type" content="article">
@@ -246,92 +246,116 @@
     
     <div class="post-body" itemprop="articleBody"><p>CirroDate LOB类型说明</p>
 <span id="more"></span>
-
-<h3 id="LOB类型"><a href="#LOB类型" class="headerlink" title="LOB类型"></a>LOB类型</h3><table>
+<h3 id="LOB类型">LOB类型</h3>
+<table>
 <thead>
 <tr>
-<th align="center">类型</th>
-<th align="center">存储对象</th>
+<th style="text-align:center">类型</th>
+<th style="text-align:center">存储对象</th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="center">BLOB</td>
-<td align="center">存储二进制数据</td>
+<tbody>
+<tr>
+<td style="text-align:center">BLOB</td>
+<td style="text-align:center">存储二进制数据</td>
 </tr>
 <tr>
-<td align="center">CLOB</td>
-<td align="center">存储字符数据，使用UTF-8编码</td>
+<td style="text-align:center">CLOB</td>
+<td style="text-align:center">存储字符数据，使用UTF-8编码</td>
 </tr>
-</tbody></table>
-<h3 id="LOB存储方式"><a href="#LOB存储方式" class="headerlink" title="LOB存储方式"></a>LOB存储方式</h3><table>
+</tbody>
+</table>
+<h3 id="LOB存储方式">LOB存储方式</h3>
+<table>
 <thead>
 <tr>
-<th align="left">数据长度</th>
-<th align="left">存储类型</th>
-<th align="left">存放位置</th>
+<th style="text-align:left">数据长度</th>
+<th style="text-align:left">存储类型</th>
+<th style="text-align:left">存放位置</th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="left">&lt;&#x3D; 4KB</td>
-<td align="left">LOB_INLINE</td>
-<td align="left">以dp文件存储</td>
+<tbody>
+<tr>
+<td style="text-align:left">&lt;= 4KB</td>
+<td style="text-align:left">LOB_INLINE</td>
+<td style="text-align:left">以dp文件存储</td>
 </tr>
 <tr>
-<td align="left">&gt; 4KB</td>
-<td align="left">LOB_LOCATOR</td>
-<td align="left">hdfs指定位置</td>
+<td style="text-align:left">&gt; 4KB</td>
+<td style="text-align:left">LOB_LOCATOR</td>
+<td style="text-align:left">hdfs指定位置</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <p>LOB_LOCATOR存储位置</p>
 <ol>
-<li>正常情况:<br><code>/xcloud_name/cluster_name.data/db_name/schema_name/table_id/session_id/LOB/lob_file_name</code></li>
-<li>LLVM计算:<br><code>/xcloud_name/cluster_name.data/SYS.TEMP/db_name/schema_name/session_id/LOB/lob_file_name</code></li>
+<li>正常情况:<br>
+<code>/xcloud_name/cluster_name.data/db_name/schema_name/table_id/session_id/LOB/lob_file_name</code></li>
+<li>LLVM计算:<br>
+<code>/xcloud_name/cluster_name.data/SYS.TEMP/db_name/schema_name/session_id/LOB/lob_file_name</code></li>
 </ol>
 <blockquote>
-<p>注: Writer会根据数据长度设置Lob存储类型<br>读取lob数据时，需要根据存储类型区分读取方式，LOB_INLINE直接从lob中读取，LOB_LOCATOR使用Reader读取</p>
+<p>注: Writer会根据数据长度设置Lob存储类型读取lob数据时，需要根据存储类型区分读取方式，LOB_INLINE直接从lob中读取，LOB_LOCATOR使用Reader读取</p>
 </blockquote>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="type">const</span> <span class="type">int32_t</span> LOB_INLINE_SIZE = <span class="number">4</span> * <span class="number">1024</span>;</span><br></pre></td></tr></table></figure>
-
-<h3 id="LOB文件命名"><a href="#LOB文件命名" class="headerlink" title="LOB文件命名"></a>LOB文件命名</h3><ol>
+<h3 id="LOB文件命名">LOB文件命名</h3>
+<ol>
 <li>普通文件</li>
 </ol>
 <ul>
-<li>索引文件<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lob.[trans_id].[unique_id].[hostname]_[pid].index</span><br></pre></td></tr></table></figure></li>
-<li>数据文件<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lob.[trans_id].[unique_id].[hostname]_[pid]</span><br></pre></td></tr></table></figure></li>
+<li>索引文件</li>
 </ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lob.[trans_id].[unique_id].[hostname]_[pid].index</span><br></pre></td></tr></table></figure>
+<ul>
+<li>数据文件</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lob.[trans_id].[unique_id].[hostname]_[pid]</span><br></pre></td></tr></table></figure>
 <ol start="2">
 <li>llvm计算文件:</li>
 </ol>
 <ul>
-<li>索引文件<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lob.llvm.[unique_id].[hostname]_[pid].index</span><br></pre></td></tr></table></figure></li>
-<li>数据文件<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lob.llvm.[unique_id].[hostname]_[pid]</span><br></pre></td></tr></table></figure></li>
+<li>索引文件</li>
 </ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lob.llvm.[unique_id].[hostname]_[pid].index</span><br></pre></td></tr></table></figure>
+<ul>
+<li>数据文件</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lob.llvm.[unique_id].[hostname]_[pid]</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>注: 索引文件和数据文件成对出现，索引文件的文件名仅比数据文件的文件名多<code>.index</code>后缀</p>
 </blockquote>
-<h3 id="参数lob-delete-factor"><a href="#参数lob-delete-factor" class="headerlink" title="参数lob_delete_factor"></a>参数<code>lob_delete_factor</code></h3><p>TODO: 变更参数名: delete操作与无效lob生成无关，改为<code>compaction_lob_file_invaild_data_threshold</code>或许更好</p>
-<p>功能描述: 每个lob数据文件中允许无效的lob个数占总lob个数的比例小于该比例<br>默认值: 0.5</p>
+<h3 id="参数lob-delete-factor">参数<code>lob_delete_factor</code></h3>
+<p>TODO: 变更参数名: delete操作与无效lob生成无关，改为<code>compaction_lob_file_invaild_data_threshold</code>或许更好</p>
+<p>功能描述: 每个lob数据文件中允许无效的lob个数占总lob个数的比例小于该比例默认值: 0.5</p>
 <p>说明:</p>
 <ol>
 <li>update操作才会产生无效数据，delete不会</li>
-<li>无效数据比例 &gt;&#x3D; lob_delete_factor时，会触发compaction</li>
+<li>无效数据比例 &gt;= lob_delete_factor时，会触发compaction</li>
 </ol>
 <blockquote>
 <p>注意: LOCATOR存储的lob,若update后的数据长度小于4KB,是不会进行compaction的，此时lob属于INLINE存储，原lob仅增加delete标记</p>
 </blockquote>
-<h3 id="参数lob-compaction-small-file-size"><a href="#参数lob-compaction-small-file-size" class="headerlink" title="参数lob_compaction_small_file_size"></a>参数<code>lob_compaction_small_file_size</code></h3><p>功能描述: lob compaction的时候，LOB文件大小小于该临界值的文件认为是小文件<br>默认值: 1GB</p>
-<h3 id="参数lob-compaction-small-files-cnt"><a href="#参数lob-compaction-small-files-cnt" class="headerlink" title="参数lob_compaction_small_files_cnt"></a>参数<code>lob_compaction_small_files_cnt</code></h3><p>功能描述: lob小文件数量，LOB小文件的数量达到该临界值的时候，也需要进行compaction<br>默认值: 50</p>
-<h3 id="lob触发compaction的两种机制"><a href="#lob触发compaction的两种机制" class="headerlink" title="lob触发compaction的两种机制"></a>lob触发compaction的两种机制</h3><ol>
-<li>update操作，lob文件中无效lob比例 &gt;&#x3D; lob_delete_factor</li>
-<li>lob小文件数量 &gt;&#x3D; lob_compaction_small_files_cnt</li>
+<h3 id="参数lob-compaction-small-file-size">参数<code>lob_compaction_small_file_size</code></h3>
+<p>功能描述: lob compaction的时候，LOB文件大小小于该临界值的文件认为是小文件默认值: 1GB</p>
+<h3 id="参数lob-compaction-small-files-cnt">参数<code>lob_compaction_small_files_cnt</code></h3>
+<p>功能描述: lob小文件数量，LOB小文件的数量达到该临界值的时候，也需要进行compaction<br>
+默认值: 50</p>
+<h3 id="lob触发compaction的两种机制">lob触发compaction的两种机制</h3>
+<ol>
+<li>update操作，lob文件中无效lob比例 &gt;= lob_delete_factor</li>
+<li>lob小文件数量 &gt;= lob_compaction_small_files_cnt</li>
 </ol>
-<h3 id="lob为NULL"><a href="#lob为NULL" class="headerlink" title="lob为NULL"></a>lob为NULL</h3><ol>
+<h3 id="lob为NULL">lob为NULL</h3>
+<ol>
 <li>使用<code>XCLob::IsNull()</code>方法判断lob是否为null</li>
 <li>lob为null，其成员函数几乎都不可使用，强制使用会访问空指针（<code>m_lobInfo = null</code>），导致崩溃</li>
 </ol>
-<h3 id="export-clob"><a href="#export-clob" class="headerlink" title="export clob"></a>export clob</h3><p>支持导出真实数据，如果数据太长，依然用&lt;CLOB&gt;替代真实数据,长度限制查看配置,导出和导入用的同一套配置参数<br>csv_file_with_clob_max_buffer_size 和 csv_file_max_buffer_size</p>
-<h3 id="blob加载多媒体文件"><a href="#blob加载多媒体文件" class="headerlink" title="blob加载多媒体文件"></a>blob加载多媒体文件</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> BLOB_TEST;</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> BLOB_TEST(picture <span class="type">BLOB</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="comment">/*+LOB_FROM_EXTFILE*/</span> BLOB_TEST <span class="string">&#x27;/home/gaoyuanfeng/3.0/blob_insert.csv&#x27;</span> SEPARATOR <span class="string">&#x27;;&#x27;</span> DELIMITER <span class="string">&#x27;&quot;&#x27;</span>;</span><br></pre></td></tr></table></figure>
-<p>&#x2F;home&#x2F;gaoyuanfeng&#x2F;3.0&#x2F;blob_insert.csv文件内容</p>
+<h3 id="export-clob">export clob</h3>
+<p>支持导出真实数据，如果数据太长，依然用&lt;CLOB&gt;替代真实数据,长度限制查看配置,导出和导入用的同一套配置参数<br>
+csv_file_with_clob_max_buffer_size 和 csv_file_max_buffer_size</p>
+<h3 id="blob加载多媒体文件">blob加载多媒体文件</h3>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> BLOB_TEST;</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> BLOB_TEST(picture <span class="type">BLOB</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="comment">/*+LOB_FROM_EXTFILE*/</span> BLOB_TEST <span class="string">&#x27;/home/gaoyuanfeng/3.0/blob_insert.csv&#x27;</span> SEPARATOR <span class="string">&#x27;;&#x27;</span> DELIMITER <span class="string">&#x27;&quot;&#x27;</span>;</span><br></pre></td></tr></table></figure>
+<p>/home/gaoyuanfeng/3.0/blob_insert.csv文件内容</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&quot;home/gaoyuanfeng/3.0/picture2.png&quot;</span><br><span class="line">&quot;home/gaoyuanfeng/3.0/picture2.png&quot;</span><br></pre></td></tr></table></figure>
     </div>
 

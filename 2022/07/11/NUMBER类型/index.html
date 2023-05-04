@@ -17,7 +17,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="CirroData NUMBER类型说明">
 <meta property="og:type" content="article">
@@ -246,29 +246,41 @@
     
     <div class="post-body" itemprop="articleBody"><p>CirroData NUMBER类型说明</p>
 <span id="more"></span>
-
-<h2 id="number可表示范围"><a href="#number可表示范围" class="headerlink" title="number可表示范围"></a>number可表示范围</h2><p>   (-1E252, -1E-260], 0, [1E-260, 1E252)</p>
-<h2 id="number精度与刻度"><a href="#number精度与刻度" class="headerlink" title="number精度与刻度"></a>number精度与刻度</h2><h3 id="精度"><a href="#精度" class="headerlink" title="精度"></a>精度</h3><p><strong>说明</strong>：精度（precision）是NUMBER表示的数字中，精确的有效数字位数（NUMBER中记录的数字有可能超过精度，但是不保证精度范围之外的数字精确）。<br><strong>取值范围</strong>：[1, 38]。</p>
-<h3 id="刻度"><a href="#刻度" class="headerlink" title="刻度"></a>刻度</h3><p><strong>说明</strong>：刻度（scale）是精确到小数点后的位数。scale &gt; 0时，表示该类型精确到小数点后scale位；scale &#x3D; 0时，表示该类型为整数；scale &lt; 0时，表示该类型精确到小数点前-scale位。<br><strong>取值范围</strong>：[-84, 127]。</p>
-<h2 id="number存储规则"><a href="#number存储规则" class="headerlink" title="number存储规则"></a>number存储规则</h2><p>number类型占24个字节，每2个字节作为一个单元，共12个单元，每个单位最大可存储4位数字。<br>第一个单元是索引部分，既用于表示数值正负，也用于记录数值整数部分占用多少个单元，剩余11个单元用于存储具体数值，称为数值部分。</p>
-<h3 id="索引部分存储规则"><a href="#索引部分存储规则" class="headerlink" title="索引部分存储规则"></a>索引部分存储规则</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">const</span> IndexType XCNumber::S_POSITIVE_INDEX_BASE = <span class="number">192</span>;</span><br><span class="line"><span class="type">const</span> IndexType XCNumber::S_NEGATIVE_INDEX_BASE = <span class="number">63</span>;</span><br><span class="line"><span class="type">const</span> IndexType XCNumber::S_ZERO_INDEX_BASE = <span class="number">128</span>;</span><br></pre></td></tr></table></figure>
-
-<h4 id="正数"><a href="#正数" class="headerlink" title="正数"></a>正数</h4><p>   索引值 &#x3D; <code>S_POSITIVE_INDEX_BASE</code> + 整数部分单元格的个数<br>   例如: 数值1234567.1234567存储位number类型，索引值 &#x3D; 192 + 2 &#x3D; 194</p>
-<p>   若索引值n小于<code>S_POSITIVE_INDEX_BASE</code>，则表示有效数字前有<code>192-n</code>个单元格是0<br>   例如0.000000123   索引值为191</p>
-<p>   索引值取值范围[128, 255]</p>
-<h4 id="负数"><a href="#负数" class="headerlink" title="负数"></a>负数</h4><p>   索引值 &#x3D; <code>S_NEGATIVE_INDEX_BASE</code> - 整数部分单元格的个数<br>   例如: 数值-1234567.1234567存储为number类型，索引值 &#x3D; 63 - 2 &#x3D; 61</p>
-<p>   若索引值n大于<code>S_NEGATIVE_INDEX_BASE</code>，则表示有效数字前有<code>n-63</code>个单元格是0<br>   例如: -0.000000000123   索引值是65</p>
-<p>   索引值取值范围[0, 127]</p>
-<h4 id="0"><a href="#0" class="headerlink" title="0"></a>0</h4><p>   索引值 &#x3D; <code>S_ZERO_INDEX_BASE</code> &#x3D; 128</p>
+<h2 id="number可表示范围">number可表示范围</h2>
+<p>(-1E252, -1E-260], 0, [1E-260, 1E252)</p>
+<h2 id="number精度与刻度">number精度与刻度</h2>
+<h3 id="精度">精度</h3>
+<p><strong>说明</strong>：精度（precision）是NUMBER表示的数字中，精确的有效数字位数（NUMBER中记录的数字有可能超过精度，但是不保证精度范围之外的数字精确）。<br>
+<strong>取值范围</strong>：[1, 38]。</p>
+<h3 id="刻度">刻度</h3>
+<p><strong>说明</strong>：刻度（scale）是精确到小数点后的位数。scale &gt; 0时，表示该类型精确到小数点后scale位；scale = 0时，表示该类型为整数；scale &lt; 0时，表示该类型精确到小数点前-scale位。<br>
+<strong>取值范围</strong>：[-84, 127]。</p>
+<h2 id="number存储规则">number存储规则</h2>
+<p>number类型占24个字节，每2个字节作为一个单元，共12个单元，每个单位最大可存储4位数字。第一个单元是索引部分，既用于表示数值正负，也用于记录数值整数部分占用多少个单元，剩余11个单元用于存储具体数值，称为数值部分。</p>
+<h3 id="索引部分存储规则">索引部分存储规则</h3>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">const</span> IndexType XCNumber::S_POSITIVE_INDEX_BASE = <span class="number">192</span>;</span><br><span class="line"><span class="type">const</span> IndexType XCNumber::S_NEGATIVE_INDEX_BASE = <span class="number">63</span>;</span><br><span class="line"><span class="type">const</span> IndexType XCNumber::S_ZERO_INDEX_BASE = <span class="number">128</span>;</span><br></pre></td></tr></table></figure>
+<h4 id="正数">正数</h4>
+<p>索引值 = <code>S_POSITIVE_INDEX_BASE</code> + 整数部分单元格的个数例如: 数值1234567.1234567存储位number类型，索引值 = 192 + 2 = 194</p>
+<p>若索引值n小于<code>S_POSITIVE_INDEX_BASE</code>，则表示有效数字前有<code>192-n</code>个单元格是0<br>
+例如0.000000123   索引值为191</p>
+<p>索引值取值范围[128, 255]</p>
+<h4 id="负数">负数</h4>
+<p>索引值 = <code>S_NEGATIVE_INDEX_BASE</code> - 整数部分单元格的个数例如: 数值-1234567.1234567存储为number类型，索引值 = 63 - 2 = 61</p>
+<p>若索引值n大于<code>S_NEGATIVE_INDEX_BASE</code>，则表示有效数字前有<code>n-63</code>个单元格是0<br>
+例如: -0.000000000123   索引值是65</p>
+<p>索引值取值范围[0, 127]</p>
+<h4 id="0">0</h4>
+<p>索引值 = <code>S_ZERO_INDEX_BASE</code> = 128</p>
 <blockquote>
 <p>注意: 0的索引值是128，但索引值为128的数不一定是0，例如1E-260的索引值也是128</p>
 </blockquote>
-<h3 id="数值部分存储规则"><a href="#数值部分存储规则" class="headerlink" title="数值部分存储规则"></a>数值部分存储规则</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">const</span> TailType XCNumber::S_POSITIVE_TAIL = <span class="number">0</span>;</span><br><span class="line"><span class="type">const</span> TailType XCNumber::S_NEGATIVE_TAIL = <span class="number">10002</span>;</span><br><span class="line"><span class="type">const</span> TailType XCNumbeer::S_POSITIVE_BASE = <span class="number">1</span>;</span><br><span class="line"><span class="type">const</span> TailType XCNumber::S_NEGATIVE_BASE = <span class="number">10001</span>;</span><br></pre></td></tr></table></figure>
-
+<h3 id="数值部分存储规则">数值部分存储规则</h3>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">const</span> TailType XCNumber::S_POSITIVE_TAIL = <span class="number">0</span>;</span><br><span class="line"><span class="type">const</span> TailType XCNumber::S_NEGATIVE_TAIL = <span class="number">10002</span>;</span><br><span class="line"><span class="type">const</span> TailType XCNumbeer::S_POSITIVE_BASE = <span class="number">1</span>;</span><br><span class="line"><span class="type">const</span> TailType XCNumber::S_NEGATIVE_BASE = <span class="number">10001</span>;</span><br></pre></td></tr></table></figure>
 <p>以1234567.1234567举例</p>
-<h4 id="数值划分"><a href="#数值划分" class="headerlink" title="数值划分"></a>数值划分</h4><ol>
-<li>整数部分: 每4位占一个单元，从低位开始划分，从高位开始存储<br>例如: 1234567  共7位，占2个单元，123 占数值部分第1个单元，4567占第2个单元</li>
-<li>小数部分: 每4位占一个单元，从高位开始划分，从高位开始存储，低位不满4字节末尾填充0补齐<br>例如: .1234567 共7位，占2个单元，1234占数值部分第3个单元，5670占第4个单元</li>
+<h4 id="数值划分">数值划分</h4>
+<ol>
+<li>整数部分: 每4位占一个单元，从低位开始划分，从高位开始存储例如: 1234567  共7位，占2个单元，123 占数值部分第1个单元，4567占第2个单元</li>
+<li>小数部分: 每4位占一个单元，从高位开始划分，从高位开始存储，低位不满4字节末尾填充0补齐例如: .1234567 共7位，占2个单元，1234占数值部分第3个单元，5670占第4个单元</li>
 </ol>
 <p>1234567.1234567的按单元个划分如下</p>
 <table>
@@ -281,9 +293,12 @@
 </tr>
 </thead>
 </table>
-<h4 id="数值存储"><a href="#数值存储" class="headerlink" title="数值存储"></a>数值存储</h4><ol>
-<li><p><strong>正数</strong>: 默认11个单元初始化为<code>S_POSITIVE_TAIL</code>,存储内容为原值单元划分后的值加上<code>S_POSITIVE_BASE</code>，即每个单元初始化为0，每个单元的值为：原值 + 1</p>
-<p>例如: 1234567.1234567<br>初始单元格:</p>
+<h4 id="数值存储">数值存储</h4>
+<ol>
+<li>
+<p><strong>正数</strong>: 默认11个单元初始化为<code>S_POSITIVE_TAIL</code>,存储内容为原值单元划分后的值加上<code>S_POSITIVE_BASE</code>，即每个单元初始化为0，每个单元的值为：原值 + 1</p>
+<p>例如: 1234567.1234567<br>
+初始单元格:</p>
 <table>
 <thead>
 <tr>
@@ -331,8 +346,10 @@
 </thead>
 </table>
 </li>
-<li><p><strong>负数</strong>: 默认11个单元初始化为<code>S_NEGATIVE_TAIL</code>,存储内容为<code>S_NEGATIVE_BASE</code>减去原值单元划分后的值，即每个单元初始化为10002，每个单元的值为：10001 - 原值</p>
-<p>例如: -1234567.1234567<br>初始单元格:</p>
+<li>
+<p><strong>负数</strong>: 默认11个单元初始化为<code>S_NEGATIVE_TAIL</code>,存储内容为<code>S_NEGATIVE_BASE</code>减去原值单元划分后的值，即每个单元初始化为10002，每个单元的值为：10001 - 原值</p>
+<p>例如: -1234567.1234567<br>
+初始单元格:</p>
 <table>
 <thead>
 <tr>

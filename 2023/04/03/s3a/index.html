@@ -17,7 +17,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="hadoop s3a 支持测试">
 <meta property="og:type" content="article">
@@ -138,7 +138,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A1%AE%E5%AE%9A%E6%AF%8F%E6%AC%A1I-x2F-O%E9%87%8F"><span class="nav-number">1.</span> <span class="nav-text">确定每次I&#x2F;O量</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%EF%BC%9A"><span class="nav-number">1.1.</span> <span class="nav-text">问题：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8B%A5%E5%BC%80%E5%8F%91%E6%B5%8B%E8%AF%95"><span class="nav-number">2.</span> <span class="nav-text">若开发测试</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%97%AE%E9%A2%98"><span class="nav-number">2.1.</span> <span class="nav-text">问题:</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A1%AE%E5%AE%9A%E6%AF%8F%E6%AC%A1I-O%E9%87%8F"><span class="nav-number">1.</span> <span class="nav-text">确定每次I&#x2F;O量</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%EF%BC%9A"><span class="nav-number">1.1.</span> <span class="nav-text">问题：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8B%A5%E5%BC%80%E5%8F%91%E6%B5%8B%E8%AF%95"><span class="nav-number">2.</span> <span class="nav-text">若开发测试</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%97%AE%E9%A2%98"><span class="nav-number">2.1.</span> <span class="nav-text">问题:</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -246,8 +246,8 @@
     
     <div class="post-body" itemprop="articleBody"><p>hadoop s3a 支持测试</p>
 <span id="more"></span>
-
-<h3 id="确定每次I-x2F-O量"><a href="#确定每次I-x2F-O量" class="headerlink" title="确定每次I&#x2F;O量"></a>确定每次I&#x2F;O量</h3><table>
+<h3 id="确定每次I-O量">确定每次I/O量</h3>
+<table>
 <thead>
 <tr>
 <th></th>
@@ -255,7 +255,8 @@
 <th>最大写长度</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>csv</td>
 <td>csv_file_max_buffer_size (默认16M) 或<br>csv_file_with_clob_max_buffer_size(默认64M)</td>
 <td>csv_file_max_buffer_size (默认16M) 或<br>csv_file_with_clob_max_buffer_size(默认64M)</td>
@@ -285,17 +286,21 @@
 <td>int32_max</td>
 <td>5GB</td>
 </tr>
-</tbody></table>
-<h4 id="问题："><a href="#问题：" class="headerlink" title="问题："></a>问题：</h4><ol>
+</tbody>
+</table>
+<h4 id="问题：">问题：</h4>
+<ol>
 <li>csv，orc类型文件可以控制，读取数据量，但parquet无法控制</li>
-<li>测试不同API性能，如何控制I&#x2F;O，尤其s3a读取的不确定性</li>
+<li>测试不同API性能，如何控制I/O，尤其s3a读取的不确定性</li>
 </ol>
-<h3 id="若开发测试"><a href="#若开发测试" class="headerlink" title="若开发测试"></a>若开发测试</h3><ol>
-<li>为测试s3a 与 libs3, parser解析增加s3a:&#x2F;&#x2F;${buck_name}&#x2F;[${key}]?coreSiteFile&#x3D;${core_site_xml_path}，以使得可同时测试s3a 与 libs3</li>
+<h3 id="若开发测试">若开发测试</h3>
+<ol>
+<li>为测试s3a 与 libs3, parser解析增加s3a://${buck_name}/[${key}]?coreSiteFile=${core_site_xml_path}，以使得可同时测试s3a 与 libs3</li>
 <li>计划增加s3a处理</li>
 <li>ClientCacheHdfs与HdfsAccessService添加s3a连接</li>
 </ol>
-<h4 id="问题"><a href="#问题" class="headerlink" title="问题:"></a>问题:</h4><ol>
+<h4 id="问题">问题:</h4>
+<ol>
 <li>s3a使用hdfs逻辑，还是新增封装</li>
 <li>测试流程所说的写数据源，使用内存如何实现，即写测试数据源是什么</li>
 </ol>

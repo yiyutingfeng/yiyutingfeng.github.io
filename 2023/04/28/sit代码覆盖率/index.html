@@ -17,7 +17,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="使用coverage版CirroEngine,通过sit生产代码覆盖率报告">
 <meta property="og:type" content="article">
@@ -245,35 +245,43 @@
     
     <div class="post-body" itemprop="articleBody"><p>使用coverage版CirroEngine,通过sit生产代码覆盖率报告</p>
 <span id="more"></span>
-
 <ol>
-<li><p>编译coverage版本</p>
+<li>编译coverage版本</li>
+</ol>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./build.sh --build=coverage --pack_all=1 --pack_type=onebox all</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>
+<p>搭建环境,配置参数<code>brpc_dsink_enable</code>需改为<code>false</code></p>
 </li>
-<li><p>搭建环境,配置参数<code>brpc_dsink_enable</code>需改为<code>false</code></p>
+<li>
+<p>执行sit</p>
 </li>
-<li><p>执行sit</p>
+<li>
+<p>kill 行云进程号</p>
 </li>
-<li><p>kill 行云进程号</p>
+</ol>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">kill</span> <span class="variable">$&#123;pid&#125;</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>等待1分钟,查看是否生成*.gcda文件的时间是否在当前时间左右,若是则成功了</p>
+<ol start="5">
+<li>等待1分钟,查看是否生成*.gcda文件的时间是否在当前时间左右,若是则成功了</li>
+</ol>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find gcda/ -name <span class="string">&quot;*.gcda&quot;</span> -<span class="built_in">exec</span> <span class="built_in">ls</span> -lh &#123;&#125; \;</span><br></pre></td></tr></table></figure>
 <p>或</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ls</span> -lhR gcda/ | grep <span class="string">&quot;\.gcda$&quot;</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>将文件打包,并copy到代码执行编译的目录下</p>
+<ol start="6">
+<li>将文件打包,并copy到代码执行编译的目录下</li>
+</ol>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar cjf gcda.tar.bz2 gcda/*</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>在编译路径下，执行report_coverage.sh脚本生成覆盖率报告（会生成coverage目录）</p>
+<ol start="8">
+<li>在编译路径下，执行report_coverage.sh脚本生成覆盖率报告（会生成coverage目录）</li>
+</ol>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./report_coverage.sh -gcda=./gcda.tar.bz2 <span class="variable">$&#123;模块名1&#125;</span> <span class="variable">$&#123;模块名2&#125;</span> <span class="variable">$&#123;模块名...&#125;</span></span><br></pre></td></tr></table></figure>
-<p>指定模块,则生成对应模块的覆盖率文件<br>不指定模块,则生成整个项目的覆盖率文件</p>
-</li>
-<li><p>coverage&#x2F;xcloud.report&#x2F;下，执行命令</p>
+<p>指定模块,则生成对应模块的覆盖率文件不指定模块,则生成整个项目的覆盖率文件</p>
+<ol start="9">
+<li>coverage/xcloud.report/下，执行命令</li>
+</ol>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -m SimpleHTTPServer 12345</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>   查看覆盖率<br>在浏览器输入当前节点的IP:12345</p>
-</li>
+<ol start="10">
+<li>查看覆盖率在浏览器输入当前节点的IP:12345</li>
 </ol>
 
     </div>

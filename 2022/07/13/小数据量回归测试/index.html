@@ -17,7 +17,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="小数据量回归测试环境配置">
 <meta property="og:type" content="article">
@@ -246,8 +246,8 @@
     
     <div class="post-body" itemprop="articleBody"><p>小数据量回归测试环境配置</p>
 <span id="more"></span>
-
-<h4 id=""><a href="#" class="headerlink" title=""></a></h4><p>修改配置</p>
+<h4 id=""></h4>
+<p>修改配置</p>
 <table>
 <thead>
 <tr>
@@ -256,9 +256,10 @@
 <th>说明</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>kerb_cross_realm_conf</td>
-<td>&#x2F;mnt&#x2F;disk2&#x2F;external_linux_csv&#x2F;krb5.conf</td>
+<td>/mnt/disk2/external_linux_csv/krb5.conf</td>
 <td>远程连接带kerberos集群需要的krb5.conf配置文件</td>
 </tr>
 <tr>
@@ -271,15 +272,19 @@
 <td>false</td>
 <td>是否开启存储空间限制检查(开启可能会导致inster失败)</td>
 </tr>
-</tbody></table>
-<h4 id="autotest必要前提"><a href="#autotest必要前提" class="headerlink" title="autotest必要前提"></a>autotest必要前提</h4><p>修改<code>systemadmin</code>的密码为<code>123456_</code></p>
-<h4 id="基础表加载"><a href="#基础表加载" class="headerlink" title="基础表加载"></a>基础表加载</h4><p>用例模板</p>
+</tbody>
+</table>
+<h4 id="autotest必要前提">autotest必要前提</h4>
+<p>修改<code>systemadmin</code>的密码为<code>123456_</code></p>
+<h4 id="基础表加载">基础表加载</h4>
+<p>用例模板</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://172.16.12.45/afe/#tab_id=view_job&amp;object_id=142460</span><br></pre></td></tr></table></figure>
-
-<h4 id="小数据量double环境测试"><a href="#小数据量double环境测试" class="headerlink" title="小数据量double环境测试"></a>小数据量double环境测试</h4><p>需要修改ip、端口、数据库、用户和testjdbc<br>用例模板</p>
+<h4 id="小数据量double环境测试">小数据量double环境测试</h4>
+<p>需要修改ip、端口、数据库、用户和testjdbc<br>
+用例模板</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://172.16.12.45/afe/#tab_id=view_job&amp;object_id=142217</span><br></pre></td></tr></table></figure>
-
-<h4 id="小数据量number环境测试"><a href="#小数据量number环境测试" class="headerlink" title="小数据量number环境测试"></a>小数据量number环境测试</h4><p>参数配置</p>
+<h4 id="小数据量number环境测试">小数据量number环境测试</h4>
+<p>参数配置</p>
 <table>
 <thead>
 <tr>
@@ -288,7 +293,8 @@
 <th>说明</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>integer_div_as_number_enable</td>
 <td>true</td>
 <td>整数除法结果类型是否设置为NUMBER类型</td>
@@ -298,48 +304,57 @@
 <td>true</td>
 <td>浮点数常量是否为NUMBER类型</td>
 </tr>
-</tbody></table>
-<p>需要修改ip、端口、数据库、用户和testjdbc<br>用例模板</p>
+</tbody>
+</table>
+<p>需要修改ip、端口、数据库、用户和testjdbc<br>
+用例模板</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://172.16.12.45/afe/#tab_id=view_job&amp;object_id=139306</span><br></pre></td></tr></table></figure>
-
-<h4 id="48公共环境配置"><a href="#48公共环境配置" class="headerlink" title="48公共环境配置"></a>48公共环境配置</h4><p>注意:借公共环境时，不要借44.54节点，该节点没有安装cgroups,无法启动3.0</p>
-<h4 id="HDFSMetaQueryProxy配置"><a href="#HDFSMetaQueryProxy配置" class="headerlink" title="HDFSMetaQueryProxy配置"></a>HDFSMetaQueryProxy配置</h4><table>
+<h4 id="48公共环境配置">48公共环境配置</h4>
+<p>注意:借公共环境时，不要借44.54节点，该节点没有安装cgroups,无法启动3.0</p>
+<h4 id="HDFSMetaQueryProxy配置">HDFSMetaQueryProxy配置</h4>
+<table>
 <thead>
 <tr>
 <th>参数名</th>
 <th>参数值</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>keyTabFile</td>
-<td>&#x2F;home&#x2F;cirrofs&#x2F;cirrofs_cfs&#x2F;key&#x2F;cirrofs.keytab</td>
+<td>/home/cirrofs/cirrofs_cfs/key/cirrofs.keytab</td>
 </tr>
 <tr>
 <td>userPrincipal</td>
-<td>cirrofs&#x2F;<a href="mailto:&#95;&#x48;&#79;&#83;&#84;&#64;&#x42;&#x4f;&#x4e;&#x43;&#x34;&#46;&#67;&#x4f;&#x4d;">&#95;&#x48;&#79;&#83;&#84;&#64;&#x42;&#x4f;&#x4e;&#x43;&#x34;&#46;&#67;&#x4f;&#x4d;</a></td>
+<td>cirrofs/_HOST@BONC4.COM</td>
 </tr>
-</tbody></table>
-<h4 id="xcloud配置"><a href="#xcloud配置" class="headerlink" title="xcloud配置"></a>xcloud配置</h4><table>
+</tbody>
+</table>
+<h4 id="xcloud配置">xcloud配置</h4>
+<table>
 <thead>
 <tr>
 <th>参数名</th>
 <th>参数值</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>kerb_principal</td>
-<td>cirrofs&#x2F;<a href="mailto:&#95;&#x48;&#x4f;&#x53;&#x54;&#x40;&#x42;&#79;&#x4e;&#x43;&#52;&#46;&#67;&#x4f;&#x4d;">&#95;&#x48;&#x4f;&#x53;&#x54;&#x40;&#x42;&#79;&#x4e;&#x43;&#52;&#46;&#67;&#x4f;&#x4d;</a></td>
+<td>cirrofs/_HOST@BONC4.COM</td>
 </tr>
 <tr>
 <td>kerb_keytab_file</td>
-<td>&#x2F;home&#x2F;cirrofs&#x2F;cirrofs_cfs&#x2F;key&#x2F;cirrofs.keytab</td>
+<td>/home/cirrofs/cirrofs_cfs/key/cirrofs.keytab</td>
 </tr>
 <tr>
 <td>hadoop_user</td>
 <td>cirrofs</td>
 </tr>
-</tbody></table>
-<h4 id="曾遇问题"><a href="#曾遇问题" class="headerlink" title="曾遇问题"></a>曾遇问题</h4><table>
+</tbody>
+</table>
+<h4 id="曾遇问题">曾遇问题</h4>
+<table>
 <thead>
 <tr>
 <th>报错信息</th>
@@ -347,7 +362,8 @@
 <th>处理方法</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>Unhandled ImportError: No module named pandas</td>
 <td>auto test 选择的host节点存在问题</td>
 <td>更换节点</td>
@@ -362,24 +378,28 @@
 <td>kerb相关配置不对</td>
 <td>修改配置</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <p>详见<a target="_blank" rel="noopener" href="https://doc.weixin.qq.com/doc/w3_AHAAuwaoAMAFGOjox3pTWCkCFoVjS?scode=AHEAaQdHAAcAZOt6VSAJMA4gaCAME">小数据量测试介绍</a></p>
-<h4 id="auto-test配置"><a href="#auto-test配置" class="headerlink" title="auto test配置"></a>auto test配置</h4><table>
+<h4 id="auto-test配置">auto test配置</h4>
+<table>
 <thead>
 <tr>
 <th>目的</th>
 <th>修改</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>关闭并发</td>
-<td>parallel&#x3D;False</td>
+<td>parallel=False</td>
 </tr>
 <tr>
 <td>sql都从入口节点下发</td>
-<td>test_jdbc&#x3D;”XCloud_TestJDBC_SP_connectDirectTrue.jar”</td>
+<td>test_jdbc=“XCloud_TestJDBC_SP_connectDirectTrue.jar”</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 
     </div>
 
