@@ -27,7 +27,7 @@
 <meta property="og:description" content="无需重启CirroEngine,通过SQL修改默认参数值">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-07-19T01:40:49.000Z">
-<meta property="article:modified_time" content="2023-05-04T10:01:36.332Z">
+<meta property="article:modified_time" content="2023-05-05T08:35:14.248Z">
 <meta property="article:author" content="yiyutingfeng">
 <meta name="twitter:card" content="summary">
 
@@ -138,7 +138,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E5%89%8D%E6%94%AF%E6%8C%81%E4%BF%AE%E6%94%B9%E7%9A%84%E5%8F%82%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">目前支持修改的参数</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E5%8F%82%E6%95%B0%E5%8F%82%E6%95%B0%E5%90%8D"><span class="nav-number"></span> <span class="nav-text">动态参数参数名</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E8%A1%A8"><span class="nav-number">1.</span> <span class="nav-text">系统表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SQL"><span class="nav-number">2.</span> <span class="nav-text">SQL</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E5%89%8D%E6%94%AF%E6%8C%81%E4%BF%AE%E6%94%B9%E7%9A%84%E5%8F%82%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">目前支持修改的参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E8%A1%A8"><span class="nav-number">2.</span> <span class="nav-text">系统表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E5%8A%A8%E6%80%81%E5%8F%82%E6%95%B0SQL"><span class="nav-number">3.</span> <span class="nav-text">修改动态参数SQL</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -217,7 +217,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-04 18:01:36" itemprop="dateModified" datetime="2023-05-04T18:01:36+08:00">2023-05-04</time>
+      <time title="修改时间：2023-05-05 16:35:14" itemprop="dateModified" datetime="2023-05-05T16:35:14+08:00">2023-05-05</time>
     </span>
 
   
@@ -227,14 +227,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>785</span>
+      <span>1.3k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>3 分钟</span>
+      <span>5 分钟</span>
     </span>
 </div>
 
@@ -247,10 +247,153 @@
     <div class="post-body" itemprop="articleBody"><p>无需重启<code>CirroEngine</code>,通过<code>SQL</code>修改默认参数值</p>
 <span id="more"></span>
 <h4 id="目前支持修改的参数">目前支持修改的参数</h4>
-<table>
+<div class="tabs" id="version"><ul class="nav-tabs"><li class="tab active"><a href="#version-1">3.0版</a></li><li class="tab"><a href="#version-2">3.0之前的版本</a></li></ul><div class="tab-content"><div class="tab-pane active" id="version-1"><div class="tabs" id="dynamic_parameter_3.0"><ul class="nav-tabs"><li class="tab active"><a href="#dynamic_parameter_3.0-1">DB级别参数</a></li><li class="tab"><a href="#dynamic_parameter_3.0-2">PC级别参数</a></li></ul><div class="tab-content"><div class="tab-pane active" id="dynamic_parameter_3.0-1"><table>
 <thead>
 <tr>
-<th>DB级参数</th>
+<th>参数名</th>
+<th>说明</th>
+<th>参数类型</th>
+<th>默认值</th>
+<th>参数值范围</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>page_compress_algorithm</td>
+<td>页数据压缩算法</td>
+<td>int32</td>
+<td>1</td>
+<td>{1,2,3}</td>
+</tr>
+<tr>
+<td>cirrofile_max_size</td>
+<td>单个cirrofile文件的大小上限</td>
+<td>int64</td>
+<td>1GB</td>
+<td>[256MB, 4GB]</td>
+</tr>
+<tr>
+<td>cirrofile_max_row</td>
+<td>单个cirrofile文件的最大行数</td>
+<td>int64</td>
+<td>10485760</td>
+<td>[10000000, 100000000]</td>
+</tr>
+<tr>
+<td>dictionary_page_num</td>
+<td>字典编码中，字典的页数量字典达到记录数和大小中任何一个条件后，不能继续新增字典记录。</td>
+<td>int32</td>
+<td>4</td>
+<td>[1, 4]</td>
+</tr>
+<tr>
+<td>cirrofile_reserve_rate</td>
+<td>cirrofile文件的预留空间比例，以防止实际产生的cirrofile文件超过设定的大小。</td>
+<td>double</td>
+<td>0.1</td>
+<td>[0.01, 0.2]</td>
+</tr>
+<tr>
+<td>page_compress_optimize_enable</td>
+<td>是否启用页压缩优化。启用后，数据文件将无法兼容标准parquet格式。</td>
+<td>bool</td>
+<td>false</td>
+<td>true/false</td>
+</tr>
+<tr>
+<td>page_compress_optimize_threshold_ratio</td>
+<td>页压缩优化的数据压缩率阈值。如果启用页压缩优化，则数据压缩率超过该百分比，才进行页数据压缩存储。该参数只对新增数据有效。该参数只在页压缩优化启用时有效。启用后，数据无法兼容标准parquet格式。</td>
+<td>double</td>
+<td>0.6</td>
+<td>(0, 1]</td>
+</tr>
+<tr>
+<td>dictionary_item_num</td>
+<td>字典编码中，字典的记录数量。字典达到记录数和大小中任何一个条件后，不能继续新增字典记录。</td>
+<td>int32</td>
+<td>65535</td>
+<td>[32768, 65535]</td>
+</tr>
+<tr>
+<td>plain_encoding_rule</td>
+<td>指定不适用编码的数据类型，多个类型之间用逗号’,'分隔。主要用于数据加载时的编码过程控制。</td>
+<td>string</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>page_rownum_index_enable</td>
+<td>是否在加载数据时，创建page-row索引。</td>
+<td>bool</td>
+<td>TRUE</td>
+<td>TRUE/FALSE</td>
+</tr>
+<tr>
+<td>page_maxmin_index_enable</td>
+<td>是否在加载数据时，创建page内部极值索引。</td>
+<td>bool</td>
+<td>TRUE</td>
+<td>TRUE/FALSE</td>
+</tr>
+</tbody>
+</table></div><div class="tab-pane" id="dynamic_parameter_3.0-2"><table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>说明</th>
+<th>参数类型</th>
+<th>默认值</th>
+<th>参数值范围</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>dml_write_buffer_mdp_num</td>
+<td>表更新、有序表加载时，用于数据写入的缓存MDP数量。</td>
+<td>int32</td>
+<td>3</td>
+<td>[1, 5]</td>
+</tr>
+<tr>
+<td>default_timestamp_format</td>
+<td>timestamp的默认格式。csv加载和cast时会按照此参数将字符串类型与timestamp类型进行转换。可根据需要调整分隔符与年月日时分秒的位置。</td>
+<td>string</td>
+<td>yyyy-mm-dd hh24:mi:ss.ff</td>
+<td></td>
+</tr>
+<tr>
+<td>default_date_format</td>
+<td>Date类型默认格式,csv加载和cast时会按照此参数将字符串类型与date类型进行转换。可根据需要调整分隔符与年月日时分秒的位置。</td>
+<td>string</td>
+<td>yyyy/mm/dd hh24:mi:ss</td>
+<td></td>
+</tr>
+<tr>
+<td>compaction_group_num</td>
+<td>Compaction任务中，分组的数量。需要整并的数据文件不小于该值时，整并结果的数据文件数量不少于该值。</td>
+<td>int32</td>
+<td>1</td>
+<td>[1, 16]</td>
+</tr>
+<tr>
+<td>compaction_max_file_size</td>
+<td>Compaction任务中，判定为不需要整并的数据文件的大小阈值。比阈值小的文件，都需要进行整并。</td>
+<td>int64</td>
+<td>849346560</td>
+<td>[100MB, 1GB]</td>
+</tr>
+<tr>
+<td>local_data_cache_policy</td>
+<td>本地数据缓存缓存策略.<br>NO_CACHE: 不进行本地缓存;<br> AUTO_CACHE: 自动选择节点进行缓存（最多选择两个）;<br>GLOBAL_CACHE: 所有节点都可以缓存.</td>
+<td>string</td>
+<td>AUTO_CACHE</td>
+<td>NO_CACHE, AUTO_CACHE, GLOBAL_CACHE</td>
+</tr>
+</tbody>
+</table></div></div></div></div><div class="tab-pane" id="version-2"><div class="tabs" id="dynamic_parameter_old"><ul class="nav-tabs"><li class="tab active"><a href="#dynamic_parameter_old-1">DB级别参数</a></li><li class="tab"><a href="#dynamic_parameter_old-2">PC级别参数</a></li></ul><div class="tab-content"><div class="tab-pane active" id="dynamic_parameter_old-1"><table>
+<thead>
+<tr>
+<th>参数名</th>
 <th>说明</th>
 <th>参数类型</th>
 <th>默认值</th>
@@ -260,87 +403,86 @@
 <tbody>
 <tr>
 <td>page_compress_type</td>
-<td>Page 数据压缩算法：1-SNAPPY，2-LZ4；如果使用非SNAPPY 算法，会影响与标准parquet 格式的兼容</td>
+<td>Page数据压缩算法: 1-SNAPPY, 2-LZ4;<em><strong>如果使用非SNAPPY算法，会影响与标准parquet格式的兼容</strong></em></td>
 <td>int32</td>
 <td>1</td>
 <td>{1,2}</td>
 </tr>
 <tr>
 <td>datapack_maxsize</td>
-<td>单个 DataPack 文件大小上限，单位Byte</td>
+<td>单个DataPack文件大小上限，单位Byte</td>
 <td>int64</td>
 <td>1073741824</td>
-<td>[223,263-1]</td>
+<td>[2<sup>23</sup>, 2<sup>63</sup>-1]</td>
 </tr>
 <tr>
 <td>datapack_maxrownum</td>
-<td>单个 DataPack 文件数据行数上限</td>
+<td>单个DataPack文件数据行数上限</td>
 <td>int64</td>
 <td>10485760</td>
-<td>[1,263-1]</td>
+<td>[1, 2<sup>63</sup>-1]</td>
 </tr>
 <tr>
 <td>dictpage_num</td>
-<td>ColumnChunk 中字典页的缓存页数，内存中字典编码的 buffer 大小为 dictpage_num * page_size，值越大需要的内存越多，编码效率更高</td>
+<td>ColumnChunk中字典页的缓存页数</td>
 <td>int32</td>
 <td>4</td>
-<td>[1,4]</td>
+<td>[1, 4]</td>
 </tr>
 <tr>
 <td>filesize_reserverate</td>
-<td>DP 文件中实际使用空间占 datapack_maxsize 规定的单个 dp 文件大小的百分比，dp 文件 footer 的估值并不十分准确，为了确保 dp 文件的size 不会超过 datapack_maxsize，给 datapack_maxsize 乘个百分比作为 dp 文件中存储的数据大小</td>
+<td>[Percentage]DP文件中实际使用空间百分比，取值范围80~99</td>
 <td>int32</td>
 <td>90</td>
-<td>(0,100]</td>
+<td>[80, 99]</td>
 </tr>
 <tr>
 <td>no_page_compress_optimize</td>
-<td>是否禁止 Page 压缩优化；如果不禁止，会影响与标准 parquet 格式的兼容</td>
+<td>是否禁止Page压缩优化; 如果不禁止，会影响与标准parquet格式的兼容</td>
 <td>bool</td>
-<td>TRUE</td>
-<td>TRUE/FALSE</td>
+<td>true</td>
+<td>true/false</td>
 </tr>
 <tr>
 <td>compress_validrate</td>
-<td>DP 文件数据压缩百分比阈值，当 no_page_compress_optimize 为 false 时才会生效，压缩后与压缩前大小比例超过该值才进行压缩</td>
+<td>[Percentage]DP文件数据压缩百分比阈值，取值范围1~100，压缩后与压缩前大小比例超过该值才进行压缩</td>
 <td>int32</td>
 <td>60</td>
-<td>[1,100]</td>
+<td>[1, 100]</td>
 </tr>
 <tr>
 <td>dictcardinality</td>
-<td>字典编码中，字典条目上限，字典条目达到参数指定条数或者字典编码的 buffer 占满，则写字典页</td>
+<td>字典编码中，字典条目上限</td>
 <td>int32</td>
 <td>65535</td>
-<td>(0,231-1]</td>
+<td>(0, 2<sup>31</sup>-1]</td>
 </tr>
 <tr>
 <td>plain_encoding_rule</td>
-<td>指定采用默认 Plain 编码规则的数据类型，多个类型用’,'分隔，如果数据类型指定了 plain 编码规则，该类型不生成字典页	string</td>
-<td>空</td>
-<td>{int, long, double, date, yminterval, dsinterval, timestamp, number, char, char(n), varchar, varch(n)}中选择一个或多个</td>
+<td>默认Plain编码规则，多个类型用’，'分隔. 具体参考Release Note</td>
+<td>string</td>
+<td></td>
 <td></td>
 </tr>
 <tr>
 <td>page_rownum_index</td>
-<td>是否在加载数据时，创建 page_row 索引，点查询优化需要该参数值为 true</td>
+<td>是否在加载数据时，创建page-row索引</td>
 <td>bool</td>
-<td>TRUE</td>
-<td>TRUE/FALSE</td>
+<td>true</td>
+<td>true/false</td>
 </tr>
 <tr>
 <td>page_max_min_index</td>
-<td>是否在加载数据时，创建 page 内部极值索引，点查询优化需要该参数值为 true</td>
+<td>是否在加载数据时，创建page内部极值索引</td>
 <td>bool</td>
-<td>TRUE</td>
-<td>TRUE/FALSE</td>
+<td>true</td>
+<td>true/false</td>
 </tr>
 </tbody>
-</table>
-<table>
+</table></div><div class="tab-pane" id="dynamic_parameter_old-2"><table>
 <thead>
 <tr>
-<th>PC级参数</th>
+<th>参数名</th>
 <th>说明</th>
 <th>参数类型</th>
 <th>默认值</th>
@@ -350,23 +492,23 @@
 <tbody>
 <tr>
 <td>write_buffer_num</td>
-<td>异步加载线程使用的 MDP 队列中 mdp 的数量，参数原名为 mdp_queue_num</td>
+<td>异步加载线程使用的缓存块数</td>
 <td>int32</td>
 <td>3</td>
-<td>[1,5]</td>
+<td>[1, 5]</td>
 </tr>
 <tr>
 <td>cast_timestamp_format</td>
 <td><Basic>Timestamp类型默认格式，小数精度为9</td>
 <td>string</td>
-<td>YYYY-MM-DD HH24:MI:SS.FF</td>
+<td>yyyy-mm-dd hh24:mi:ss.ff</td>
 <td></td>
 </tr>
 <tr>
 <td>cast_date_format</td>
-<td><Basic>Date类型默认格式</td>
+<td>Date类型默认格式,csv加载和cast时会按照此参数将字符串类型与date类型进行转换。可根据需要调整分隔符与年月日时分秒的位置。</td>
 <td>string</td>
-<td>YYYY/MM/DD HH24:MI:SS</td>
+<td>yyyy/mm/dd hh24:mi:ss</td>
 <td></td>
 </tr>
 <tr>
@@ -374,125 +516,21 @@
 <td>整并分组数</td>
 <td>int32</td>
 <td>1</td>
-<td>[1,64]</td>
+<td>[1, 64]</td>
 </tr>
 <tr>
 <td>compact_filesize_threshold</td>
 <td>不参加整并的文件大小下限，单位BYTE</td>
 <td>int64</td>
 <td>849346560</td>
-<td>[0,263-1]</td>
-</tr>
-<tr>
-<td>local_data_cache_policy</td>
-<td>本地数据缓存策略.NO_CACHE: 不进行本地缓存 AUTO_CACHE: 自动选择节点进行缓存（最多选择两个） GLOBAL_CACHE: 所有节点都可以缓存</td>
-<td>string</td>
-<td>AUTO_CACHE</td>
-<td>NO_CACHE, AUTO_CACHE, GLOBAL_CACHE</td>
+<td>[0, 2<sup>63</sup>-1]</td>
 </tr>
 </tbody>
-</table>
-<h2 id="动态参数参数名">动态参数参数名</h2>
-<table>
-<thead>
-<tr>
-<th>曾用名</th>
-<th>3.0 名称</th>
-<th>验证方法</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>page_compress_type</td>
-<td>page_compress_algorithm</td>
-<td>grep -a “CompressionCodec” log/xcloudd.INFO</td>
-</tr>
-<tr>
-<td>datapack_maxsize</td>
-<td>cirrofile_max_size</td>
-<td></td>
-</tr>
-<tr>
-<td>datapack_maxrownum</td>
-<td>cirrofile_max_row</td>
-<td></td>
-</tr>
-<tr>
-<td>dictpage_num</td>
-<td>dictionary_page_num</td>
-<td></td>
-</tr>
-<tr>
-<td>filesize_reserverate</td>
-<td>cirrofile_reserve_rate</td>
-<td></td>
-</tr>
-<tr>
-<td>no_page_compress_optimize</td>
-<td>page_compress_optimize_enable</td>
-<td></td>
-</tr>
-<tr>
-<td>compress_validrate</td>
-<td>page_compress_optimize_threshold_ratio</td>
-<td></td>
-</tr>
-<tr>
-<td>dictcardinality</td>
-<td>dictionary_item_num</td>
-<td></td>
-</tr>
-<tr>
-<td>plain_encoding_rule</td>
-<td>plain_encoding_rule</td>
-<td></td>
-</tr>
-<tr>
-<td>page_rownum_index</td>
-<td>page_rownum_index_enable</td>
-<td></td>
-</tr>
-<tr>
-<td>page_max_min_index</td>
-<td>page_maxmin_index_enable</td>
-<td></td>
-</tr>
-<tr>
-<td>write_buffer_num</td>
-<td>dml_write_buffer_mdp_num</td>
-<td></td>
-</tr>
-<tr>
-<td>cast_timestamp_format</td>
-<td>default_timestamp_format</td>
-<td></td>
-</tr>
-<tr>
-<td>cast_date_format</td>
-<td>default_date_format</td>
-<td></td>
-</tr>
-<tr>
-<td>compact_filesize_threshold</td>
-<td>compaction_max_file_size</td>
-<td></td>
-</tr>
-<tr>
-<td>compact_group_num</td>
-<td>compaction_group_num</td>
-<td></td>
-</tr>
-<tr>
-<td>local_data_cache_policy</td>
-<td>local_data_cache_policy</td>
-<td></td>
-</tr>
-</tbody>
-</table>
+</table></div></div></div></div></div></div>
 <h4 id="系统表">系统表</h4>
 <p>systemadmin 用户查询 <code>V$CLUSTER_PARAMETERS_INFO</code><br>
 system 用户查询 <code>V$DB_PARAMETERS_INFO</code></p>
-<h4 id="SQL">SQL</h4>
+<h4 id="修改动态参数SQL">修改动态参数SQL</h4>
 <div class="tabs" id="修改动态参数"><ul class="nav-tabs"><li class="tab active"><a href="#修改动态参数-1">设置 DB 级别参数</a></li><li class="tab"><a href="#修改动态参数-2">设置 PC 级别参数</a></li></ul><div class="tab-content"><div class="tab-pane active" id="修改动态参数-1"><p>systemadmin用户执行</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> DATABASE db_name <span class="keyword">SET</span> <span class="keyword">PARAMETER</span> parameter_name <span class="operator">=</span> <span class="string">&#x27;parameter_value&#x27;</span>;</span><br></pre></td></tr></table></figure>
 <p>system用户执行</p>
@@ -549,19 +587,15 @@ system 用户查询 <code>V$DB_PARAMETERS_INFO</code></p>
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">10k</span>
+    <span title="站点总字数">11k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">37 分钟</span>
+    <span title="站点阅读时长">39 分钟</span>
   </span>
 </div>
-
-<!--
-  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
-  </div> -->
 
     </div>
   </footer>
