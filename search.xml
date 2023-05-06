@@ -478,7 +478,7 @@ csv_file_with_clob_max_buffer_size 和 csv_file_max_buffer_size</p>
 <th>说明</th>
 <th>参数类型</th>
 <th>默认值</th>
-<th>参数值范围</th>
+<th>取值范围</th>
 </tr>
 </thead>
 <tbody>
@@ -501,7 +501,7 @@ csv_file_with_clob_max_buffer_size 和 csv_file_max_buffer_size</p>
 <td>单个cirrofile文件的最大行数</td>
 <td>int64</td>
 <td>10485760</td>
-<td>[10000000, 100000000]</td>
+<td><div style="white-space: nowrap">[10000000, 100000000]</div></td>
 </tr>
 <tr>
 <td>dictionary_page_num</td>
@@ -567,7 +567,7 @@ csv_file_with_clob_max_buffer_size 和 csv_file_max_buffer_size</p>
 <th>说明</th>
 <th>参数类型</th>
 <th>默认值</th>
-<th>参数值范围</th>
+<th>取值范围</th>
 </tr>
 </thead>
 <tbody>
@@ -582,7 +582,7 @@ csv_file_with_clob_max_buffer_size 和 csv_file_max_buffer_size</p>
 <td>default_timestamp_format</td>
 <td>timestamp的默认格式。csv加载和cast时会按照此参数将字符串类型与timestamp类型进行转换。可根据需要调整分隔符与年月日时分秒的位置。</td>
 <td>string</td>
-<td>yyyy-mm-dd hh24:mi:ss.ff</td>
+<td><div style="white-space: nowrap">yyyy-mm-dd hh24:mi:ss.ff</div></td>
 <td></td>
 </tr>
 <tr>
@@ -637,7 +637,7 @@ csv_file_with_clob_max_buffer_size 和 csv_file_max_buffer_size</p>
 <td>单个DataPack文件大小上限，单位Byte</td>
 <td>int64</td>
 <td>1073741824</td>
-<td>[2<sup>23</sup>, 2<sup>63</sup>-1]</td>
+<td><div style="white-space: nowrap">[2<sup>23</sup>, 2<sup>63</sup>-1]</div></td>
 </tr>
 <tr>
 <td>datapack_maxrownum</td>
@@ -725,7 +725,7 @@ csv_file_with_clob_max_buffer_size 和 csv_file_max_buffer_size</p>
 <td>cast_timestamp_format</td>
 <td><Basic>Timestamp类型默认格式，小数精度为9</td>
 <td>string</td>
-<td>yyyy-mm-dd hh24:mi:ss.ff</td>
+<td><div style="white-space: nowrap">yyyy-mm-dd hh24:mi:ss.ff</div></td>
 <td></td>
 </tr>
 <tr>
@@ -747,7 +747,7 @@ csv_file_with_clob_max_buffer_size 和 csv_file_max_buffer_size</p>
 <td>不参加整并的文件大小下限，单位BYTE</td>
 <td>int64</td>
 <td>849346560</td>
-<td>[0, 2<sup>63</sup>-1]</td>
+<td><div style="white-space: nowrap">[0, 2<sup>63</sup>-1]</div></td>
 </tr>
 </tbody>
 </table></div></div></div></div></div></div>
