@@ -752,8 +752,9 @@ csv_file_with_clob_max_buffer_size 和 csv_file_max_buffer_size</p>
 </tbody>
 </table></div></div></div></div></div></div>
 <h4 id="系统表">系统表</h4>
-<p>systemadmin 用户查询 <code>V$CLUSTER_PARAMETERS_INFO</code><br>
-system 用户查询 <code>V$DB_PARAMETERS_INFO</code></p>
+<div class="tabs" id="system_table"><ul class="nav-tabs"><li class="tab active"><a href="#system_table-1">V$CLUSTER_PARAMETERS_INFO</a></li><li class="tab"><a href="#system_table-2">V$DB_PARAMETERS_INFO</a></li></ul><div class="tab-content"><div class="tab-pane active" id="system_table-1"><p>systemadmin 用户查询</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> V$CLUSTER_PARAMETERS_INFO;</span><br></pre></td></tr></table></figure></div><div class="tab-pane" id="system_table-2"><p>system 用户查询</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> V$DB_PARAMETERS_INFO;</span><br></pre></td></tr></table></figure></div></div></div>
 <h4 id="修改动态参数SQL">修改动态参数SQL</h4>
 <div class="tabs" id="修改动态参数"><ul class="nav-tabs"><li class="tab active"><a href="#修改动态参数-1">设置 DB 级别参数</a></li><li class="tab"><a href="#修改动态参数-2">设置 PC 级别参数</a></li></ul><div class="tab-content"><div class="tab-pane active" id="修改动态参数-1"><p>systemadmin用户执行</p>
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> DATABASE db_name <span class="keyword">SET</span> <span class="keyword">PARAMETER</span> parameter_name <span class="operator">=</span> <span class="string">&#x27;parameter_value&#x27;</span>;</span><br></pre></td></tr></table></figure>
