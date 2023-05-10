@@ -823,6 +823,9 @@ csv_file_with_clob_max_buffer_size 和 csv_file_max_buffer_size</p>
 <li>短期内不会修改的文件</li>
 </ol>
 ]]></content>
+      <tags>
+        <tag>缓存</tag>
+      </tags>
   </entry>
   <entry>
     <title>小数据量回归测试</title>
@@ -1284,6 +1287,9 @@ csv_file_with_clob_max_buffer_size 和 csv_file_max_buffer_size</p>
 <li>local_data_cache_file_max_size配置足够大,否则即使有写缓存,但因数据过大实际不会缓存</li>
 </ol>
 ]]></content>
+      <tags>
+        <tag>缓存</tag>
+      </tags>
   </entry>
   <entry>
     <title>模块负责人</title>
@@ -1667,6 +1673,9 @@ csv_file_with_clob_max_buffer_size 和 csv_file_max_buffer_size</p>
 </tbody>
 </table>
 ]]></content>
+      <tags>
+        <tag>配置参数</tag>
+      </tags>
   </entry>
   <entry>
     <title>问题定位</title>
@@ -1705,7 +1714,11 @@ csv_file_with_clob_max_buffer_size 和 csv_file_max_buffer_size</p>
 <h4 id="查看节点同步回报是否正常">查看节点同步回报是否正常</h4>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">grep -i <span class="string">&quot;SetFeedBackInfo&quot;</span> <span class="built_in">log</span>/xclodd.INFO</span><br></pre></td></tr></table></figure>
 <h3 id="查看压缩方式">查看压缩方式</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">grep -a <span class="string">&quot;CompressionCodec&quot;</span> <span class="built_in">log</span>/xcloudd.INFO</span><br></pre></td></tr></table></figure>]]></content>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">grep -a <span class="string">&quot;CompressionCodec&quot;</span> <span class="built_in">log</span>/xcloudd.INFO</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>问题</tag>
+      </tags>
   </entry>
   <entry>
     <title>集群搭建</title>
@@ -2080,5 +2093,8 @@ C:\Users\CirroData\xcloud\DBConfig.xml</p>
 <h4 id="2-16-cgroup赋权">2.16 cgroup赋权</h4>
 <p>sudo ./init-xcloud-cg.sh [user_name]:[user_name]</p>
 ]]></content>
+      <tags>
+        <tag>集群</tag>
+      </tags>
   </entry>
 </search>
