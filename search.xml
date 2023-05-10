@@ -1002,17 +1002,17 @@ csv_file_with_clob_max_buffer_size 和 csv_file_max_buffer_size</p>
     <url>/2022/07/19/%E6%80%BB%E7%BB%93/</url>
     <content><![CDATA[<p>总结工作中遇到的问题，处理方法等</p>
 <span id="more"></span>
-<h3 id="序列化">序列化</h3>
-<p>增加成员，对应proto文件也要添加文件路径： be/src/proto/xxxx.proto</p>
-<blockquote>
-<p>注意：需要清三方库，否则编译会报错</p>
-</blockquote>
 <h2 id="基础知识">基础知识</h2>
 <h3 id="std-map">std::map</h3>
 <p>下标访问，若元素不存在会导致新增该元素使用成员函数erase()后，切记不可使用下标访问</p>
 <h3 id="static">static</h3>
 <p>static变量是指静态的变量，不管是在全局还是局部声明的static变量都存放于程序的全局变量区域，所以它的生命周期是从程序开始到程序结束。但是static变量的作用域并不等同于它的生存周期，它的作用域决定于它被定义的位置。可以认为static变量的作用域&lt;=生存周期</p>
 <h2 id="行云编译相关">行云编译相关</h2>
+<h3 id="序列化">序列化</h3>
+<p>增加成员，对应proto文件也要添加文件路径： be/src/proto/xxxx.proto</p>
+<blockquote>
+<p>注意：需要清三方库，否则编译会报错</p>
+</blockquote>
 <h3 id="编译报错">编译报错</h3>
 <p>报错: make[1]: *** No rule to make target `be/src/idl/all’. Stop.<br>
 编译命令后加上 idl</p>
@@ -1682,15 +1682,15 @@ csv_file_with_clob_max_buffer_size 和 csv_file_max_buffer_size</p>
     <url>/2023/05/02/%E9%97%AE%E9%A2%98%E5%AE%9A%E4%BD%8D/</url>
     <content><![CDATA[<p>定位问题的方法与命令</p>
 <span id="more"></span>
-<h3 id="设置bash命令行提示符的样式">设置bash命令行提示符的样式</h3>
+<h2 id="设置bash命令行提示符的样式">设置bash命令行提示符的样式</h2>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">export</span> PS1=<span class="string">&quot;\[\e[1;32m\]\u\[\e[1;31m\]@\[\e[1;33m\]\h\[\e[1;35m\]:\[\e[0;36m\]\w\[\e[1;35m\]\\$ \[\e[0m&quot;</span></span><br></pre></td></tr></table></figure>
-<h3 id="解压已压缩的日志">解压已压缩的日志</h3>
+<h2 id="解压已压缩的日志">解压已压缩的日志</h2>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> tar <span class="keyword">in</span> INFO*bz2 ; <span class="keyword">do</span> tar xvf <span class="variable">$tar</span>; <span class="keyword">done</span></span><br></pre></td></tr></table></figure>
-<h3 id="查看堆栈对应的代码行">查看堆栈对应的代码行</h3>
+<h2 id="查看堆栈对应的代码行">查看堆栈对应的代码行</h2>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">addr2line -e bin/xcloudd <span class="variable">$&#123;堆栈地址&#125;</span></span><br></pre></td></tr></table></figure>
 <p>示例:</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">addr2line -e bin/xcloudd 0x37f75d1</span><br></pre></td></tr></table></figure>
-<h3 id="SQL卡住定位">SQL卡住定位</h3>
+<h2 id="SQL卡住定位">SQL卡住定位</h2>
 <ol>
 <li>获取sql的<code>Query Id</code></li>
 <li>替换以下命令中<code>Query Id</code>(仅最后一个冒号前的内容),执行命令,结果为没有返回的子计划id</li>
@@ -1704,16 +1704,16 @@ csv_file_with_clob_max_buffer_size 和 csv_file_max_buffer_size</p>
 <li>查看调用堆栈,多执行几次,看看堆栈是否有变动</li>
 </ol>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pstack <span class="variable">$&#123;tid&#125;</span></span><br></pre></td></tr></table></figure>
-<h3 id="打印所有线程堆栈到thread-info-txt文件">打印所有线程堆栈到<code>thread_info.txt</code>文件</h3>
+<h2 id="打印所有线程堆栈到thread-info-txt文件">打印所有线程堆栈到<code>thread_info.txt</code>文件</h2>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">gdb -q --batch --ex <span class="string">&quot;set height 0&quot;</span> --ex <span class="string">&quot;set logging file thread_info.txt&quot;</span> --ex <span class="string">&quot;set logging on&quot;</span> --ex <span class="string">&quot;thread apply all  bt&quot;</span> --ex <span class="string">&quot;set logging off&quot;</span> bin/xcloudd core.xxx</span><br></pre></td></tr></table></figure>
-<h3 id="gdb调试core文件">gdb调试core文件</h3>
+<h2 id="gdb调试core文件">gdb调试core文件</h2>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 使用stl_view.gdb脚本打印参数，pvector plist 等</span></span><br><span class="line"><span class="built_in">source</span> [stl_view.gdb路径]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 关闭命令行分页功能</span></span><br><span class="line"><span class="built_in">set</span> pagination off</span><br><span class="line"></span><br><span class="line"><span class="comment"># 打印所有线程堆栈</span></span><br><span class="line">thread apply all bt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 显示所有线程</span></span><br><span class="line">info threads</span><br><span class="line"></span><br><span class="line"><span class="comment"># 切换到该线程</span></span><br><span class="line">thread tid</span><br><span class="line"></span><br><span class="line"><span class="comment"># 打印（char*）i的字符内容</span></span><br><span class="line">x  /10c &amp;i</span><br></pre></td></tr></table></figure>
-<h3 id="动态参数">动态参数</h3>
-<h4 id="查看总超时时间">查看总超时时间</h4>
+<h2 id="动态参数">动态参数</h2>
+<h3 id="查看总超时时间">查看总超时时间</h3>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">grep -a <span class="string">&quot;dynamic parameter total timeout is&quot;</span> <span class="built_in">log</span>/xcloudd.INFO</span><br></pre></td></tr></table></figure>
-<h4 id="查看节点同步回报是否正常">查看节点同步回报是否正常</h4>
+<h3 id="查看节点同步回报是否正常">查看节点同步回报是否正常</h3>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">grep -i <span class="string">&quot;SetFeedBackInfo&quot;</span> <span class="built_in">log</span>/xclodd.INFO</span><br></pre></td></tr></table></figure>
-<h3 id="查看压缩方式">查看压缩方式</h3>
+<h2 id="查看压缩方式">查看压缩方式</h2>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">grep -a <span class="string">&quot;CompressionCodec&quot;</span> <span class="built_in">log</span>/xcloudd.INFO</span><br></pre></td></tr></table></figure>
 ]]></content>
       <tags>
