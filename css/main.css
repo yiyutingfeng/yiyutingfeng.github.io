@@ -2386,7 +2386,7 @@ mark.search-keyword {
 }
 header.header {
   background: var(--content-bg-color);
-  border-radius: initial;
+  border-radius: 30px 30px 30px 30px;
   box-shadow: 0 2px 2px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.06), 0 1px 5px 0 rgba(0,0,0,0.12);
 }
 @media (max-width: 991px) {
@@ -2423,7 +2423,7 @@ header.header {
   }
 }
 .main-inner {
-  border-radius: initial;
+  border-radius: 30px 30px 30px 30px;
   box-sizing: border-box;
   width: calc(100% - 252px);
 }
@@ -2564,7 +2564,7 @@ header.header {
 }
 .sidebar-inner {
   background: var(--content-bg-color);
-  border-radius: initial;
+  border-radius: 30px;
   box-shadow: 0 2px 2px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.06), 0 1px 5px 0 rgba(0,0,0,0.12), 0 -1px 0.5px 0 rgba(0,0,0,0.09);
   box-sizing: border-box;
   color: var(--text-color);
@@ -2616,22 +2616,6 @@ header.header {
 .links-of-author-item a:hover {
   background: var(--body-bg-color);
 }
-body {
-  background-image: url("/images/background.jpg");
-/* 设置页面背景图片 */
-  background-repeat: no-repeat; /* 不重复背景图片 */
-  background-attachment: fixed; /* 固定背景图片，不随页面滚动 */
-  background-position: center; /* 背景图片居中显示 */
-}
-.post-block {
-  background-color: #fff; /* 文章块背景色为白色 */
-  padding: 20px; /* 文章块内部留白 */
-  border-radius: 30px 30px 30px 30px; /* 圆角半径为 30px */
-  box-shadow: 8px 7px 2px 0 rgba(0,0,0,0.12), 7px 4px 1px -2px rgba(0,0,0,0.06), 0 1px 5px 0 rgba(0,0,0,0.12);
-}
-.main-inner {
-  background-color: rgba(255,255,255,0); /* 主体区域透明背景 */
-}
 .main-inner .sub-menu,
 .main-inner .post-block,
 .main-inner .tabs-comment,
@@ -2639,11 +2623,11 @@ body {
 .main-inner .comment-position .comments,
 .main-inner .pagination {
   background: var(--content-bg-color);
-  border-radius: initial;
+  border-radius: 30px 30px 30px 30px;
   box-shadow: 0 2px 2px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.06), 0 1px 5px 0 rgba(0,0,0,0.12);
 }
 .main-inner .post-block:not(:first-child):not(:first-child) {
-  border-radius: initial;
+  border-radius: 30px;
   box-shadow: 0 2px 2px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.06), 0 1px 5px 0 rgba(0,0,0,0.12), 0 -1px 0.5px 0 rgba(0,0,0,0.09);
   margin-top: 12px;
 }
@@ -2661,7 +2645,7 @@ body {
 .main-inner > .comments,
 .main-inner .comment-position .comments,
 .main-inner .pagination {
-  border-radius: initial;
+  border-radius: 30px;
   box-shadow: 0 2px 2px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.06), 0 1px 5px 0 rgba(0,0,0,0.12), 0 -1px 0.5px 0 rgba(0,0,0,0.09);
   margin-top: 12px;
 }
@@ -2726,4 +2710,20 @@ body {
   .comments {
     padding: 10px 12px;
   }
+}
+body {
+  background-image: url("/images/background.jpg");
+/* 设置页面背景图片 */
+  background-repeat: no-repeat; /* 不重复背景图片 */
+  background-attachment: fixed; /* 固定背景图片，不随页面滚动 */
+  background-position: center; /* 背景图片居中显示 */
+}
+.post-block {
+  background-color: #fff; /* 文章块背景色为白色 */
+  padding: 20px; /* 文章块内部留白 */
+  border-radius: 30px 30px 30px 30px; /* 圆角半径为 30px */
+  box-shadow: 8px 7px 2px 0 rgba(0,0,0,0.12), 7px 4px 1px -2px rgba(0,0,0,0.06), 0 1px 5px 0 rgba(0,0,0,0.12);
+}
+.main-inner {
+  background-color: rgba(255,255,255,0); /* 主体区域透明背景 */
 }
