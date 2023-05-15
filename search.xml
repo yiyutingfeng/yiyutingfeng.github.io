@@ -655,9 +655,9 @@
 <tr>
 <td>page_compress_algorithm</td>
 <td>页数据压缩算法</td>
-<td>int32</td>
-<td>1</td>
-<td>{1,2,3}</td>
+<td>string</td>
+<td>SNAPPY</td>
+<td>{SNAPPY,LZ4,ZSTD}</td>
 </tr>
 <tr>
 <td>cirrofile_max_size</td>
@@ -719,15 +719,15 @@
 <td>page_rownum_index_enable</td>
 <td>是否在加载数据时，创建page-row索引。</td>
 <td>bool</td>
-<td>TRUE</td>
-<td>TRUE/FALSE</td>
+<td>true</td>
+<td>true/false</td>
 </tr>
 <tr>
 <td>page_maxmin_index_enable</td>
 <td>是否在加载数据时，创建page内部极值索引。</td>
 <td>bool</td>
-<td>TRUE</td>
-<td>TRUE/FALSE</td>
+<td>true</td>
+<td>true/false</td>
 </tr>
 </tbody>
 </table></div><div class="tab-pane" id="dynamic_parameter_3.0-2"><table>
@@ -1257,7 +1257,7 @@
 </tr>
 <tr>
 <td>local_data_cache_file_max_size</td>
-<td>缓存文件在停止追加数据前可以增加到的最大值,<strong>不等于缓存文件最终大小</strong>,建议与配置的缓存存储目录空间大小保持一致.</td>
+<td>缓存文件在停止追加数据前可以增加到的最大值,<mark>不等于缓存文件最终大小</mark>,建议与配置的缓存存储目录空间大小保持一致.</td>
 <td>string</td>
 <td>1099511627776</td>
 <td>[4KB,4TB]</td>
