@@ -1369,7 +1369,7 @@
 <p>示例:</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">lsof +L1 | grep <span class="string">&quot;data-cache&quot;</span> | grep <span class="string">&quot;62622&quot;</span></span><br></pre></td></tr></table></figure>
 <h3 id="循环查看缓存文件数">循环查看缓存文件数</h3>
-<p>每10秒打印一次缓存文件数</p>
+<p>每3秒打印一次缓存文件数</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span> <span class="literal">true</span>; <span class="keyword">do</span> lsof +L1 | grep -c <span class="string">&quot;data-cache-<span class="variable">$&#123;hostname&#125;</span>-<span class="variable">$&#123;service_port&#125;</span>&quot;</span>; <span class="built_in">sleep</span> 3; <span class="keyword">done</span></span><br></pre></td></tr></table></figure>
 <p>示例</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span> <span class="literal">true</span>; <span class="keyword">do</span> lsof +L1 | grep -c <span class="string">&quot;data-cache-cirrodata04-62622&quot;</span>; <span class="built_in">sleep</span> 3; <span class="keyword">done</span></span><br></pre></td></tr></table></figure>
