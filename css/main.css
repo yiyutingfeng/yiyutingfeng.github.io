@@ -2326,6 +2326,14 @@ ul.breadcrumb li:last-child {
   border-bottom-color: #111;
   color: #111;
 }
+.gt-header a,
+.gt-comments a,
+.gt-popup a {
+  border-bottom: 0;
+}
+.gt-container .gt-popup .gt-action.is--active::before {
+  top: 0.7em;
+}
 .search-active {
   overflow: hidden;
 }
@@ -2768,6 +2776,7 @@ header.header {
     padding: 10px 12px;
   }
 }
+/* 全局布局美化代码 */
 body {
   background-image: url("/images/background.jpg");
 /* 设置页面背景图片 */
