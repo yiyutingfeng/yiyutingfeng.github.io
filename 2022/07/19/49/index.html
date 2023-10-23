@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yiyutingfeng.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta property="og:type" content="article">
+<meta property="og:title" content="动态参数">
+<meta property="og:url" content="https://yiyutingfeng.github.io/2022/07/19/49/index.html">
+<meta property="og:site_name" content="BONC">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-07-19T01:40:49.000Z">
+<meta property="article:modified_time" content="2023-10-14T04:29:55.562Z">
+<meta property="article:author" content="yiyutingfeng">
+<meta property="article:tag" content="动态参数">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://yiyutingfeng.github.io/2022/07/19/49/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://yiyutingfeng.github.io/2022/07/19/49/","path":"2022/07/19/49/","title":"动态参数"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>动态参数 | BONC</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">BONC</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E5%8F%82%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">配置参数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%A5%E9%85%8D%E7%BD%AE%E5%8F%82%E6%95%B0%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">1.1.</span> <span class="nav-text">该配置参数的作用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AD%A6%E5%91%8A"><span class="nav-number">2.</span> <span class="nav-text">警告</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E5%89%8D%E6%94%AF%E6%8C%81%E4%BF%AE%E6%94%B9%E7%9A%84%E5%8F%82%E6%95%B0"><span class="nav-number">3.</span> <span class="nav-text">目前支持修改的参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E6%95%B0%E5%80%BC%E7%94%9F%E6%95%88%E4%BC%98%E5%85%88%E7%BA%A7"><span class="nav-number">4.</span> <span class="nav-text">参数值生效优先级</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E8%A1%A8"><span class="nav-number">5.</span> <span class="nav-text">系统表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E5%8A%A8%E6%80%81%E5%8F%82%E6%95%B0SQL"><span class="nav-number">6.</span> <span class="nav-text">修改动态参数SQL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E4%BF%A1%E6%81%AF%E5%AD%98%E6%94%BE%E8%B7%AF%E5%BE%84"><span class="nav-number">7.</span> <span class="nav-text">修改信息存放路径</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="yiyutingfeng"
+      src="/images/Chinchilla.jpg">
+  <p class="site-author-name" itemprop="name">yiyutingfeng</p>
+  <div class="site-description" itemprop="description">BONC工作总结</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:gaoyuanfeng@bonc.com.cn" title="电子邮箱 → mailto:gaoyuanfeng@bonc.com.cn" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>电子邮箱</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/images/weixin.png" title="企业微信 → &#x2F;images&#x2F;weixin.png" rel="noopener me"><i class="fab fa-weixin fa-fw"></i>企业微信</a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://yiyutingfeng.github.io/2022/07/19/49/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/Chinchilla.jpg">
+      <meta itemprop="name" content="yiyutingfeng">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BONC">
+      <meta itemprop="description" content="BONC工作总结">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="动态参数 | BONC">
+      <meta itemprop="description" content="CirroData 动态参数功能">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          动态参数
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-07-19 09:40:49" itemprop="dateCreated datePublished" datetime="2022-07-19T09:40:49+08:00">2022-07-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-10-14 12:29:55" itemprop="dateModified" datetime="2023-10-14T12:29:55+08:00">2023-10-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/CirroData/" itemprop="url" rel="index"><span itemprop="name">CirroData</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Valine：</span>
+  
+    <a title="valine" href="/2022/07/19/49/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/07/19/49/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+            <div class="post-description">CirroData 动态参数功能</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h3 id="配置参数">配置参数</h3>
+<div class="tabs" id="dynamic-parameter"><ul class="nav-tabs"><li class="tab active"><a href="#dynamic-parameter-1">3.0</a></li><li class="tab"><a href="#dynamic-parameter-2">3.0之前的版本</a></li></ul><div class="tab-content"><div class="tab-pane active" id="dynamic-parameter-1"><table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>说明</th>
+<th>参数类型</th>
+<th>默认值</th>
+<th>参数值范围</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>parameter_setting_sync_timeout</td>
+<td>动态参数设定的同步超时时间.如果超时,则不再等待其他节点的同步状态,可能导致其他节点使用的参数不是最新值.</td>
+<td>int32</td>
+<td>5</td>
+<td><div style="white-space: nowrap">[1, 100]</div></td>
+</tr>
+</tbody>
+</table></div><div class="tab-pane" id="dynamic-parameter-2"><table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>说明</th>
+<th>参数类型</th>
+<th>默认值</th>
+<th>参数值范围</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>param_update_timeout</td>
+<td>参数修改指令单个节点超时时间，单位s.</td>
+<td>int32</td>
+<td>5</td>
+<td>[1, 100]</td>
+</tr>
+</tbody>
+</table></div></div></div>
+<h4 id="该配置参数的作用">该配置参数的作用</h4>
+<ol>
+<li>节点同步修改超时时间,若超时节点同步失败</li>
+<li>sql下发节点,每次获取节点同步回报信息失败后等待0.5秒后重试,若一直获取失败，则总重试等待时间为 <code>节点数 × parameter_setting_sync_timeout</code></li>
+</ol>
+<div class="note warning"><h3 id="警告">警告</h3>
+<p>节点数 × parameter_setting_sync_timeout ≠ 总同步超时时间<br>总同步超时时间 = 节点数 × parameter_setting_sync_timeout / 0.5 * 获取节点同步回报信息耗时 + 节点数 × parameter_setting_sync_timeout</p>
+</div>
+<h3 id="目前支持修改的参数">目前支持修改的参数</h3>
+<div class="tabs" id="version"><ul class="nav-tabs"><li class="tab active"><a href="#version-1">3.0版</a></li><li class="tab"><a href="#version-2">3.0之前的版本</a></li></ul><div class="tab-content"><div class="tab-pane active" id="version-1"><div class="tabs" id="dynamic_parameter_3.0"><ul class="nav-tabs"><li class="tab active"><a href="#dynamic_parameter_3.0-1">DB级别参数</a></li><li class="tab"><a href="#dynamic_parameter_3.0-2">PC级别参数</a></li></ul><div class="tab-content"><div class="tab-pane active" id="dynamic_parameter_3.0-1"><table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>说明</th>
+<th>参数类型</th>
+<th>默认值</th>
+<th>取值范围</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>page_compress_algorithm</td>
+<td>页数据压缩算法</td>
+<td>string</td>
+<td>SNAPPY</td>
+<td>{SNAPPY,LZ4,ZSTD}</td>
+</tr>
+<tr>
+<td>cirrofile_max_size</td>
+<td>单个cirrofile文件的大小上限</td>
+<td>int64</td>
+<td>1GB</td>
+<td>[256MB, 4GB]</td>
+</tr>
+<tr>
+<td>cirrofile_max_row</td>
+<td>单个cirrofile文件的最大行数</td>
+<td>int64</td>
+<td>10485760</td>
+<td><div style="white-space: nowrap">[10000000, 100000000]</div></td>
+</tr>
+<tr>
+<td>dictionary_page_num</td>
+<td>字典编码中，字典的页数量字典达到记录数和大小中任何一个条件后，不能继续新增字典记录。</td>
+<td>int32</td>
+<td>4</td>
+<td>[1, 4]</td>
+</tr>
+<tr>
+<td>cirrofile_reserve_rate</td>
+<td>cirrofile文件的预留空间比例，以防止实际产生的cirrofile文件超过设定的大小。</td>
+<td>double</td>
+<td>0.1</td>
+<td>[0.01, 0.2]</td>
+</tr>
+<tr>
+<td>page_compress_optimize_enable</td>
+<td>是否启用页压缩优化。启用后，数据文件将无法兼容标准parquet格式。</td>
+<td>bool</td>
+<td>false</td>
+<td>true/false</td>
+</tr>
+<tr>
+<td>page_compress_optimize_threshold_ratio</td>
+<td>页压缩优化的数据压缩率阈值。如果启用页压缩优化，则数据压缩率超过该百分比，才进行页数据压缩存储。该参数只对新增数据有效。该参数只在页压缩优化启用时有效。启用后，数据无法兼容标准parquet格式。</td>
+<td>double</td>
+<td>0.6</td>
+<td>(0, 1]</td>
+</tr>
+<tr>
+<td>dictionary_item_num</td>
+<td>字典编码中，字典的记录数量。字典达到记录数和大小中任何一个条件后，不能继续新增字典记录。</td>
+<td>int32</td>
+<td>65535</td>
+<td>[32768, 65535]</td>
+</tr>
+<tr>
+<td>plain_encoding_rule</td>
+<td>指定不适用编码的数据类型，多个类型之间用逗号’,'分隔。主要用于数据加载时的编码过程控制。</td>
+<td>string</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>page_rownum_index_enable</td>
+<td>是否在加载数据时，创建page-row索引。</td>
+<td>bool</td>
+<td>true</td>
+<td>true/false</td>
+</tr>
+<tr>
+<td>page_maxmin_index_enable</td>
+<td>是否在加载数据时，创建page内部极值索引。</td>
+<td>bool</td>
+<td>true</td>
+<td>true/false</td>
+</tr>
+</tbody>
+</table></div><div class="tab-pane" id="dynamic_parameter_3.0-2"><table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>说明</th>
+<th>参数类型</th>
+<th>默认值</th>
+<th>取值范围</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>dml_write_buffer_mdp_num</td>
+<td>表更新、有序表加载时，用于数据写入的缓存MDP数量。</td>
+<td>int32</td>
+<td>3</td>
+<td>[1, 5]</td>
+</tr>
+<tr>
+<td>default_timestamp_format</td>
+<td>timestamp的默认格式。csv加载和cast时会按照此参数将字符串类型与timestamp类型进行转换。可根据需要调整分隔符与年月日时分秒的位置。</td>
+<td>string</td>
+<td><div style="white-space: nowrap">yyyy-mm-dd hh24:mi:ss.ff</div></td>
+<td></td>
+</tr>
+<tr>
+<td>default_date_format</td>
+<td>Date类型默认格式,csv加载和cast时会按照此参数将字符串类型与date类型进行转换。可根据需要调整分隔符与年月日时分秒的位置。</td>
+<td>string</td>
+<td>yyyy/mm/dd hh24:mi:ss</td>
+<td></td>
+</tr>
+<tr>
+<td>compaction_group_num</td>
+<td>Compaction任务中，分组的数量。需要整并的数据文件不小于该值时，整并结果的数据文件数量不少于该值。</td>
+<td>int32</td>
+<td>1</td>
+<td>[1, 16]</td>
+</tr>
+<tr>
+<td>compaction_max_file_size</td>
+<td>Compaction任务中，判定为不需要整并的数据文件的大小阈值。比阈值小的文件，都需要进行整并。</td>
+<td>int64</td>
+<td>849346560</td>
+<td>[100MB, 1GB]</td>
+</tr>
+<tr>
+<td>local_data_cache_policy</td>
+<td>本地数据缓存缓存策略.<br>NO_CACHE: 不进行本地缓存;<br> AUTO_CACHE: 自动选择节点进行缓存（最多选择两个）;<br>GLOBAL_CACHE: 所有节点都可以缓存.</td>
+<td>string</td>
+<td>AUTO_CACHE</td>
+<td>NO_CACHE, AUTO_CACHE, GLOBAL_CACHE</td>
+</tr>
+</tbody>
+</table></div></div></div></div><div class="tab-pane" id="version-2"><div class="tabs" id="dynamic_parameter_old"><ul class="nav-tabs"><li class="tab active"><a href="#dynamic_parameter_old-1">DB级别参数</a></li><li class="tab"><a href="#dynamic_parameter_old-2">PC级别参数</a></li></ul><div class="tab-content"><div class="tab-pane active" id="dynamic_parameter_old-1"><table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>说明</th>
+<th>参数类型</th>
+<th>默认值</th>
+<th>参数值范围</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>page_compress_type</td>
+<td>Page数据压缩算法: 1-SNAPPY, 2-LZ4;<em><strong>如果使用非SNAPPY算法，会影响与标准parquet格式的兼容</strong></em></td>
+<td>int32</td>
+<td>1</td>
+<td>{1,2}</td>
+</tr>
+<tr>
+<td>datapack_maxsize</td>
+<td>单个DataPack文件大小上限，单位Byte</td>
+<td>int64</td>
+<td>1073741824</td>
+<td><div style="white-space: nowrap">[2<sup>23</sup>, 2<sup>63</sup>-1]</div></td>
+</tr>
+<tr>
+<td>datapack_maxrownum</td>
+<td>单个DataPack文件数据行数上限</td>
+<td>int64</td>
+<td>10485760</td>
+<td>[1, 2<sup>63</sup>-1]</td>
+</tr>
+<tr>
+<td>dictpage_num</td>
+<td>ColumnChunk中字典页的缓存页数</td>
+<td>int32</td>
+<td>4</td>
+<td>[1, 4]</td>
+</tr>
+<tr>
+<td>filesize_reserverate</td>
+<td>[Percentage]DP文件中实际使用空间百分比，取值范围80~99</td>
+<td>int32</td>
+<td>90</td>
+<td>[80, 99]</td>
+</tr>
+<tr>
+<td>no_page_compress_optimize</td>
+<td>是否禁止Page压缩优化; 如果不禁止，会影响与标准parquet格式的兼容</td>
+<td>bool</td>
+<td>true</td>
+<td>true/false</td>
+</tr>
+<tr>
+<td>compress_validrate</td>
+<td>[Percentage]DP文件数据压缩百分比阈值，取值范围1~100，压缩后与压缩前大小比例超过该值才进行压缩</td>
+<td>int32</td>
+<td>60</td>
+<td>[1, 100]</td>
+</tr>
+<tr>
+<td>dictcardinality</td>
+<td>字典编码中，字典条目上限</td>
+<td>int32</td>
+<td>65535</td>
+<td>(0, 2<sup>31</sup>-1]</td>
+</tr>
+<tr>
+<td>plain_encoding_rule</td>
+<td>默认Plain编码规则，多个类型用’，'分隔. 具体参考Release Note</td>
+<td>string</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>page_rownum_index</td>
+<td>是否在加载数据时，创建page-row索引</td>
+<td>bool</td>
+<td>true</td>
+<td>true/false</td>
+</tr>
+<tr>
+<td>page_max_min_index</td>
+<td>是否在加载数据时，创建page内部极值索引</td>
+<td>bool</td>
+<td>true</td>
+<td>true/false</td>
+</tr>
+</tbody>
+</table></div><div class="tab-pane" id="dynamic_parameter_old-2"><table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>说明</th>
+<th>参数类型</th>
+<th>默认值</th>
+<th>参数值范围</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>write_buffer_num</td>
+<td>异步加载线程使用的缓存块数</td>
+<td>int32</td>
+<td>3</td>
+<td>[1, 5]</td>
+</tr>
+<tr>
+<td>cast_timestamp_format</td>
+<td><Basic>Timestamp类型默认格式，小数精度为9</td>
+<td>string</td>
+<td><div style="white-space: nowrap">yyyy-mm-dd hh24:mi:ss.ff</div></td>
+<td></td>
+</tr>
+<tr>
+<td>cast_date_format</td>
+<td>Date类型默认格式,csv加载和cast时会按照此参数将字符串类型与date类型进行转换。可根据需要调整分隔符与年月日时分秒的位置。</td>
+<td>string</td>
+<td>yyyy/mm/dd hh24:mi:ss</td>
+<td></td>
+</tr>
+<tr>
+<td>compact_group_num</td>
+<td>整并分组数</td>
+<td>int32</td>
+<td>1</td>
+<td>[1, 64]</td>
+</tr>
+<tr>
+<td>compact_filesize_threshold</td>
+<td>不参加整并的文件大小下限，单位BYTE</td>
+<td>int64</td>
+<td>849346560</td>
+<td><div style="white-space: nowrap">[0, 2<sup>63</sup>-1]</div></td>
+</tr>
+</tbody>
+</table></div></div></div></div></div></div>
+<h3 id="参数值生效优先级">参数值生效优先级</h3>
+<p>PC 级别参数 &gt; DB 级别参数 &gt; 集群级别参数（ds.xml）</p>
+<h3 id="系统表">系统表</h3>
+<div class="tabs" id="system_table"><ul class="nav-tabs"><li class="tab active"><a href="#system_table-1">V$CLUSTER_PARAMETERS_INFO</a></li><li class="tab"><a href="#system_table-2">V$DB_PARAMETERS_INFO</a></li></ul><div class="tab-content"><div class="tab-pane active" id="system_table-1"><p>systemadmin 用户查询</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> V$CLUSTER_PARAMETERS_INFO;</span><br></pre></td></tr></table></figure></div><div class="tab-pane" id="system_table-2"><p>system 用户查询</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> V$DB_PARAMETERS_INFO;</span><br></pre></td></tr></table></figure></div></div></div>
+<h3 id="修改动态参数SQL">修改动态参数SQL</h3>
+<div class="tabs" id="修改动态参数"><ul class="nav-tabs"><li class="tab active"><a href="#修改动态参数-1">设置 DB 级别参数</a></li><li class="tab"><a href="#修改动态参数-2">设置 PC 级别参数</a></li></ul><div class="tab-content"><div class="tab-pane active" id="修改动态参数-1"><p>systemadmin用户执行</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> DATABASE db_name <span class="keyword">SET</span> <span class="keyword">PARAMETER</span> parameter_name <span class="operator">=</span> <span class="string">&#x27;parameter_value&#x27;</span>;</span><br></pre></td></tr></table></figure>
+<p>system用户执行</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">SYSTEM</span> PARAM <span class="keyword">SET</span> parameter_name <span class="operator">=</span> <span class="string">&#x27;parameter_value&#x27;</span>;</span><br></pre></td></tr></table></figure></div><div class="tab-pane" id="修改动态参数-2"><p>system用户执行</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> PC PARAM <span class="keyword">SET</span> pc_name.parameter_name <span class="operator">=</span> <span class="string">&#x27;parameter_value&#x27;</span>;</span><br></pre></td></tr></table></figure></div></div></div>
+<h3 id="修改信息存放路径">修改信息存放路径</h3>
+<p>参数修改信息存放在zookeeper上</p>
+<ul>
+<li>dp级参数存放路径</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/xcloud_name/cluster_name/XCLOUD/PUCONTROLLER/PARAMETERLIST/db_id/SYSPFILE</span><br></pre></td></tr></table></figure>
+<ul>
+<li>pc级参数存放路径</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/xcloud_name/cluster_name/XCLOUD/PUCONTROLLER/DB_LIST/db_id/PC_LIST/pc_name/PARAMETERLIST/PCPFILE</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>yiyutingfeng
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://yiyutingfeng.github.io/2022/07/19/49/" title="动态参数">https://yiyutingfeng.github.io/2022/07/19/49/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E5%8A%A8%E6%80%81%E5%8F%82%E6%95%B0/" rel="tag"><i class="fa fa-tag"></i> 动态参数</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/07/19/18/" rel="prev" title="总结 CirroData 开发中曾遇到的问题的处理方法">
+                  <i class="fa fa-angle-left"></i> 总结 CirroData 开发中曾遇到的问题的处理方法
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/07/19/52/" rel="next" title="本地数据缓存">
+                  本地数据缓存 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="valine-comments"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">yiyutingfeng</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+<script class="next-config" data-name="valine" type="application/json">{"enable":true,"appId":"6VXD9E0Vl3aN1kIDTufiLnbd-gzGzoHsz","appKey":"HCXYqYxY4dsV8Bj04VSEXau8","serverURLs":"https://6vxd9e0v.lc-cn-n1-shared.com","placeholder":"Just go go","avatar":"mm","meta":["nick","mail"],"pageSize":10,"lang":null,"visitor":false,"comment_count":true,"recordIP":false,"enableQQ":false,"requiredFields":["nick","mail"],"el":"#valine-comments","path":"/2022/07/19/49/"}</script>
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.valine.el)
+    .then(() => NexT.utils.getScript(
+      'https://fastly.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js',
+      { condition: window.Valine }
+    ))
+    .then(() => {
+      new Valine(CONFIG.valine);
+    });
+});
+</script>
+
+</body>
+</html>
