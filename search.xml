@@ -3564,4 +3564,79 @@ C:\Users\CirroData\xcloud\DBConfig.xml</p>
         <tag>集群</tag>
       </tags>
   </entry>
+  <entry>
+    <title>远程读数据缓存设计详解</title>
+    <url>/2023/12/07/12/</url>
+    <content><![CDATA[<h2 id="概述">概述</h2>
+<p>计算节点通过缓存远端数据，实现了对数据的快速访问和网络开销的减少。当需要读取相同的数据时，计算节点可以直接从缓存中获取，而无需通过网络进行数据传输。这种方式不仅提高了数据访问的速度，也大大减少了网络的负载。这种策略在处理大量数据时，尤其能体现出其优势，有效提升了整体的运行效率。</p>
+<h2 id="缓存结构">缓存结构</h2>
+<h3 id="元数据缓存-LRU缓存">元数据缓存(LRU缓存)</h3>
+<p>缓存所有CacheKey与CacheEntry的键值对，使用LRU缓存，用于查找数据，淘汰旧数据以及控制数据缓存占用磁盘的大小作用；</p>
+<ul>
+<li>CacheKey：记录远程文件的文件名filename，文件最后一次被修改的时间戳mtime，目标数据所在的起始偏移量offset</li>
+<li>CacheEntry：记录缓存数据所在的缓存文件的文件句柄，缓存数据所在的起始偏移量offset，缓存数据的长度length</li>
+</ul>
+<h3 id="数据缓存">数据缓存</h3>
+<p>存储从远端读取到的数据到本地磁盘中，当数据被存储时，无论数据实际占用多少空间，都会以4KB的倍数进行分配和存储。即以页（page）为单位进行管理, 有助于提高系统性能和文件打孔。</p>
+<p>缺点：如果数据大小不是4KB的整数倍，会将整个4KB的页分配给数据，导致浪费一些空间。</p>
+<ul>
+<li>存储目录：一个或多个，用于存储缓存文件，每个存储目录设置存储上限；多存储目录情况下在存储数据时，通过hash计算选择存储目录</li>
+<li>缓存文件：存储具体的数据段，单文件最大可达到存储目录设置的存储上限，服务过程中保持open状态，属于临时文件，便于在服务停止或机器宕机后自动清理文件，避免产生垃圾文件</li>
+</ul>
+<h2 id="淘汰机制">淘汰机制</h2>
+<ol>
+<li>使用LRU策略淘汰旧数据，在删除CacheEntry的同时，通过文件打孔的方式，删除缓存文件中的旧数据</li>
+<li>限制总缓存文件数，避免因不断淘汰而产生大量小文件</li>
+</ol>
+]]></content>
+      <categories>
+        <category>CirroData</category>
+      </categories>
+      <tags>
+        <tag>数据缓存</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>同步MySQL数据到Doris</title>
+    <url>/2023/12/15/48/</url>
+    <content><![CDATA[<h2 id="下载驱动程序">下载驱动程序</h2>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">wget https://cdn.mysql.com//Downloads/Connector-J/mysql-connector-j-8.2.0.tar.gz .</span><br><span class="line">tar xvfz mysql-connector-j-8.2.0.tar.gz</span><br></pre></td></tr></table></figure>
+<p>也可以去MySQL官网下载其他版本<a href="https://dev.mysql.com/downloads/connector/j/">Connector/J</a><br>
+建议选择<strong>Platform Independent</strong>的压缩包，解压即可使用</p>
+<p><img src="/images/%E5%90%8C%E6%AD%A5MySQL%E6%95%B0%E6%8D%AE%E5%88%B0Doris/Connector_J.png" alt=""></p>
+<h2 id="be和fe配置jdbc驱动目录">be和fe配置jdbc驱动目录</h2>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">jdbc_drivers_dir = /root/doris/mysql-connector-j-8.2.0</span><br></pre></td></tr></table></figure>
+<p><img src="/images/%E5%90%8C%E6%AD%A5MySQL%E6%95%B0%E6%8D%AE%E5%88%B0Doris/%E9%85%8D%E7%BD%AEjdbc%E9%A9%B1%E5%8A%A8%E7%9B%AE%E5%BD%95.png" alt=""></p>
+<h2 id="从MySQL导入数据到Doris示例">从MySQL导入数据到Doris示例</h2>
+<ol>
+<li>创建目标表</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> example_tbl (</span><br><span class="line">    id <span class="type">INT</span> COMMENT &quot;id&quot;,</span><br><span class="line">		name <span class="type">VARCHAR</span>(<span class="number">20</span>)  COMMENT &quot;name&quot;</span><br><span class="line">)</span><br><span class="line">DISTRIBUTED <span class="keyword">BY</span> HASH(id) BUCKETS <span class="number">10</span></span><br><span class="line">PROPERTIES(&quot;replication_num&quot; <span class="operator">=</span> &quot;1&quot;);</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>创建 MySQL CATALOG</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- CREATE CATALOG jdbc_mysql PROPERTIES (</span></span><br><span class="line"><span class="comment">--     &quot;type&quot;=&quot;jdbc&quot;,</span></span><br><span class="line"><span class="comment">--     &quot;user&quot;=&quot;root&quot;,</span></span><br><span class="line"><span class="comment">--     &quot;password&quot;=&quot;123456&quot;,</span></span><br><span class="line"><span class="comment">--     &quot;jdbc_url&quot; = &quot;jdbc:mysql://172.16.48.9:4486/demo&quot;,</span></span><br><span class="line"><span class="comment">--     &quot;driver_url&quot; = &quot;mysql-connector-j-8.2.0.jar&quot;,</span></span><br><span class="line"><span class="comment">--     &quot;driver_class&quot; = &quot;com.mysql.jdbc.Driver&quot;</span></span><br><span class="line"><span class="comment">-- )</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">CREATE</span> CATALOG jdbc_mysql PROPERTIES (</span><br><span class="line">    &quot;type&quot;<span class="operator">=</span>&quot;jdbc&quot;,</span><br><span class="line">    &quot;user&quot;<span class="operator">=</span>&quot;root&quot;,</span><br><span class="line">    &quot;jdbc_url&quot; <span class="operator">=</span> &quot;jdbc:mysql://172.16.48.9:4486&quot;,  <span class="comment">-- 可以不指定具体数据库</span></span><br><span class="line">    &quot;driver_url&quot; <span class="operator">=</span> &quot;mysql-connector-j-8.2.0.jar&quot;,</span><br><span class="line">    &quot;driver_class&quot; <span class="operator">=</span> &quot;com.mysql.jdbc.Driver&quot;</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p><img src="/images/%E5%90%8C%E6%AD%A5MySQL%E6%95%B0%E6%8D%AE%E5%88%B0Doris/CREATE_CATALOG.png" alt=""></p>
+<ol start="3">
+<li>查看 CATALOGS</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SHOW</span> CATALOGS;</span><br></pre></td></tr></table></figure>
+<p><img src="/images/%E5%90%8C%E6%AD%A5MySQL%E6%95%B0%E6%8D%AE%E5%88%B0Doris/SHOW_CATALOGS.png" alt=""></p>
+<ol start="4">
+<li>插入数据</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- INSERT INTO &lt;doris_Catalog_Name&gt;.&lt;db_name&gt;.&lt;table_name&gt; SELECT * FROM &lt;mysql_Catalog_Name&gt;.&lt;db_name&gt;.&lt;table_name&gt;;</span></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> internal.demo.example_tbl <span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> jdbc_mysql.demo.t1;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 由于当前在 doris CATALOG 下,可以省略Catalog_Name与db_name</span></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> example_tbl <span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> jdbc_mysql.demo.t1;</span><br></pre></td></tr></table></figure>
+<p><img src="/images/%E5%90%8C%E6%AD%A5MySQL%E6%95%B0%E6%8D%AE%E5%88%B0Doris/insert.png" alt=""></p>
+<ol start="5">
+<li>可以切换使用 MySQL 环境</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">switch jdbc_mysql;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 当前在MySQL CATALOG 下, 可以省略Catalog_Name与db_name</span></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> internal.demo.example_tbl <span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> t1;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>doris</category>
+      </categories>
+      <tags>
+        <tag>CATALOG</tag>
+        <tag>MySQL</tag>
+      </tags>
+  </entry>
 </search>
